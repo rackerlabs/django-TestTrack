@@ -3,9 +3,8 @@
 # - Fail if migrations are not created
 # - Exit container after running tests to allow exit code to propagate as test result
 # set -x
-# set -e
+set -e
 # set -v
-
 
 . /secret-file-loader.sh
 . /reach_database.sh
