@@ -36,8 +36,8 @@ ldap-utils \
 
 Please check for the latest version of these requirements at the time of implementation on pypi.org and use those if you can.
 
-- [https://pypi.org/project/python-ldap/](python-ldap)
-- [https://pypi.org/project/django-auth-ldap/](django-auth-ldap)
+- [python-ldap](https://pypi.org/project/python-ldap/)
+- [django-auth-ldap](https://pypi.org/project/django-auth-ldap/)
 
 Otherwise add the following to requirements.txt:
 
