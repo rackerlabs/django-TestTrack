@@ -113,7 +113,7 @@ of DefectDojo as we begin work on v3. Please see our [contributing guidelines](r
 information. Check out our latest update on v3 [here](https://github.com/DefectDojo/django-DefectDojo/discussions/8974).
 
 ## Pro Edition
-[Upgrade to DefectDojo Pro](https://www.defectdojo.com/pricing) today to take your DevSecOps to 11. DefectDojo Pro is
+[Upgrade to DefectDojo Pro](https://www.defectdojo.com/) today to take your DevSecOps to 11. DefectDojo Pro is
 designed to meet you wherever you are on your security journey and help you scale, with enhanced dashboards, additional
 smart features, tunable deduplication, and support from DevSecOps experts.
 
