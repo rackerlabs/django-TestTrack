@@ -1676,6 +1676,23 @@ class Endpoint(models.Model):
             models.Index(fields=["product"]),
         ]
 
+    def __hash__(self):
+        return self.__str__().__hash__()
+
+    def __eq__(self, other):
+        if isinstance(other, Endpoint):
+            # Check if the contents of the endpoint match
+            contents_match = str(self) == str(other)
+            # Determine if products should be used in the equation
+            if self.product is not None and other.product is not None:
+                # Check if the products are the same
+                products_match = (self.product) == other.product
+                # Check if the contents match
+                return products_match and contents_match
+            return contents_match
+
+        return NotImplemented
+
     def __str__(self):
         try:
             if self.host:
@@ -1806,23 +1823,6 @@ class Endpoint(models.Model):
 
         if errors:
             raise ValidationError(errors)
-
-    def __hash__(self):
-        return self.__str__().__hash__()
-
-    def __eq__(self, other):
-        if isinstance(other, Endpoint):
-            # Check if the contents of the endpoint match
-            contents_match = str(self) == str(other)
-            # Determine if products should be used in the equation
-            if self.product is not None and other.product is not None:
-                # Check if the products are the same
-                products_match = (self.product) == other.product
-                # Check if the contents match
-                return products_match and contents_match
-            return contents_match
-
-        return NotImplemented
 
     @property
     def is_broken(self):
@@ -2622,6 +2622,16 @@ class Finding(models.Model):
             models.Index(fields=["duplicate_finding", "id"]),
         ]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.unsaved_endpoints = []
+        self.unsaved_request = None
+        self.unsaved_response = None
+        self.unsaved_tags = None
+        self.unsaved_files = None
+        self.unsaved_vulnerability_ids = None
+
     def __str__(self):
         return self.title
 
@@ -2695,16 +2705,6 @@ class Finding(models.Model):
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse("view_finding", args=[str(self.id)])
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.unsaved_endpoints = []
-        self.unsaved_request = None
-        self.unsaved_response = None
-        self.unsaved_tags = None
-        self.unsaved_files = None
-        self.unsaved_vulnerability_ids = None
 
     def copy(self, test=None):
         copy = self
