@@ -17,7 +17,7 @@ We will need to modify a grand total of 4-5 files, depending on how you want to 
  - Dockerfile.django-*
  - Dockerfile.nginx-*
  - requirements.txt
- - settings.dist.py
+ - local_settings.py
  - docker-compose.yml *(Optional)*
 
 
@@ -47,9 +47,9 @@ django-auth-ldap==4.1.0
 ```
 
 
-#### settings.dist.py
+#### local_settings.py
 
-Find the settings file (hint: `/dojo/settings/settings.dist.py`) and add the following:
+Find the settings file (hint: check in `/dojo/settings/settings.py` for instructions for how to use `/dojo/settings/local_settings.py`, if the file does not already exist) and add the following:
 
 At the top of the file:
 ```python
@@ -116,7 +116,7 @@ Read the docs for Django Authentication with LDAP here: https://django-auth-ldap
 
 #### docker-compose.yml
 
-In order to pass the variables to the settings.dist.py file via docker, it's a good idea to add these to the docker compose file.
+In order to pass the variables to the local_settings.py file via docker, it's a good idea to add these to the docker compose file.
 
 You can do this by adding the following variables to the environment section for the uwsgi image:
 ```yaml
