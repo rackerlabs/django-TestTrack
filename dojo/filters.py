@@ -21,6 +21,7 @@ from django_filters import (
     CharFilter,
     DateFilter,
     DateFromToRangeFilter,
+    DateTimeFilter,
     FilterSet,
     ModelChoiceFilter,
     ModelMultipleChoiceFilter,
@@ -1465,9 +1466,9 @@ class ApiFindingFilter(DojoFilter):
     jira_change = DateRangeFilter(field_name="jira_issue__jira_change")
     last_reviewed = DateRangeFilter()
     mitigated = DateRangeFilter()
-    mitigated_on = DateFilter(field_name="mitigated", lookup_expr="exact")
-    mitigated_before = DateFilter(field_name="mitigated", lookup_expr="lt")
-    mitigated_after = DateFilter(field_name="mitigated", lookup_expr="gt")
+    mitigated_on = DateTimeFilter(field_name="mitigated", lookup_expr="exact", method="filter_mitigated_on")
+    mitigated_before = DateTimeFilter(field_name="mitigated", lookup_expr="lt")
+    mitigated_after = DateTimeFilter(field_name="mitigated", lookup_expr="gt", label="Mitigated After", method="filter_mitigated_after")
     # NumberInFilter
     cwe = NumberInFilter(field_name="cwe", lookup_expr="in")
     defect_review_requested_by = NumberInFilter(field_name="defect_review_requested_by", lookup_expr="in")
@@ -1570,6 +1571,20 @@ class ApiFindingFilter(DojoFilter):
         exclude = ["url", "thread_id", "notes", "files",
                    "line", "cve"]
 
+    def filter_mitigated_after(self, queryset, name, value):
+        if value.hour == 0 and value.minute == 0 and value.second == 0:
+            value = value.replace(hour=23, minute=59, second=59)
+
+        return queryset.filter(mitigated__gt=value)
+
+    def filter_mitigated_on(self, queryset, name, value):
+        if value.hour == 0 and value.minute == 0 and value.second == 0:
+            # we have a simple date without a time, lets get a range from this morning to tonight at 23:59:59:999
+            nextday = value + timedelta(days=1)
+            return queryset.filter(mitigated__gte=value, mitigated__lt=nextday)
+
+        return queryset.filter(mitigated=value)
+
 
 class PercentageFilter(NumberFilter):
     def __init__(self, *args, **kwargs):
@@ -1604,9 +1619,9 @@ class FindingFilterHelper(FilterSet):
     duplicate = ReportBooleanFilter()
     is_mitigated = ReportBooleanFilter()
     mitigated = DateRangeFilter(field_name="mitigated", label="Mitigated Date")
-    mitigated_on = DateFilter(field_name="mitigated", lookup_expr="exact", label="Mitigated On")
-    mitigated_before = DateFilter(field_name="mitigated", lookup_expr="lt", label="Mitigated Before")
-    mitigated_after = DateFilter(field_name="mitigated", lookup_expr="gt", label="Mitigated After")
+    mitigated_on = DateTimeFilter(field_name="mitigated", lookup_expr="exact", label="Mitigated On", method="filter_mitigated_on")
+    mitigated_before = DateTimeFilter(field_name="mitigated", lookup_expr="lt", label="Mitigated Before")
+    mitigated_after = DateTimeFilter(field_name="mitigated", lookup_expr="gt", label="Mitigated After", method="filter_mitigated_after")
     planned_remediation_date = DateRangeOmniFilter()
     planned_remediation_version = CharFilter(lookup_expr="icontains", label=_("Planned remediation version"))
     file_path = CharFilter(lookup_expr="icontains")
@@ -1721,6 +1736,20 @@ class FindingFilterHelper(FilterSet):
         self.form.fields["mitigated_before"].widget = date_input_widget
         self.form.fields["mitigated_after"].widget = date_input_widget
         self.form.fields["cwe"].choices = cwe_options(self.queryset)
+
+    def filter_mitigated_after(self, queryset, name, value):
+        if value.hour == 0 and value.minute == 0 and value.second == 0:
+            value = value.replace(hour=23, minute=59, second=59)
+
+        return queryset.filter(mitigated__gt=value)
+
+    def filter_mitigated_on(self, queryset, name, value):
+        if value.hour == 0 and value.minute == 0 and value.second == 0:
+            # we have a simple date without a time, lets get a range from this morning to tonight at 23:59:59:999
+            nextday = value + timedelta(days=1)
+            return queryset.filter(mitigated__gte=value, mitigated__lt=nextday)
+
+        return queryset.filter(mitigated=value)
 
 
 class FindingFilterWithoutObjectLookups(FindingFilterHelper, FindingTagStringFilter):
