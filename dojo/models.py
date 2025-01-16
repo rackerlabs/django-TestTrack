@@ -3197,7 +3197,7 @@ class Finding(models.Model):
                 st = dojo_meta.value.strip()
                 if st:
                     return st.lower()
-        return ""
+        return settings.DEFAULT_SCM_TYPE
 
     def scm_public_prepare_base_link(self, uri):
         # scm public (https://scm-domain.org) url template for browse is:
