@@ -2,7 +2,7 @@ import datetime
 
 from dojo.models import Engagement, Product, Test
 from dojo.tools.contrast.parser import ContrastParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestContrastParser(DojoTestCase):
@@ -11,7 +11,7 @@ class TestContrastParser(DojoTestCase):
         test = Test()
         test.engagement = Engagement()
         test.engagement.product = Product()
-        with open("unittests/scans/contrast/contrast-node-goat.csv", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("contrast") / "contrast-node-goat.csv", encoding="utf-8") as testfile:
             parser = ContrastParser()
             findings = parser.get_findings(testfile, test)
             for finding in findings:
@@ -56,7 +56,7 @@ class TestContrastParser(DojoTestCase):
         test = Test()
         test.engagement = Engagement()
         test.engagement.product = Product()
-        with open("unittests/scans/contrast/vulnerabilities2020-09-21.csv", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("contrast") / "vulnerabilities2020-09-21.csv", encoding="utf-8") as testfile:
             parser = ContrastParser()
             findings = parser.get_findings(testfile, test)
             for finding in findings:

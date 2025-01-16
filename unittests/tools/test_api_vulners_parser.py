@@ -1,12 +1,12 @@
 from dojo.models import Test
 from dojo.tools.api_vulners.parser import ApiVulnersParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestApiVulnersParser(DojoTestCase):
 
     def test_parse_many_findings(self):
-        with open("unittests/scans/api_vulners/report_many_vulns.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("api_vulners") / "report_many_vulns.json", encoding="utf-8") as testfile:
             parser = ApiVulnersParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(3, len(findings))
@@ -19,7 +19,7 @@ class TestApiVulnersParser(DojoTestCase):
             self.assertEqual("CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H", finding.cvssv3)
 
     def test_parse_one_finding(self):
-        with open("unittests/scans/api_vulners/report_one_vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("api_vulners") / "report_one_vuln.json", encoding="utf-8") as testfile:
             parser = ApiVulnersParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -31,13 +31,13 @@ class TestApiVulnersParser(DojoTestCase):
             self.assertEqual("CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H", finding.cvssv3)
 
     def test_parse_no_finding(self):
-        with open("unittests/scans/api_vulners/report_no_vulns.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("api_vulners") / "report_no_vulns.json", encoding="utf-8") as testfile:
             parser = ApiVulnersParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_no_description(self):
-        with open("unittests/scans/api_vulners/report_no_description.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("api_vulners") / "report_no_description.json", encoding="utf-8") as testfile:
             parser = ApiVulnersParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))

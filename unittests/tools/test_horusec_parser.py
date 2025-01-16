@@ -1,16 +1,14 @@
 import datetime
-from os import path
-from pathlib import Path
 
 from dojo.models import Test
 from dojo.tools.horusec.parser import HorusecParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestHorusecParser(DojoTestCase):
     def test_get_findings(self):
         """Version 2.6.3 with big project in Python"""
-        with open(path.join(Path(__file__).parent, "../scans/horusec/version_2.6.3.json"), encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "horusec/version_2.6.3.json", encoding="utf-8") as testfile:
             parser = HorusecParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(267, len(findings))
@@ -18,7 +16,7 @@ class TestHorusecParser(DojoTestCase):
 
     def test_get_tests(self):
         """Version 2.6.3 with big project in Python"""
-        with open(path.join(Path(__file__).parent, "../scans/horusec/version_2.6.3.json"), encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "horusec/version_2.6.3.json", encoding="utf-8") as testfile:
             parser = HorusecParser()
             tests = parser.get_tests("Horusec Scan", testfile)
             self.assertEqual(1, len(tests))
@@ -50,7 +48,7 @@ class TestHorusecParser(DojoTestCase):
 
     def test_get_tests_ok(self):
         """Version 2.6.3 with big project in Python"""
-        with open(path.join(Path(__file__).parent, "../scans/horusec/horres3.json"), encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "horusec/horres3.json", encoding="utf-8") as testfile:
             parser = HorusecParser()
             tests = parser.get_tests("Horusec Scan", testfile)
             self.assertEqual(1, len(tests))
@@ -82,7 +80,7 @@ class TestHorusecParser(DojoTestCase):
 
     def test_get_tests_issue_6258(self):
         """"""
-        with open(path.join(Path(__file__).parent, "../scans/horusec/issue_6258.json"), encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "horusec/issue_6258.json", encoding="utf-8") as testfile:
             parser = HorusecParser()
             tests = parser.get_tests("Horusec Scan", testfile)
             self.assertEqual(1, len(tests))
@@ -118,7 +116,7 @@ class TestHorusecParser(DojoTestCase):
 
     def test_get_tests_pr_6563(self):
         """"""
-        with open(path.join(Path(__file__).parent, "../scans/horusec/pr_6563.json"), encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "horusec/pr_6563.json", encoding="utf-8") as testfile:
             parser = HorusecParser()
             tests = parser.get_tests("Horusec Scan", testfile)
             self.assertEqual(1, len(tests))
@@ -137,7 +135,7 @@ class TestHorusecParser(DojoTestCase):
 
     def test_issue_9939(self):
         """"""
-        with open(path.join(Path(__file__).parent, "../scans/horusec/issue_9939.json"), encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "horusec/issue_9939.json", encoding="utf-8") as testfile:
             parser = HorusecParser()
             tests = parser.get_tests("Horusec Scan", testfile)
             self.assertEqual(1, len(tests))

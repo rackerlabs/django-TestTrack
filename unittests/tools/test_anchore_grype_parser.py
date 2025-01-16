@@ -1,19 +1,19 @@
 from dojo.models import Finding, Test
 from dojo.tools.anchore_grype.parser import AnchoreGrypeParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestAnchoreGrypeParser(DojoTestCase):
 
     def test_parser_has_no_findings(self):
-        with open("unittests/scans/anchore_grype/no_vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("anchore_grype") / "no_vuln.json", encoding="utf-8") as testfile:
             parser = AnchoreGrypeParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parser_has_many_findings(self):
         found = False
-        with open("unittests/scans/anchore_grype/many_vulns.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("anchore_grype") / "many_vulns.json", encoding="utf-8") as testfile:
             parser = AnchoreGrypeParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1509, len(findings))
@@ -35,7 +35,7 @@ class TestAnchoreGrypeParser(DojoTestCase):
 
     def test_grype_parser_with_one_criticle_vuln_has_one_findings(self):
         found = False
-        with open("unittests/scans/anchore_grype/many_vulns2.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("anchore_grype") / "many_vulns2.json", encoding="utf-8") as testfile:
             parser = AnchoreGrypeParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1567, len(findings))
@@ -56,7 +56,7 @@ class TestAnchoreGrypeParser(DojoTestCase):
 
     def test_grype_parser_with_many_vulns3(self):
         found = False
-        with open("unittests/scans/anchore_grype/many_vulns3.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("anchore_grype") / "many_vulns3.json", encoding="utf-8") as testfile:
             parser = AnchoreGrypeParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(327, len(findings))
@@ -77,7 +77,7 @@ class TestAnchoreGrypeParser(DojoTestCase):
 
     def test_grype_parser_with_new_matcher_list(self):
         found = False
-        with open("unittests/scans/anchore_grype/many_vulns4.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("anchore_grype") / "many_vulns4.json", encoding="utf-8") as testfile:
             parser = AnchoreGrypeParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(9, len(findings))
@@ -97,7 +97,7 @@ class TestAnchoreGrypeParser(DojoTestCase):
             self.assertTrue(found)
 
     def test_check_all_fields(self):
-        with open("unittests/scans/anchore_grype/check_all_fields.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("anchore_grype") / "check_all_fields.json", encoding="utf-8") as testfile:
             parser = AnchoreGrypeParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(5, len(findings))
@@ -266,13 +266,13 @@ class TestAnchoreGrypeParser(DojoTestCase):
             self.assertEqual(2, finding.nb_occurences)
 
     def test_grype_issue_9618(self):
-        with open("unittests/scans/anchore_grype/issue_9618.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("anchore_grype") / "issue_9618.json", encoding="utf-8") as testfile:
             parser = AnchoreGrypeParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(35, len(findings))
 
     def test_grype_issue_9942(self):
-        with open("unittests/scans/anchore_grype/issue_9942.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("anchore_grype") / "issue_9942.json", encoding="utf-8") as testfile:
             parser = AnchoreGrypeParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))

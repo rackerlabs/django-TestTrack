@@ -1,12 +1,11 @@
-import os.path
 
 from dojo.models import Test
 from dojo.tools.trufflehog.parser import TruffleHogParser
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 def sample_path(file_name):
-    return os.path.join(get_unit_tests_path() + "/scans/trufflehog", file_name)
+    return get_unit_tests_scans_path("trufflehog") / file_name
 
 
 class TestTruffleHogParser(DojoTestCase):

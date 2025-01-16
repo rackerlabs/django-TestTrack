@@ -1,18 +1,18 @@
 from dojo.models import Test
 from dojo.tools.nsp.parser import NspParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestNspParser(DojoTestCase):
     def test_parse_none(self):
         parser = NspParser()
-        with open("unittests/scans/nsp/none.json", encoding="utf-8") as test_file:
+        with open(get_unit_tests_scans_path("nsp") / "none.json", encoding="utf-8") as test_file:
             findings = parser.get_findings(test_file, Test())
         self.assertEqual(0, len(findings))
 
     def test_parse_ok(self):
         parser = NspParser()
-        with open("unittests/scans/nsp/scan.json", encoding="utf-8") as test_file:
+        with open(get_unit_tests_scans_path("nsp") / "scan.json", encoding="utf-8") as test_file:
             findings = parser.get_findings(test_file, Test())
         self.assertEqual(9, len(findings))
 

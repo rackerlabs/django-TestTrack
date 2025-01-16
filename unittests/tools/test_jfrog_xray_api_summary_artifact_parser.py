@@ -4,19 +4,19 @@ from dojo.models import Test
 from dojo.tools.jfrog_xray_api_summary_artifact.parser import (
     JFrogXrayApiSummaryArtifactParser,
 )
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestJFrogXrayApiSummaryArtifactParser(DojoTestCase):
     def test_parse_file_with_no_vuln(self):
-        testfile = open("unittests/scans/jfrog_xray_api_summary_artifact/no_vuln.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("jfrog_xray_api_summary_artifact") / "no_vuln.json", encoding="utf-8")
         parser = JFrogXrayApiSummaryArtifactParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
         self.assertEqual(0, len(findings))
 
     def test_parse_file_with_one_vuln(self):
-        testfile = open("unittests/scans/jfrog_xray_api_summary_artifact/one_vuln.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("jfrog_xray_api_summary_artifact") / "one_vuln.json", encoding="utf-8")
         parser = JFrogXrayApiSummaryArtifactParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -52,7 +52,7 @@ class TestJFrogXrayApiSummaryArtifactParser(DojoTestCase):
 
     def test_parse_file_with_many_vulns(self):
         testfile = open(
-            "unittests/scans/jfrog_xray_api_summary_artifact/many_vulns.json", encoding="utf-8",
+            get_unit_tests_scans_path("jfrog_xray_api_summary_artifact") / "many_vulns.json", encoding="utf-8",
         )
         parser = JFrogXrayApiSummaryArtifactParser()
         findings = parser.get_findings(testfile, Test())
@@ -64,7 +64,7 @@ class TestJFrogXrayApiSummaryArtifactParser(DojoTestCase):
 
     def test_parse_file_with_malformed_cvssv3_score(self):
         testfile = open(
-            "unittests/scans/jfrog_xray_api_summary_artifact/malformed_cvssv3.json", encoding="utf-8",
+            get_unit_tests_scans_path("jfrog_xray_api_summary_artifact") / "malformed_cvssv3.json", encoding="utf-8",
         )
         parser = JFrogXrayApiSummaryArtifactParser()
         findings = parser.get_findings(testfile, Test())

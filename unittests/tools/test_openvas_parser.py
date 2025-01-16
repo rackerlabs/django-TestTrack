@@ -1,11 +1,11 @@
 from dojo.models import Engagement, Product, Test
 from dojo.tools.openvas.parser import OpenVASParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestOpenVASParser(DojoTestCase):
     def test_openvas_csv_one_vuln(self):
-        with open("unittests/scans/openvas/one_vuln.csv", encoding="utf-8") as f:
+        with open(get_unit_tests_scans_path("openvas") / "one_vuln.csv", encoding="utf-8") as f:
             test = Test()
             test.engagement = Engagement()
             test.engagement.product = Product()
@@ -26,7 +26,7 @@ class TestOpenVASParser(DojoTestCase):
             self.assertEqual(22, findings[0].unsaved_endpoints[0].port)
 
     def test_openvas_csv_many_vuln(self):
-        with open("unittests/scans/openvas/many_vuln.csv", encoding="utf-8") as f:
+        with open(get_unit_tests_scans_path("openvas") / "many_vuln.csv", encoding="utf-8") as f:
             test = Test()
             test.engagement = Engagement()
             test.engagement.product = Product()
@@ -51,7 +51,7 @@ class TestOpenVASParser(DojoTestCase):
             self.assertEqual(finding.unsaved_vulnerability_ids[0], "CVE-2011-3389")
 
     def test_openvas_csv_report_usingCVE(self):
-        with open("unittests/scans/openvas/report_using_CVE.csv", encoding="utf-8") as f:
+        with open(get_unit_tests_scans_path("openvas") / "report_using_CVE.csv", encoding="utf-8") as f:
             test = Test()
             test.engagement = Engagement()
             test.engagement.product = Product()
@@ -67,7 +67,7 @@ class TestOpenVASParser(DojoTestCase):
             self.assertEqual(finding.unsaved_vulnerability_ids[0], "CVE-2014-0117")
 
     def test_openvas_csv_report_usingOpenVAS(self):
-        with open("unittests/scans/openvas/report_using_openVAS.csv", encoding="utf-8") as f:
+        with open(get_unit_tests_scans_path("openvas") / "report_using_openVAS.csv", encoding="utf-8") as f:
             test = Test()
             test.engagement = Engagement()
             test.engagement.product = Product()
@@ -83,7 +83,7 @@ class TestOpenVASParser(DojoTestCase):
             self.assertEqual(finding.unsaved_vulnerability_ids, [])
 
     def test_openvas_xml_no_vuln(self):
-        with open("unittests/scans/openvas/no_vuln.xml", encoding="utf-8") as f:
+        with open(get_unit_tests_scans_path("openvas") / "no_vuln.xml", encoding="utf-8") as f:
             test = Test()
             test.engagement = Engagement()
             test.engagement.product = Product()
@@ -92,7 +92,7 @@ class TestOpenVASParser(DojoTestCase):
             self.assertEqual(0, len(findings))
 
     def test_openvas_xml_one_vuln(self):
-        with open("unittests/scans/openvas/one_vuln.xml", encoding="utf-8") as f:
+        with open(get_unit_tests_scans_path("openvas") / "one_vuln.xml", encoding="utf-8") as f:
             test = Test()
             test.engagement = Engagement()
             test.engagement.product = Product()
@@ -108,7 +108,7 @@ class TestOpenVASParser(DojoTestCase):
                 self.assertEqual("Critical", finding.severity)
 
     def test_openvas_xml_many_vuln(self):
-        with open("unittests/scans/openvas/many_vuln.xml", encoding="utf-8") as f:
+        with open(get_unit_tests_scans_path("openvas") / "many_vuln.xml", encoding="utf-8") as f:
             test = Test()
             test.engagement = Engagement()
             test.engagement.product = Product()

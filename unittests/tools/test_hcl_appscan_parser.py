@@ -1,18 +1,18 @@
 from dojo.tools.hcl_appscan.parser import HCLAppScanParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestHCLAppScanParser(DojoTestCase):
 
     def test_no_findings(self):
-        my_file_handle = open("unittests/scans/hcl_appscan/no_findings.xml", encoding="utf-8")
+        my_file_handle = open(get_unit_tests_scans_path("hcl_appscan") / "no_findings.xml", encoding="utf-8")
         parser = HCLAppScanParser()
         findings = parser.get_findings(my_file_handle, None)
         my_file_handle.close()
         self.assertEqual(0, len(findings))
 
     def test_many_findings(self):
-        my_file_handle = open("unittests/scans/hcl_appscan/many_findings.xml", encoding="utf-8")
+        my_file_handle = open(get_unit_tests_scans_path("hcl_appscan") / "many_findings.xml", encoding="utf-8")
         parser = HCLAppScanParser()
         findings = parser.get_findings(my_file_handle, None)
         my_file_handle.close()
@@ -26,7 +26,7 @@ class TestHCLAppScanParser(DojoTestCase):
         self.assertEqual(findings[9].cwe, 522)
 
     def test_issue_9279(self):
-        my_file_handle = open("unittests/scans/hcl_appscan/issue_9279.xml", encoding="utf-8")
+        my_file_handle = open(get_unit_tests_scans_path("hcl_appscan") / "issue_9279.xml", encoding="utf-8")
         parser = HCLAppScanParser()
         findings = parser.get_findings(my_file_handle, None)
         my_file_handle.close()
@@ -39,7 +39,7 @@ class TestHCLAppScanParser(DojoTestCase):
         self.assertEqual(findings[10].cwe, 1275)
 
     def test_issue_10074(self):
-        with open("unittests/scans/hcl_appscan/issue_10074.xml", encoding="utf-8") as my_file_handle:
+        with open(get_unit_tests_scans_path("hcl_appscan") / "issue_10074.xml", encoding="utf-8") as my_file_handle:
             parser = HCLAppScanParser()
             findings = parser.get_findings(my_file_handle, None)
             my_file_handle.close()

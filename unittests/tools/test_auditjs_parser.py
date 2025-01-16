@@ -1,18 +1,18 @@
 from dojo.models import Test
 from dojo.tools.auditjs.parser import AuditJSParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestAuditJSParser(DojoTestCase):
 
     def test_auditjs_parser_with_no_vuln_has_no_findings(self):
-        with open("unittests/scans/auditjs/auditjs_zero_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("auditjs") / "auditjs_zero_vul.json", encoding="utf-8") as testfile:
             parser = AuditJSParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_auditjs_parser_with_one_criticle_vuln_has_one_findings(self):
-        with open("unittests/scans/auditjs/auditjs_one_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("auditjs") / "auditjs_one_vul.json", encoding="utf-8") as testfile:
             parser = AuditJSParser()
             findings = parser.get_findings(testfile, Test())
             for finding in findings:
@@ -32,7 +32,7 @@ class TestAuditJSParser(DojoTestCase):
                 findings[0].references)
 
     def test_auditjs_parser_with_many_vuln_has_many_findings(self):
-        with open("unittests/scans/auditjs/auditjs_many_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("auditjs") / "auditjs_many_vul.json", encoding="utf-8") as testfile:
             parser = AuditJSParser()
             findings = parser.get_findings(testfile, Test())
             testfile.close()
@@ -59,7 +59,7 @@ class TestAuditJSParser(DojoTestCase):
 
     def test_auditjs_parser_empty_with_error(self):
         with self.assertRaises(ValueError) as context:
-            with open("unittests/scans/auditjs/empty_with_error.json", encoding="utf-8") as testfile:
+            with open(get_unit_tests_scans_path("auditjs") / "empty_with_error.json", encoding="utf-8") as testfile:
                 parser = AuditJSParser()
                 parser.get_findings(testfile, Test())
 
@@ -68,7 +68,7 @@ class TestAuditJSParser(DojoTestCase):
         )
 
     def test_auditjs_parser_with_package_name_has_namespace(self):
-        with open("unittests/scans/auditjs/auditjs_with_package_namespace.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("auditjs") / "auditjs_with_package_namespace.json", encoding="utf-8") as testfile:
             parser = AuditJSParser()
             findings = parser.get_findings(testfile, Test())
 

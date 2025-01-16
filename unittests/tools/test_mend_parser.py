@@ -1,18 +1,18 @@
 from dojo.models import Test
 from dojo.tools.mend.parser import MendParser
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestMendParser(DojoTestCase):
 
     def test_parse_file_with_no_vuln_has_no_findings(self):
-        with open("unittests/scans/mend/okhttp_no_vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("mend") / "okhttp_no_vuln.json", encoding="utf-8") as testfile:
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_file_with_one_vuln_has_one_findings(self):
-        with open("unittests/scans/mend/okhttp_one_vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("mend") / "okhttp_one_vuln.json", encoding="utf-8") as testfile:
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -23,21 +23,21 @@ class TestMendParser(DojoTestCase):
             self.assertEqual(5.3, finding.cvssv3_score)
 
     def test_parse_file_with_multiple_vuln_has_multiple_finding(self):
-        with open("unittests/scans/mend/okhttp_many_vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("mend") / "okhttp_many_vuln.json", encoding="utf-8") as testfile:
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(6, len(findings))
 
     def test_parse_file_with_multiple_vuln_cli_output(self):
         with open(
-            get_unit_tests_path() + "/scans/mend/cli_generated_many_vulns.json", encoding="utf-8",
+            get_unit_tests_scans_path("mend") / "cli_generated_many_vulns.json", encoding="utf-8",
         ) as testfile:
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(20, len(findings))
 
     def test_parse_file_with_one_sca_vuln_finding(self):
-        with open("unittests/scans/mend/mend_sca_vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("mend") / "mend_sca_vuln.json", encoding="utf-8") as testfile:
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -45,13 +45,13 @@ class TestMendParser(DojoTestCase):
             self.assertEqual("D:\\MendRepo\\test-product\\test-project\\test-project-subcomponent\\path\\to\\the\\Java\\commons-codec-1.6_donotuse.jar", finding.file_path)
 
     def test_parse_file_with_no_vuln_has_no_findings_platform(self):
-        with open("unittests/scans/mend/mend-sca-platform-api3-no-findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("mend") / "mend-sca-platform-api3-no-findings.json", encoding="utf-8") as testfile:
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_file_with_one_vuln_has_one_findings_platform(self):
-        with open("unittests/scans/mend/mend-sca-platform-api3-one-finding.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("mend") / "mend-sca-platform-api3-one-finding.json", encoding="utf-8") as testfile:
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -62,7 +62,7 @@ class TestMendParser(DojoTestCase):
             self.assertEqual(3.1, finding.cvssv3_score)
 
     def test_parse_file_with_multiple_vuln_has_multiple_finding_platform(self):
-        with open("unittests/scans/mend/mend-sca-platform-api3-eleven-findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("mend") / "mend-sca-platform-api3-eleven-findings.json", encoding="utf-8") as testfile:
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(11, len(findings))

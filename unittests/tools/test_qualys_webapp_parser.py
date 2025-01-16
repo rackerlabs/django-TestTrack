@@ -1,12 +1,12 @@
 from dojo.models import Test
 from dojo.tools.qualys_webapp.parser import QualysWebAppParser
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestQualysWebAppParser(DojoTestCase):
 
     def test_qualys_webapp_parser_with_no_vuln_has_no_findings(self):
-        testfile = open("unittests/scans/qualys_webapp/qualys_webapp_no_vuln.xml", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("qualys_webapp") / "qualys_webapp_no_vuln.xml", encoding="utf-8")
         parser = QualysWebAppParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -18,7 +18,7 @@ class TestQualysWebAppParser(DojoTestCase):
         self.assertEqual(17, len(findings))
 
     def test_qualys_webapp_parser_with_one_criticle_vuln_has_one_findings(self):
-        testfile = open("unittests/scans/qualys_webapp/qualys_webapp_one_vuln.xml", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("qualys_webapp") / "qualys_webapp_one_vuln.xml", encoding="utf-8")
         parser = QualysWebAppParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -31,7 +31,7 @@ class TestQualysWebAppParser(DojoTestCase):
 
     def test_qualys_webapp_parser_with_many_vuln_has_many_findings(self):
         testfile = open(
-            get_unit_tests_path() + "/scans/qualys_webapp/qualys_webapp_many_vuln.xml", encoding="utf-8",
+            get_unit_tests_scans_path("qualys_webapp") / "qualys_webapp_many_vuln.xml", encoding="utf-8",
         )
         parser = QualysWebAppParser()
         findings = parser.get_findings(testfile, Test())
@@ -45,7 +45,7 @@ class TestQualysWebAppParser(DojoTestCase):
 
     def test_qualys_webapp_parser_info_is_vuln(self):
         testfile = open(
-            get_unit_tests_path() + "/scans/qualys_webapp/qualys_webapp_many_vuln.xml", encoding="utf-8",
+            get_unit_tests_scans_path("qualys_webapp") / "qualys_webapp_many_vuln.xml", encoding="utf-8",
         )
         parser = QualysWebAppParser()
         findings = parser.get_findings(testfile, Test(), enable_weakness=True)
@@ -59,7 +59,7 @@ class TestQualysWebAppParser(DojoTestCase):
 
     def test_discussion_10239(self):
         testfile = open(
-            get_unit_tests_path() + "/scans/qualys_webapp/discussion_10239.xml", encoding="utf-8",
+            get_unit_tests_scans_path("qualys_webapp") / "discussion_10239.xml", encoding="utf-8",
         )
         parser = QualysWebAppParser()
         findings = parser.get_findings(testfile, Test(), enable_weakness=True)

@@ -2,31 +2,31 @@ import datetime
 
 from dojo.models import Test
 from dojo.tools.coverity_api.parser import CoverityApiParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestZapParser(DojoTestCase):
     def test_parse_wrong_file(self):
         with self.assertRaises(ValueError):
-            with open("unittests/scans/coverity_api/wrong.json", encoding="utf-8") as testfile:
+            with open(get_unit_tests_scans_path("coverity_api") / "wrong.json", encoding="utf-8") as testfile:
                 parser = CoverityApiParser()
                 parser.get_findings(testfile, Test())
 
     def test_parse_no_findings(self):
-        with open("unittests/scans/coverity_api/empty.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("coverity_api") / "empty.json", encoding="utf-8") as testfile:
             parser = CoverityApiParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_only_quality(self):
         """This report only have quality findings"""
-        with open("unittests/scans/coverity_api/only_quality.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("coverity_api") / "only_quality.json", encoding="utf-8") as testfile:
             parser = CoverityApiParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_some_findings(self):
-        with open("unittests/scans/coverity_api/few_findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("coverity_api") / "few_findings.json", encoding="utf-8") as testfile:
             parser = CoverityApiParser()
             findings = parser.get_findings(testfile, Test())
             self.assertIsInstance(findings, list)
@@ -43,7 +43,7 @@ class TestZapParser(DojoTestCase):
                 self.assertEqual(22463, finding.unique_id_from_tool)
 
     def test_parse_few_findings_triaged_as_bug(self):
-        with open("unittests/scans/coverity_api/few_findings_triaged_as_bug.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("coverity_api") / "few_findings_triaged_as_bug.json", encoding="utf-8") as testfile:
             parser = CoverityApiParser()
             findings = parser.get_findings(testfile, Test())
             self.assertIsInstance(findings, list)
@@ -60,7 +60,7 @@ class TestZapParser(DojoTestCase):
                 self.assertEqual(22248, finding.unique_id_from_tool)
 
     def test_parse_some_findings_mitigated(self):
-        with open("unittests/scans/coverity_api/few_findings_mitigated.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("coverity_api") / "few_findings_mitigated.json", encoding="utf-8") as testfile:
             parser = CoverityApiParser()
             findings = parser.get_findings(testfile, Test())
             self.assertIsInstance(findings, list)

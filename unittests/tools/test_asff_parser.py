@@ -1,14 +1,13 @@
 import json
-import os.path
 from datetime import datetime
 
 from dojo.models import Endpoint, Test
 from dojo.tools.asff.parser import AsffParser
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 def sample_path(file_name):
-    return os.path.join(get_unit_tests_path(), "scans/asff", file_name)
+    return get_unit_tests_scans_path("asff") / file_name
 
 
 class TestAsffParser(DojoTestCase):

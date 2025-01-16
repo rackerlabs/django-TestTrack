@@ -1,12 +1,12 @@
 from dojo.models import Test
 from dojo.tools.deepfence_threatmapper.parser import DeepfenceThreatmapperParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestDeepfenceThreatmapperParser(DojoTestCase):
 
     def test_parse_file_compliance_report(self):
-        with open("unittests/scans/deepfence_threatmapper/compliance_report.xlsx", "rb") as testfile:
+        with open(get_unit_tests_scans_path("deepfence_threatmapper") / "compliance_report.xlsx", "rb") as testfile:
             parser = DeepfenceThreatmapperParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(7, len(findings))
@@ -14,7 +14,7 @@ class TestDeepfenceThreatmapperParser(DojoTestCase):
             self.assertEqual(findings[0].severity, "Info")
 
     def test_parse_file_malware_report(self):
-        with open("unittests/scans/deepfence_threatmapper/malware_report.xlsx", "rb") as testfile:
+        with open(get_unit_tests_scans_path("deepfence_threatmapper") / "malware_report.xlsx", "rb") as testfile:
             parser = DeepfenceThreatmapperParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(9, len(findings))
@@ -23,7 +23,7 @@ class TestDeepfenceThreatmapperParser(DojoTestCase):
             self.assertEqual(findings[0].file_path, "/tmp/Deepfence/YaraHunter/df_db09257b02e615049e0aecc05be2dc2401735e67db4ab74225df777c62c39753/usr/sbin/mkfs.cramfs")
 
     def test_parse_file_secret_report(self):
-        with open("unittests/scans/deepfence_threatmapper/secret_report.xlsx", "rb") as testfile:
+        with open(get_unit_tests_scans_path("deepfence_threatmapper") / "secret_report.xlsx", "rb") as testfile:
             parser = DeepfenceThreatmapperParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(7, len(findings))
@@ -32,7 +32,7 @@ class TestDeepfenceThreatmapperParser(DojoTestCase):
             self.assertEqual(findings[0].file_path, "usr/share/doc/curl-8.3.0/TheArtOfHttpScripting.md")
 
     def test_parse_file_vulnerability_report(self):
-        with open("unittests/scans/deepfence_threatmapper/vulnerability_report.xlsx", "rb") as testfile:
+        with open(get_unit_tests_scans_path("deepfence_threatmapper") / "vulnerability_report.xlsx", "rb") as testfile:
             parser = DeepfenceThreatmapperParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(3, len(findings))

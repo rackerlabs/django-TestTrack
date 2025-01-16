@@ -146,7 +146,7 @@ class FindingTest(BaseTestCase):
         driver.find_element(By.LINK_TEXT, "Manage Files").click()
         # select first file input field: form-0-image
         # Set full image path for image file 'strange.png
-        image_path = os.path.join(dir_path, "finding_image.png")
+        image_path = Path(dir_path) / "finding_image.png"
         driver.find_element(By.ID, "id_form-0-file").send_keys(image_path)
         driver.find_element(By.ID, "id_form-0-title").send_keys("Image Title")
         # Save uploaded image
@@ -466,7 +466,7 @@ class FindingTest(BaseTestCase):
         # Select `Default` as the Environment
         Select(driver.find_element(By.ID, "id_environment")).select_by_visible_text("Development")
         # upload scan file
-        file_path = os.path.join(dir_path, "zap_sample.xml")
+        file_path = Path(dir_path) / "zap_sample.xml"
         driver.find_element(By.NAME, "file").send_keys(file_path)
         # Click Submit button
         with WaitForPageLoad(driver, timeout=50):

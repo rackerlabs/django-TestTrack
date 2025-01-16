@@ -1,10 +1,9 @@
-from django.test import TestCase
-
 from dojo.models import Test
 from dojo.tools.api_edgescan.parser import ApiEdgescanParser
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
-class TestApiEdgescanParser(TestCase):
+class TestApiEdgescanParser(DojoTestCase):
 
     def test_get_scan_types(self):
         parser = ApiEdgescanParser()
@@ -32,13 +31,13 @@ class TestApiEdgescanParser(TestCase):
         self.assertEqual(parser.requires_tool_type("scan_type"), "Edgescan")
 
     def test_parse_file_with_no_vuln_has_no_findings(self):
-        with open("unittests/scans/api_edgescan/no_vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("api_edgescan") / "no_vuln.json", encoding="utf-8") as testfile:
             parser = ApiEdgescanParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_file_with_one_vuln_has_one_findings(self):
-        with open("unittests/scans/api_edgescan/one_vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("api_edgescan") / "one_vuln.json", encoding="utf-8") as testfile:
             parser = ApiEdgescanParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -61,7 +60,7 @@ class TestApiEdgescanParser(TestCase):
             self.assertEqual(finding.unsaved_endpoints[0].protocol, None)
 
     def test_parse_file_with_multiple_vuln_has_multiple_finding(self):
-        with open("unittests/scans/api_edgescan/many_vulns.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("api_edgescan") / "many_vulns.json", encoding="utf-8") as testfile:
             parser = ApiEdgescanParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(2, len(findings))

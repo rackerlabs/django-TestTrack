@@ -4,12 +4,12 @@ from dojo.models import Test
 from dojo.tools.gitlab_secret_detection_report.parser import (
     GitlabSecretDetectionReportParser,
 )
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestGitlabSecretDetectionReportParser(DojoTestCase):
     def test_gitlab_secret_detection_report_parser_with_no_vuln_has_no_findings(self):
-        with open(f"{get_unit_tests_path()}/scans/gitlab_secret_detection_report/gitlab_secret_detection_report_0_vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "/gitlab_secret_detection_report/gitlab_secret_detection_report_0_vuln.json", encoding="utf-8") as testfile:
             parser = GitlabSecretDetectionReportParser()
             findings = parser.get_findings(testfile, Test())
         self.assertEqual(0, len(findings))
@@ -17,7 +17,7 @@ class TestGitlabSecretDetectionReportParser(DojoTestCase):
     def test_gitlab_secret_detection_report_parser_with_one_vuln_has_one_findings_v14(
         self,
     ):
-        with open(f"{get_unit_tests_path()}/scans/gitlab_secret_detection_report/gitlab_secret_detection_report_1_vuln_v14.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "/gitlab_secret_detection_report/gitlab_secret_detection_report_1_vuln_v14.json", encoding="utf-8") as testfile:
             parser = GitlabSecretDetectionReportParser()
             findings = parser.get_findings(testfile, Test())
         for finding in findings:
@@ -38,7 +38,7 @@ class TestGitlabSecretDetectionReportParser(DojoTestCase):
     def test_gitlab_secret_detection_report_parser_with_one_vuln_has_one_findings_v15(
         self,
     ):
-        with open(f"{get_unit_tests_path()}/scans/gitlab_secret_detection_report/gitlab_secret_detection_report_1_vuln_v15.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "/gitlab_secret_detection_report/gitlab_secret_detection_report_1_vuln_v15.json", encoding="utf-8") as testfile:
             parser = GitlabSecretDetectionReportParser()
             findings = parser.get_findings(testfile, Test())
         for finding in findings:
@@ -59,7 +59,7 @@ class TestGitlabSecretDetectionReportParser(DojoTestCase):
     def test_gitlab_secret_detection_report_parser_with_many_vuln_has_many_findings_v14(
         self,
     ):
-        with open(f"{get_unit_tests_path()}/scans/gitlab_secret_detection_report/gitlab_secret_detection_report_3_vuln_v14.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "/gitlab_secret_detection_report/gitlab_secret_detection_report_3_vuln_v14.json", encoding="utf-8") as testfile:
             parser = GitlabSecretDetectionReportParser()
             findings = parser.get_findings(testfile, Test())
         for finding in findings:
@@ -70,7 +70,7 @@ class TestGitlabSecretDetectionReportParser(DojoTestCase):
     def test_gitlab_secret_detection_report_parser_with_many_vuln_has_many_findings_v15(
         self,
     ):
-        with open(f"{get_unit_tests_path()}/scans/gitlab_secret_detection_report/gitlab_secret_detection_report_3_vuln_v15.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "/gitlab_secret_detection_report/gitlab_secret_detection_report_3_vuln_v15.json", encoding="utf-8") as testfile:
             parser = GitlabSecretDetectionReportParser()
             findings = parser.get_findings(testfile, Test())
         for finding in findings:

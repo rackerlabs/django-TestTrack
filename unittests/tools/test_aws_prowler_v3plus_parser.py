@@ -2,7 +2,7 @@ from datetime import date
 
 from dojo.models import Test
 from dojo.tools.aws_prowler_v3plus.parser import AWSProwlerV3plusParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestAwsProwlerV3plusParser(DojoTestCase):
@@ -14,12 +14,12 @@ class TestAwsProwlerV3plusParser(DojoTestCase):
 
     def test_aws_prowler_parser_with_no_vuln_has_no_findings_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler_v3plus/no_vuln.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler_v3plus") / "no_vuln.json", encoding="utf-8"))
         self.assertEqual(0, len(findings))
 
     def test_aws_prowler_parser_with_critical_vuln_has_one_findings_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler_v3plus/one_vuln.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler_v3plus") / "one_vuln.json", encoding="utf-8"))
         self.assertEqual(1, len(findings))
         self.assertEqual("prowler-aws-acm_certificates_expiration_check-999999999999-us-east-1-api.sandbox.partner.teste.com", findings[0].unique_id_from_tool)
         self.assertIn("Check if ACM Certificates are about to expire in specific days or less", findings[0].description)
@@ -29,7 +29,7 @@ class TestAwsProwlerV3plusParser(DojoTestCase):
 
     def test_aws_prowler_parser_with_many_vuln_has_many_findings_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler_v3plus/many_vuln.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler_v3plus") / "many_vuln.json", encoding="utf-8"))
         self.assertEqual(3, len(findings))
         with self.subTest(i=0):
             self.assertEqual("prowler-aws-acm_certificates_expiration_check-999999999999-us-east-1-api.teste.teste.com", findings[0].unique_id_from_tool)
@@ -46,12 +46,12 @@ class TestAwsProwlerV3plusParser(DojoTestCase):
 
     def test_aws_prowler_parser_with_no_vuln_has_no_findings_ocsf_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler_v3plus/no_vuln.ocsf.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler_v3plus") / "no_vuln.ocsf.json", encoding="utf-8"))
         self.assertEqual(0, len(findings))
 
     def test_aws_prowler_parser_after_4_5_0_with_critical_vuln_has_one_findings_ocsf_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler_v3plus/one_vuln_after_4_5_0.ocsf.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler_v3plus") / "one_vuln_after_4_5_0.ocsf.json", encoding="utf-8"))
         self.assertEqual(1, len(findings))
         self.assertEqual("prowler-aws-iam_role_administratoraccess_policy_permissive_trust_relationship-123456789012-us-east-1-myAdministratorExecutionRole", findings[0].unique_id_from_tool)
         self.assertIn("Ensure IAM Roles with attached AdministratorAccess policy have a well defined trust relationship", findings[0].description)
@@ -61,7 +61,7 @@ class TestAwsProwlerV3plusParser(DojoTestCase):
 
     def test_aws_prowler_parser_after_4_5_0_with_many_vuln_has_many_findings_ocsf_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler_v3plus/many_vuln_after_4_5_0.ocsf.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler_v3plus") / "many_vuln_after_4_5_0.ocsf.json", encoding="utf-8"))
         self.assertEqual(2, len(findings))
         with self.subTest(i=0):
             self.assertEqual("prowler-aws-iam_role_administratoraccess_policy_permissive_trust_relationship-123456789012-us-east-1-myAdministratorExecutionRole", findings[0].unique_id_from_tool)
@@ -74,7 +74,7 @@ class TestAwsProwlerV3plusParser(DojoTestCase):
 
     def test_aws_prowler_parser_with_critical_vuln_has_one_findings_ocsf_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler_v3plus/one_vuln.ocsf.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler_v3plus") / "one_vuln.ocsf.json", encoding="utf-8"))
         self.assertEqual(1, len(findings))
         self.assertEqual("prowler-aws-iam_role_administratoraccess_policy_permissive_trust_relationship-123456789012-us-east-1-myAdministratorExecutionRole", findings[0].unique_id_from_tool)
         self.assertIn("Ensure IAM Roles with attached AdministratorAccess policy have a well defined trust relationship", findings[0].description)
@@ -84,7 +84,7 @@ class TestAwsProwlerV3plusParser(DojoTestCase):
 
     def test_aws_prowler_parser_with_many_vuln_has_many_findings_ocsf_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler_v3plus/many_vuln.ocsf.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler_v3plus") / "many_vuln.ocsf.json", encoding="utf-8"))
         self.assertEqual(2, len(findings))
         with self.subTest(i=0):
             self.assertEqual("prowler-aws-iam_role_administratoraccess_policy_permissive_trust_relationship-123456789012-us-east-1-myAdministratorExecutionRole", findings[0].unique_id_from_tool)

@@ -52,7 +52,7 @@ class JIRAImportAndPushTestApi(DojoVCRAPITestCase):
         my_vcr.record_mode = "once"
         my_vcr.path_transformer = VCR.ensure_suffix(".yaml")
         my_vcr.filter_headers = ["Authorization", "X-Atlassian-Token"]
-        my_vcr.cassette_library_dir = get_unit_tests_path() + "/vcr/jira/"
+        my_vcr.cassette_library_dir = get_unit_tests_path() / "vcr" / "jira"  # TODO: check this
         # filters headers doesn't seem to work for cookies, so use callbacks to filter cookies from being recorded
         my_vcr.before_record_request = self.before_record_request
         my_vcr.before_record_response = self.before_record_response

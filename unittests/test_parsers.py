@@ -5,13 +5,13 @@ from django.test import tag as test_tag
 
 from .dojo_test_case import DojoTestCase, get_unit_tests_path
 
-basedir = os.path.join(get_unit_tests_path(), "..")
+basedir = get_unit_tests_path().parent
 
 
 @test_tag("parser-supplement-tests")
 class TestParsers(DojoTestCase):
     def test_file_existence(self):
-        for parser_dir in os.scandir(os.path.join(basedir, "dojo", "tools")):
+        for parser_dir in os.scandir(Path(basedir) / "dojo" / "tools"):
 
             if parser_dir.is_file() or parser_dir.name == "__pycache__":
                 continue  # this is not parser dir but some support file
@@ -28,7 +28,7 @@ class TestParsers(DojoTestCase):
                 "wizcli_common_parsers",  # common class for other wizcli parsers
             ]:
                 with self.subTest(parser=parser_dir.name, category="docs"):
-                    doc_file = os.path.join(basedir, "docs", "content", "en", "connecting_your_tools", "parsers", category, f"{doc_name}.md")
+                    doc_file = Path(basedir) / "docs" / "content" / "en" / "connecting_your_tools" / "parsers" / category / f"{doc_name}.md"
                     self.assertTrue(
                         Path(doc_file).is_file(),
                         f"Documentation file '{doc_file}' is missing or using different name",
@@ -53,7 +53,7 @@ class TestParsers(DojoTestCase):
                 "wizcli_common_parsers",  # common class for other wizcli parsers
             ]:
                 with self.subTest(parser=parser_dir.name, category="parser"):
-                    parser_test_file = os.path.join(basedir, "unittests", "tools", f"test_{parser_dir.name}_parser.py")
+                    parser_test_file = Path(basedir) / "unittests" / "tools" / f"test_{parser_dir.name}_parser.py"
                     self.assertTrue(
                         Path(parser_test_file).is_file(),
                         f"Unittest of parser '{parser_test_file}' is missing or using different name",
@@ -64,7 +64,7 @@ class TestParsers(DojoTestCase):
                 "wizcli_common_parsers",  # common class for other wizcli parsers
             ]:
                 with self.subTest(parser=parser_dir.name, category="testfiles"):
-                    scan_dir = os.path.join(basedir, "unittests", "scans", parser_dir.name)
+                    scan_dir = Path(basedir) / "unittests" / "scans" / parser_dir.name
                     self.assertTrue(
                         Path(scan_dir).is_dir(),
                         f"Test files for unittest of parser '{scan_dir}' are missing or using different name",
@@ -76,16 +76,16 @@ class TestParsers(DojoTestCase):
                     "api_vulners",  # TODO: tests should be implemented also for this parser
                 ]:
                     with self.subTest(parser=parser_dir.name, category="importer"):
-                        importer_test_file = os.path.join(basedir, "unittests", "tools", f"test_{parser_dir.name}_importer.py")
+                        importer_test_file = Path(basedir) / "unittests" / "tools" / f"test_{parser_dir.name}_importer.py"
                         self.assertTrue(
                             Path(importer_test_file).is_file(),
                             f"Unittest of importer '{importer_test_file}' is missing or using different name",
                         )
-            for file in os.scandir(os.path.join(basedir, "dojo", "tools", parser_dir.name)):
+            for file in os.scandir(Path(basedir) / "dojo" / "tools" / parser_dir.name):
                 if file.is_file() and file.name != "__pycache__" and file.name != "__init__.py":
-                    f = os.path.join(basedir, "dojo", "tools", parser_dir.name, file.name)
+                    f_path = Path(basedir) / "dojo" / "tools" / parser_dir.name / file.name
                     read_true = False
-                    with open(f, encoding="utf-8") as f:
+                    with open(f_path, encoding="utf-8") as f:
                         i = 0
                         for line in f:
                             if read_true is True:
@@ -93,7 +93,7 @@ class TestParsers(DojoTestCase):
                                     read_true = False
                                     i = 0
                                 elif i > 4:
-                                    self.assertTrue(expr=False, msg="In file " + str(os.path.join("dojo", "tools", parser_dir.name, file.name)) + " the test is failing because you don't have utf-8 after .read()")
+                                    self.assertTrue(expr=False, msg=f"In file '{f_path}' the test is failing because you don't have utf-8 after .read()")
                                     i = 0
                                     read_true = False
                                 else:
@@ -103,12 +103,12 @@ class TestParsers(DojoTestCase):
                                 i = 0
 
     def test_parser_existence(self):
-        for docs in os.scandir(os.path.join(basedir, "docs", "content", "en", "connecting_your_tools", "parsers", "file")):
+        for docs in os.scandir(Path(basedir) / "docs" / "content" / "en" / "connecting_your_tools" / "parsers" / "file"):
             if docs.name not in [
                 "_index.md", "codeql.md", "edgescan.md",
             ]:
                 with self.subTest(parser=docs.name.split(".md")[0], category="parser"):
-                    parser = os.path.join(basedir, "dojo", "tools", f"{docs.name.split('.md')[0]}", "parser.py")
+                    parser = Path(basedir) / "dojo" / "tools" / f"{docs.name.split('.md')[0]}" / "parser.py"
                     self.assertTrue(
                         Path(parser).is_file(),
                         f"Parser '{parser}' is missing or using different name",

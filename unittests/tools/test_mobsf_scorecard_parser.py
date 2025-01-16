@@ -1,6 +1,6 @@
 from dojo.models import Test
 from dojo.tools.mobsf_scorecard.parser import MobSFScorecardParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestMobSFScorecardParser(DojoTestCase):
@@ -9,7 +9,7 @@ class TestMobSFScorecardParser(DojoTestCase):
 
         parser = MobSFScorecardParser()
 
-        with open("unittests/scans/mobsf_scorecard/dvba_4_0_7_android_empty.json", encoding="utf-8") as android_empty_file:
+        with open(get_unit_tests_scans_path("mobsf_scorecard") / "dvba_4_0_7_android_empty.json", encoding="utf-8") as android_empty_file:
 
             android_empty_findings = parser.get_findings(android_empty_file, Test())
             self.assertEqual(0, len(android_empty_findings))
@@ -18,7 +18,7 @@ class TestMobSFScorecardParser(DojoTestCase):
 
         parser = MobSFScorecardParser()
 
-        with open("unittests/scans/mobsf_scorecard/dvba_4_0_7_android_one.json", encoding="utf-8") as android_one_file:
+        with open(get_unit_tests_scans_path("mobsf_scorecard") / "dvba_4_0_7_android_one.json", encoding="utf-8") as android_one_file:
 
             android_one_findings = parser.get_findings(android_one_file, Test())
             self.assertEqual(1, len(android_one_findings))
@@ -31,7 +31,7 @@ class TestMobSFScorecardParser(DojoTestCase):
 
         parser = MobSFScorecardParser()
 
-        with open("unittests/scans/mobsf_scorecard/dvba_4_0_7_android_full.json", encoding="utf-8") as android_full_file:
+        with open(get_unit_tests_scans_path("mobsf_scorecard") / "dvba_4_0_7_android_full.json", encoding="utf-8") as android_full_file:
 
             android_full_findings = parser.get_findings(android_full_file, Test())
             self.assertEqual(18, len(android_full_findings))
@@ -48,7 +48,7 @@ class TestMobSFScorecardParser(DojoTestCase):
 
         parser = MobSFScorecardParser()
 
-        with open("unittests/scans/mobsf_scorecard/dvia2_4_0_7_ios_empty.json", encoding="utf-8") as ios_empty_file:
+        with open(get_unit_tests_scans_path("mobsf_scorecard") / "dvia2_4_0_7_ios_empty.json", encoding="utf-8") as ios_empty_file:
             ios_empty_findings = parser.get_findings(ios_empty_file, Test())
 
             self.assertEqual(0, len(ios_empty_findings))
@@ -57,7 +57,7 @@ class TestMobSFScorecardParser(DojoTestCase):
 
         parser = MobSFScorecardParser()
 
-        with open("unittests/scans/mobsf_scorecard/dvia2_4_0_7_ios_one.json", encoding="utf-8") as ios_one_file:
+        with open(get_unit_tests_scans_path("mobsf_scorecard") / "dvia2_4_0_7_ios_one.json", encoding="utf-8") as ios_one_file:
             ios_one_findings = parser.get_findings(ios_one_file, Test())
 
             self.assertEqual(1, len(ios_one_findings))
@@ -70,7 +70,7 @@ class TestMobSFScorecardParser(DojoTestCase):
 
         parser = MobSFScorecardParser()
 
-        with open("unittests/scans/mobsf_scorecard/dvia2_4_0_7_ios_full.json", encoding="utf-8") as ios_full_file:
+        with open(get_unit_tests_scans_path("mobsf_scorecard") / "dvia2_4_0_7_ios_full.json", encoding="utf-8") as ios_full_file:
             ios_full_findings = parser.get_findings(ios_full_file, Test())
 
             self.assertEqual(11, len(ios_full_findings))

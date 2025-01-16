@@ -1,54 +1,54 @@
 from dojo.models import Test
 from dojo.tools.snyk.parser import SnykParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestSnykParser(DojoTestCase):
 
     def test_snykParser_single_has_no_finding(self):
-        testfile = open("unittests/scans/snyk/single_project_no_vulns.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("snyk") / "single_project_no_vulns.json", encoding="utf-8")
         parser = SnykParser()
         findings = parser.get_findings(testfile, Test())
         self.assertEqual(0, len(findings))
         testfile.close()
 
     def test_snykParser_allprojects_has_no_finding(self):
-        testfile = open("unittests/scans/snyk/all-projects_no_vulns.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("snyk") / "all-projects_no_vulns.json", encoding="utf-8")
         parser = SnykParser()
         findings = parser.get_findings(testfile, Test())
         self.assertEqual(0, len(findings))
         testfile.close()
 
     def test_snykParser_single_has_one_finding(self):
-        testfile = open("unittests/scans/snyk/single_project_one_vuln.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("snyk") / "single_project_one_vuln.json", encoding="utf-8")
         parser = SnykParser()
         findings = parser.get_findings(testfile, Test())
         self.assertEqual(1, len(findings))
         testfile.close()
 
     def test_snykParser_allprojects_has_one_finding(self):
-        testfile = open("unittests/scans/snyk/all-projects_one_vuln.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("snyk") / "all-projects_one_vuln.json", encoding="utf-8")
         parser = SnykParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
         self.assertEqual(1, len(findings))
 
     def test_snykParser_single_has_many_findings(self):
-        testfile = open("unittests/scans/snyk/single_project_many_vulns.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("snyk") / "single_project_many_vulns.json", encoding="utf-8")
         parser = SnykParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
         self.assertEqual(41, len(findings))
 
     def test_snykParser_allprojects_has_many_findings(self):
-        testfile = open("unittests/scans/snyk/all-projects_many_vulns.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("snyk") / "all-projects_many_vulns.json", encoding="utf-8")
         parser = SnykParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
         self.assertEqual(4, len(findings))
 
     def test_snykParser_finding_has_fields(self):
-        testfile = open("unittests/scans/snyk/single_project_one_vuln.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("snyk") / "single_project_one_vuln.json", encoding="utf-8")
         parser = SnykParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -89,7 +89,7 @@ class TestSnykParser(DojoTestCase):
         )
 
     def test_snykParser_file_path_with_ampersand_is_preserved(self):
-        testfile = open("unittests/scans/snyk/single_project_one_vuln_with_ampersands.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("snyk") / "single_project_one_vuln_with_ampersands.json", encoding="utf-8")
         parser = SnykParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -102,7 +102,7 @@ class TestSnykParser(DojoTestCase):
 
     def test_snykParser_allprojects_issue4277(self):
         """Report to linked to issue 4277"""
-        testfile = open("unittests/scans/snyk/all_projects_issue4277.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("snyk") / "all_projects_issue4277.json", encoding="utf-8")
         parser = SnykParser()
         findings = list(parser.get_findings(testfile, Test()))
         testfile.close()
@@ -139,7 +139,7 @@ class TestSnykParser(DojoTestCase):
             self.assertEqual("CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L/E:P/RL:O/RC:C", finding.cvssv3)
 
     def test_snykParser_cvssscore_none(self):
-        with open("unittests/scans/snyk/single_project_None_cvss.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("snyk") / "single_project_None_cvss.json", encoding="utf-8") as testfile:
             parser = SnykParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -150,7 +150,7 @@ class TestSnykParser(DojoTestCase):
             )
 
     def test_snykParser_target_file(self):
-        with open("unittests/scans/snyk/all_containers_target_output.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("snyk") / "all_containers_target_output.json", encoding="utf-8") as testfile:
             parser = SnykParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(40, len(findings))
@@ -160,7 +160,7 @@ class TestSnykParser(DojoTestCase):
             self.assertIn("target_file:Mobile-Security-Framework-MobSF/requirements.txt", finding.unsaved_tags)
 
     def test_snykParser_update_libs_tag(self):
-        with open("unittests/scans/snyk/single_project_upgrade_libs.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("snyk") / "single_project_upgrade_libs.json", encoding="utf-8") as testfile:
             parser = SnykParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(254, len(findings))
@@ -172,19 +172,19 @@ class TestSnykParser(DojoTestCase):
             self.assertIn("shell-quote@1.7.2", finding.mitigation)
 
     def test_snykcontainer_issue_9270(self):
-        with open("unittests/scans/snyk/snykcontainer_issue_9270.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("snyk") / "snykcontainer_issue_9270.json", encoding="utf-8") as testfile:
             parser = SnykParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(25, len(findings))
 
     def test_snykcode_issue_9270(self):
-        with open("unittests/scans/snyk/snykcode_issue_9270.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("snyk") / "snykcode_issue_9270.json", encoding="utf-8") as testfile:
             parser = SnykParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(39, len(findings))
 
     def test_snykcode_issue_9270_epss(self):
-        with open("unittests/scans/snyk/snykcontainer_issue_epss.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("snyk") / "snykcontainer_issue_epss.json", encoding="utf-8") as testfile:
             parser = SnykParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))

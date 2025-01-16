@@ -1,18 +1,18 @@
-import os.path
+
 
 from dojo.models import Test
 from dojo.tools.awssecurityhub.parser import AwsSecurityHubParser
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 def sample_path(file_name: str):
-    return os.path.join("/scans/awssecurityhub", file_name)
+    return get_unit_tests_scans_path("awssecurityhub") / file_name
 
 
 class TestAwsSecurityHubParser(DojoTestCase):
 
     def test_one_finding(self):
-        with open(get_unit_tests_path() + sample_path("config_one_finding.json"), encoding="utf-8") as test_file:
+        with open(sample_path("config_one_finding.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(1, len(findings))
@@ -23,7 +23,7 @@ class TestAwsSecurityHubParser(DojoTestCase):
             self.assertEqual("https://docs.aws.amazon.com/console/securityhub/IAM.5/remediation", finding.references)
 
     def test_one_finding_active(self):
-        with open(get_unit_tests_path() + sample_path("config_one_finding_active.json"), encoding="utf-8") as test_file:
+        with open(sample_path("config_one_finding_active.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(1, len(findings))
@@ -33,7 +33,7 @@ class TestAwsSecurityHubParser(DojoTestCase):
             self.assertTrue(finding.active)
 
     def test_many_findings(self):
-        with open(get_unit_tests_path() + sample_path("config_many_findings.json"), encoding="utf-8") as test_file:
+        with open(sample_path("config_many_findings.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(3, len(findings))
@@ -42,13 +42,13 @@ class TestAwsSecurityHubParser(DojoTestCase):
             self.assertEqual("This is a Security Hub Finding \nThis AWS control checks whether AWS Multi-Factor Authentication (MFA) is enabled for all AWS Identity and Access Management (IAM) users that use a console password.\n**AWS Finding ARN:** arn:aws:securityhub:us-east-1:012345678912:subscription/aws-foundational-security-best-practices/v/1.0.0/IAM.5/finding/de861909-2d26-4e45-bd86-19d2ab6ceef1\n**Resource IDs:** AWS::::Account:012345678912\n**AwsAccountId:** 012345678912\n**Generator ID:** aws-foundational-security-best-practices/v/1.0.0/IAM.5\n", finding.description)
 
     def test_repeated_findings(self):
-        with open(get_unit_tests_path() + sample_path("config_repeated_findings.json"), encoding="utf-8") as test_file:
+        with open(sample_path("config_repeated_findings.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(1, len(findings))
 
     def test_unique_id(self):
-        with open(get_unit_tests_path() + sample_path("config_one_finding.json"), encoding="utf-8") as test_file:
+        with open(sample_path("config_one_finding.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(
@@ -57,7 +57,7 @@ class TestAwsSecurityHubParser(DojoTestCase):
             )
 
     def test_inspector_ec2(self):
-        with open(get_unit_tests_path() + sample_path("inspector_ec2_cve.json"), encoding="utf-8") as test_file:
+        with open(sample_path("inspector_ec2_cve.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(5, len(findings))
@@ -71,7 +71,7 @@ class TestAwsSecurityHubParser(DojoTestCase):
             self.assertEqual("AwsEc2Instance arn:aws:ec2:us-east-1:XXXXXXXXXXXX:i-11111111111111111", endpoint.host)
 
     def test_inspector_ec2_with_no_vulnerabilities(self):
-        with open(get_unit_tests_path() + sample_path("inspector_ec2_cve_no_vulnerabilities.json"), encoding="utf-8") as test_file:
+        with open(sample_path("inspector_ec2_cve_no_vulnerabilities.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(1, len(findings))
@@ -79,7 +79,7 @@ class TestAwsSecurityHubParser(DojoTestCase):
             self.assertEqual(finding.component_name, "AwsEc2Instance")
 
     def test_inspector_ec2_ghsa(self):
-        with open(get_unit_tests_path() + sample_path("inspector_ec2_ghsa.json"), encoding="utf-8") as test_file:
+        with open(sample_path("inspector_ec2_ghsa.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(1, len(findings))
@@ -94,7 +94,7 @@ class TestAwsSecurityHubParser(DojoTestCase):
             self.assertEqual("AwsEc2Instance arn:aws:ec2:eu-central-1:012345678912:instance/i-07c11cc535d830123", endpoint.host)
 
     def test_inspector_ecr(self):
-        with open(get_unit_tests_path() + sample_path("inspector_ecr.json"), encoding="utf-8") as test_file:
+        with open(sample_path("inspector_ecr.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(7, len(findings))
@@ -111,7 +111,7 @@ class TestAwsSecurityHubParser(DojoTestCase):
             self.assertEqual("AwsEcrContainerImage arn:aws:ecr:eu-central-1:123456789012:repository/repo-os/sha256:af965ef68c78374a5f987fce98c0ddfa45801df2395bf012c50b863e65978d74", endpoint.host)
 
     def test_guardduty(self):
-        with open(get_unit_tests_path() + sample_path("guardduty.json"), encoding="utf-8") as test_file:
+        with open(sample_path("guardduty.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(4, len(findings))
@@ -128,7 +128,7 @@ class TestAwsSecurityHubParser(DojoTestCase):
             self.assertEqual("This is a GuardDuty Finding\nAPIs commonly used in Discovery tactics were invoked by user AssumedRole : 123123123, under anomalous circumstances. Such activity is not typically seen from this user.\n**AWS Finding ARN:** arn:aws:guardduty:us-east-1:123456789012:detector/123456789/finding/2123123123123\n**SourceURL:** [https://us-east-1.console.aws.amazon.com/guardduty/home?region=us-east-1#/findings?macros=current&fId=2123123123123](https://us-east-1.console.aws.amazon.com/guardduty/home?region=us-east-1#/findings?macros=current&fId=2123123123123)\n**AwsAccountId:** 123456789012\n**Region:** us-east-1\n**Generator ID:** arn:aws:guardduty:us-east-1:123456789012:detector/123456789\n", finding.description)
 
     def test_issue_10956(self):
-        with open(get_unit_tests_path() + sample_path("issue_10956.json"), encoding="utf-8") as test_file:
+        with open(sample_path("issue_10956.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(1, len(findings))
@@ -136,7 +136,7 @@ class TestAwsSecurityHubParser(DojoTestCase):
             self.assertEqual("0.00239", finding.epss_score)
 
     def test_missing_account_id(self):
-        with open(get_unit_tests_path() + sample_path("missing_account_id.json"), encoding="utf-8") as test_file:
+        with open(sample_path("missing_account_id.json"), encoding="utf-8") as test_file:
             parser = AwsSecurityHubParser()
             findings = parser.get_findings(test_file, Test())
             self.assertEqual(1, len(findings))

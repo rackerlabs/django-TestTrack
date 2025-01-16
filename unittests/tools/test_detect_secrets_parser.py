@@ -4,19 +4,19 @@ from dateutil.tz import tzlocal
 
 from dojo.models import Test
 from dojo.tools.detect_secrets.parser import DetectSecretsParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestDetectSecretsParser(DojoTestCase):
 
     def test_parse_no_findings(self):
-        with open("unittests/scans/detect_secrets/no_findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("detect_secrets") / "no_findings.json", encoding="utf-8") as testfile:
             parser = DetectSecretsParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_many_findings(self):
-        with open("unittests/scans/detect_secrets/many_findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("detect_secrets") / "many_findings.json", encoding="utf-8") as testfile:
             parser = DetectSecretsParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(4, len(findings))

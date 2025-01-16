@@ -1,12 +1,12 @@
 from dojo.models import Test
 from dojo.tools.crunch42.parser import Crunch42Parser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestCrunch42Parser(DojoTestCase):
 
     def test_crunch42parser_single_has_many_findings(self):
-        with open("unittests/scans/crunch42/crunch42_many_findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("crunch42") / "crunch42_many_findings.json", encoding="utf-8") as testfile:
             parser = Crunch42Parser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(8, len(findings))
@@ -18,7 +18,7 @@ class TestCrunch42Parser(DojoTestCase):
                 self.assertGreater(len(finding.description), 0)
 
     def test_crunch42parser_single_has_many_findings2(self):
-        with open("unittests/scans/crunch42/crunch42_many_findings2.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("crunch42") / "crunch42_many_findings2.json", encoding="utf-8") as testfile:
             parser = Crunch42Parser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(5, len(findings))

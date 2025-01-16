@@ -1,13 +1,13 @@
 from dojo.models import Test
 from dojo.tools.govulncheck.parser import GovulncheckParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestGovulncheckParser(DojoTestCase):
 
     def test_parse_empty(self):
         with self.assertRaises(ValueError) as exp:
-            with open("unittests/scans/govulncheck/empty.json", encoding="utf-8") as testfile:
+            with open(get_unit_tests_scans_path("govulncheck") / "empty.json", encoding="utf-8") as testfile:
                 parser = GovulncheckParser()
                 parser.get_findings(testfile, Test())
         self.assertIn(
@@ -15,13 +15,13 @@ class TestGovulncheckParser(DojoTestCase):
         )
 
     def test_parse_no_findings(self):
-        with open("unittests/scans/govulncheck/no_vulns.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("govulncheck") / "no_vulns.json", encoding="utf-8") as testfile:
             parser = GovulncheckParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_many_findings(self):
-        with open("unittests/scans/govulncheck/many_vulns.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("govulncheck") / "many_vulns.json", encoding="utf-8") as testfile:
             parser = GovulncheckParser()
             findings = parser.get_findings(testfile, Test())
 
@@ -67,13 +67,13 @@ class TestGovulncheckParser(DojoTestCase):
                 self.assertEqual("https://groups.google.com/g/golang-announce/c/x49AQzIVX-s", finding.references)
 
     def test_parse_new_version_no_findings(self):
-        with open("unittests/scans/govulncheck/no_vulns_new_version.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("govulncheck") / "no_vulns_new_version.json", encoding="utf-8") as testfile:
             parser = GovulncheckParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_new_version_many_findings(self):
-        with open("unittests/scans/govulncheck/many_vulns_new_version.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("govulncheck") / "many_vulns_new_version.json", encoding="utf-8") as testfile:
             parser = GovulncheckParser()
             findings = parser.get_findings(testfile, Test())
 
@@ -94,7 +94,7 @@ class TestGovulncheckParser(DojoTestCase):
                 self.assertIsNotNone(finding.references)
 
     def test_parse_new_version_many_findings_custom_severity(self):
-        with open("unittests/scans/govulncheck/many_vulns_new_version_custom_severity.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("govulncheck") / "many_vulns_new_version_custom_severity.json", encoding="utf-8") as testfile:
             parser = GovulncheckParser()
             findings = parser.get_findings(testfile, Test())
 

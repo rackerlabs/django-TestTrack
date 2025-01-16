@@ -2,7 +2,7 @@ import datetime
 
 from dojo.models import Engagement, Finding, Product, Test
 from dojo.tools.generic.parser import GenericParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestFile:
@@ -25,7 +25,7 @@ class TestGenericParser(DojoTestCase):
         self.test = Test(engagement=self.engagement)
 
     def test_parse_report1(self):
-        with open("unittests/scans/generic/generic_report1.csv", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "generic_report1.csv", encoding="utf-8") as file:
             parser = GenericParser()
             findings = parser.get_findings(file, self.test)
             for finding in findings:
@@ -434,7 +434,7 @@ True,11/7/2015,Title,0,http://localhost,Severity,Description,Mitigation,Impact,R
         self.assertEqual(fields1, fields2)
 
     def test_parse_json(self):
-        with open("unittests/scans/generic/generic_report1.json", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "generic_report1.json", encoding="utf-8") as file:
             parser = GenericParser()
             findings = parser.get_findings(file, Test())
             for finding in findings:
@@ -465,7 +465,7 @@ True,11/7/2015,Title,0,http://localhost,Severity,Description,Mitigation,Impact,R
                 self.assertIn(finding.severity, Finding.SEVERITIES)
 
     def test_parse_json2(self):
-        with open("unittests/scans/generic/generic_report2.json", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "generic_report2.json", encoding="utf-8") as file:
             parser = GenericParser()
             findings = parser.get_findings(file, Test())
             for finding in findings:
@@ -488,7 +488,7 @@ True,11/7/2015,Title,0,http://localhost,Severity,Description,Mitigation,Impact,R
                 self.assertEqual("Some mitigation", finding.mitigation)
 
     def test_parse_json3(self):
-        with open("unittests/scans/generic/generic_report3.json", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "generic_report3.json", encoding="utf-8") as file:
             parser = GenericParser()
             findings = parser.get_findings(file, Test())
             self.assertEqual(3, len(findings))
@@ -526,7 +526,7 @@ True,11/7/2015,Title,0,http://localhost,Severity,Description,Mitigation,Impact,R
                 self.assertEqual("test-pest", endpoint.path)
 
     def test_parse_endpoints_and_vulnerability_ids_json(self):
-        with open("unittests/scans/generic/generic_report4.json", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "generic_report4.json", encoding="utf-8") as file:
             parser = GenericParser()
             findings = parser.get_findings(file, Test())
             self.assertEqual(1, len(findings))
@@ -557,7 +557,7 @@ True,11/7/2015,Title,0,http://localhost,Severity,Description,Mitigation,Impact,R
             self.assertEqual("CVE-2015-9235", finding.unsaved_vulnerability_ids[1])
 
     def test_parse_host_and_vulnerability_id_csv(self):
-        with open("unittests/scans/generic/generic_report4.csv", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "generic_report4.csv", encoding="utf-8") as file:
             parser = GenericParser()
             findings = parser.get_findings(file, Test())
             self.assertEqual(4, len(findings))
@@ -599,7 +599,7 @@ True,11/7/2015,Title,0,http://localhost,Severity,Description,Mitigation,Impact,R
             self.assertIsNone(finding.unsaved_vulnerability_ids)
 
     def test_parse_json_with_image(self):
-        with open("unittests/scans/generic/test_with_image.json", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "test_with_image.json", encoding="utf-8") as file:
             parser = GenericParser()
             findings = parser.get_findings(file, Test())
             self.assertEqual(1, len(findings))
@@ -612,7 +612,7 @@ True,11/7/2015,Title,0,http://localhost,Severity,Description,Mitigation,Impact,R
             self.assertIn("data", image)
 
     def test_parse_json_custom_test(self):
-        with open("unittests/scans/generic/generic_custom_test.json", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "generic_custom_test.json", encoding="utf-8") as file:
             parser = GenericParser()
             tests = parser.get_tests(parser.get_scan_types()[0], file)
             self.assertEqual(1, len(tests))
@@ -637,21 +637,21 @@ True,11/7/2015,Title,0,http://localhost,Severity,Description,Mitigation,Impact,R
                 self.assertEqual("TEST1", finding.vuln_id_from_tool)
 
     def test_parse_json_empty_finding(self):
-        with open("unittests/scans/generic/generic_empty.json", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "generic_empty.json", encoding="utf-8") as file:
             parser = GenericParser()
             with self.assertRaisesMessage(ValueError,
                     "Required fields are missing: ['description', 'severity', 'title']"):
                 parser.get_findings(file, Test())
 
     def test_parse_json_invalid_finding(self):
-        with open("unittests/scans/generic/generic_invalid.json", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "generic_invalid.json", encoding="utf-8") as file:
             parser = GenericParser()
             with self.assertRaisesMessage(ValueError,
                     "Not allowed fields are present: ['invalid_field', 'last_status_update']"):
                 parser.get_findings(file, Test())
 
     def test_parse_csv_with_epss(self):
-        with open("unittests/scans/generic/generic_csv_with_epss.csv", encoding="utf-8") as file:
+        with open(get_unit_tests_scans_path("generic") / "generic_csv_with_epss.csv", encoding="utf-8") as file:
             parser = GenericParser()
             findings = parser.get_findings(file, self.test)
             self.assertEqual(1, len(findings))

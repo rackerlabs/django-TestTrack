@@ -442,7 +442,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(Path(DOJO_ROOT).parent, "components", "node_modules"),
+    Path(DOJO_ROOT).parent / "components" / "node_modules",
 )
 
 # List of finder classes that know how to find static files in
@@ -949,7 +949,7 @@ if SAML2_ENABLED:
         "entityid": str(SAML2_ENTITY_ID),
 
         # directory with attribute mapping
-        "attribute_map_dir": path.join(BASEDIR, "attribute-maps"),
+        "attribute_map_dir": Path(BASEDIR) / "attribute-maps",
         # do now discard attributes not specified in attribute-maps
         "allow_unknown_attributes": SAML_ALLOW_UNKNOWN_ATTRIBUTES,
         # this block states what services we provide

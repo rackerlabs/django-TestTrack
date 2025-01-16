@@ -1,18 +1,18 @@
 from dojo.models import Test
 from dojo.tools.mobsfscan.parser import MobsfscanParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestMobsfscanParser(DojoTestCase):
 
     def test_parse_no_findings(self):
-        with open("unittests/scans/mobsfscan/no_findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("mobsfscan") / "no_findings.json", encoding="utf-8") as testfile:
             parser = MobsfscanParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_many_findings(self):
-        with open("unittests/scans/mobsfscan/many_findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("mobsfscan") / "many_findings.json", encoding="utf-8") as testfile:
             parser = MobsfscanParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(8, len(findings))
@@ -94,7 +94,7 @@ class TestMobsfscanParser(DojoTestCase):
                 self.assertIsNotNone(finding.references)
 
     def test_parse_many_findings_cwe_lower(self):
-        with open("unittests/scans/mobsfscan/many_findings_cwe_lower.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("mobsfscan") / "many_findings_cwe_lower.json", encoding="utf-8") as testfile:
             parser = MobsfscanParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(7, len(findings))

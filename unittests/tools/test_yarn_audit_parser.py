@@ -1,6 +1,6 @@
 from dojo.models import Engagement, Product, Test
 from dojo.tools.yarn_audit.parser import YarnAuditParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestYarnAuditParser(DojoTestCase):
@@ -16,13 +16,13 @@ class TestYarnAuditParser(DojoTestCase):
         self.assertEqual(0, len(findings))
 
     def test_yarn_audit_parser_with_no_vuln_has_no_findings(self):
-        with open("unittests/scans/yarn_audit/yarn_audit_zero_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("yarn_audit") / "yarn_audit_zero_vul.json", encoding="utf-8") as testfile:
             parser = YarnAuditParser()
             findings = parser.get_findings(testfile, self.get_test())
             self.assertEqual(0, len(findings))
 
     def test_yarn_audit_parser_with_one_criticle_vuln_has_one_findings(self):
-        with open("unittests/scans/yarn_audit/yarn_audit_one_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("yarn_audit") / "yarn_audit_one_vul.json", encoding="utf-8") as testfile:
             parser = YarnAuditParser()
             findings = parser.get_findings(testfile, self.get_test())
             self.assertEqual(1, len(findings))
@@ -30,14 +30,14 @@ class TestYarnAuditParser(DojoTestCase):
             self.assertEqual("4.5.2", findings[0].component_version)
 
     def test_yarn_audit_parser_with_many_vuln_has_many_findings(self):
-        with open("unittests/scans/yarn_audit/yarn_audit_many_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("yarn_audit") / "yarn_audit_many_vul.json", encoding="utf-8") as testfile:
             parser = YarnAuditParser()
             findings = parser.get_findings(testfile, self.get_test())
             self.assertEqual(3, len(findings))
 
     def test_yarn_audit_parser_with_multiple_cwes_per_finding(self):
         # cwes formatted as escaped list: "cwe": "[\"CWE-346\",\"CWE-453\"]",
-        with open("unittests/scans/yarn_audit/yarn_audit_multiple_cwes.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("yarn_audit") / "yarn_audit_multiple_cwes.json", encoding="utf-8") as testfile:
             parser = YarnAuditParser()
             findings = parser.get_findings(testfile, self.get_test())
             self.assertEqual(3, len(findings))
@@ -53,7 +53,7 @@ class TestYarnAuditParser(DojoTestCase):
 
     def test_yarn_audit_parser_with_multiple_cwes_per_finding_list(self):
         # cwes formatted as proper list: "cwe": ["CWE-918","CWE-1333"],
-        with open("unittests/scans/yarn_audit/yarn_audit_multiple_cwes2.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("yarn_audit") / "yarn_audit_multiple_cwes2.json", encoding="utf-8") as testfile:
             parser = YarnAuditParser()
             findings = parser.get_findings(testfile, self.get_test())
             self.assertEqual(2, len(findings))
@@ -64,7 +64,7 @@ class TestYarnAuditParser(DojoTestCase):
 
     def test_yarn_audit_parser_empty_with_error(self):
         with self.assertRaises(ValueError) as context:
-            with open("unittests/scans/yarn_audit/empty_with_error.json", encoding="utf-8") as testfile:
+            with open(get_unit_tests_scans_path("yarn_audit") / "empty_with_error.json", encoding="utf-8") as testfile:
                 parser = YarnAuditParser()
                 parser.get_findings(testfile, self.get_test())
                 self.assertIn(
@@ -73,7 +73,7 @@ class TestYarnAuditParser(DojoTestCase):
                 self.assertIn("ECONNREFUSED", str(context.exception))
 
     def test_yarn_audit_parser_issue_6495(self):
-        with open("unittests/scans/yarn_audit/issue_6495.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("yarn_audit") / "issue_6495.json", encoding="utf-8") as testfile:
             parser = YarnAuditParser()
             findings = parser.get_findings(testfile, self.get_test())
             testfile.close()
@@ -83,7 +83,7 @@ class TestYarnAuditParser(DojoTestCase):
             self.assertEqual(findings[1].cve, None)
 
     def test_yarn_audit_parser_yarn2_audit_issue9911(self):
-        with open("unittests/scans/yarn_audit/yarn2_audit_issue9911.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("yarn_audit") / "yarn2_audit_issue9911.json", encoding="utf-8") as testfile:
             parser = YarnAuditParser()
             findings = parser.get_findings(testfile, self.get_test())
             testfile.close()

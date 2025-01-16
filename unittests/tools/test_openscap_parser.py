@@ -1,19 +1,19 @@
 from dojo.models import Test
 from dojo.tools.openscap.parser import OpenscapParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestOpenscapParser(DojoTestCase):
 
     def test_openscap_parser_with_no_vuln_has_no_findings(self):
-        testfile = open("unittests/scans/openscap/no_vuln_rhsa.xml", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("openscap") / "no_vuln_rhsa.xml", encoding="utf-8")
         parser = OpenscapParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
         self.assertEqual(0, len(findings))
 
     def test_openscap_parser_with_one_criticle_vuln_has_one_findings(self):
-        testfile = open("unittests/scans/openscap/one_vuln_rhsa.xml", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("openscap") / "one_vuln_rhsa.xml", encoding="utf-8")
         parser = OpenscapParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -26,7 +26,7 @@ class TestOpenscapParser(DojoTestCase):
         self.assertEqual("CVE-2005-1038", finding.unsaved_vulnerability_ids[0])
 
     def test_openscap_parser_with_many_vuln_has_many_findings(self):
-        testfile = open("unittests/scans/openscap/many_vuln_rhsa.xml", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("openscap") / "many_vuln_rhsa.xml", encoding="utf-8")
         parser = OpenscapParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -51,7 +51,7 @@ class TestOpenscapParser(DojoTestCase):
         self.assertEqual("192.168.100.194", finding.unsaved_endpoints[6].host)
 
     def test_parser_from_spec_1_1_3(self):
-        testfile = open("unittests/scans/openscap/ios-sample-v1.1.3.xccdf.xml", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("openscap") / "ios-sample-v1.1.3.xccdf.xml", encoding="utf-8")
         parser = OpenscapParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()

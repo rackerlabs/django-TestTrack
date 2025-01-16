@@ -1,18 +1,18 @@
 from dojo.models import Test
 from dojo.tools.gitlab_api_fuzzing.parser import GitlabAPIFuzzingParser
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestGitlabAPIFuzzingParser(DojoTestCase):
     def test_gitlab_api_fuzzing_parser_with_no_vuln_has_no_findings(self):
-        with open(f"{get_unit_tests_path()}/scans/gitlab_api_fuzzing/gitlab_api_fuzzing_0_vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "/gitlab_api_fuzzing/gitlab_api_fuzzing_0_vuln.json", encoding="utf-8") as testfile:
             parser = GitlabAPIFuzzingParser()
             findings = parser.get_findings(testfile, Test())
             testfile.close()
             self.assertEqual(0, len(findings))
 
     def test_gitlab_api_fuzzing_parser_with_one_criticle_vuln_has_one_findings_v14(self):
-        with open(f"{get_unit_tests_path()}/scans/gitlab_api_fuzzing/gitlab_api_fuzzing_1_vuln_v14.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "/gitlab_api_fuzzing/gitlab_api_fuzzing_1_vuln_v14.json", encoding="utf-8") as testfile:
             parser = GitlabAPIFuzzingParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -28,7 +28,7 @@ class TestGitlabAPIFuzzingParser(DojoTestCase):
             )
 
     def test_gitlab_api_fuzzing_parser_with_one_criticle_vuln_has_one_findings_v15(self):
-        with open(f"{get_unit_tests_path()}/scans/gitlab_api_fuzzing/gitlab_api_fuzzing_1_vuln_v15.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "/gitlab_api_fuzzing/gitlab_api_fuzzing_1_vuln_v15.json", encoding="utf-8") as testfile:
             parser = GitlabAPIFuzzingParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -44,7 +44,7 @@ class TestGitlabAPIFuzzingParser(DojoTestCase):
             )
 
     def test_gitlab_api_fuzzing_parser_with_invalid_json(self):
-        with open(f"{get_unit_tests_path()}/scans/gitlab_api_fuzzing/gitlab_api_fuzzing_invalid.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path() / "/gitlab_api_fuzzing/gitlab_api_fuzzing_invalid.json", encoding="utf-8") as testfile:
             # Something is wrong with JSON file
             with self.assertRaises((KeyError, ValueError)):
                 parser = GitlabAPIFuzzingParser()

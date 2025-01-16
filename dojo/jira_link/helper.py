@@ -1,7 +1,6 @@
 import io
 import json
 import logging
-import os
 from pathlib import Path
 from typing import Any
 
@@ -333,8 +332,8 @@ def get_jira_issue_template(obj):
         template_dir = "issue-trackers/jira_full/"
 
     if isinstance(obj, Finding_Group):
-        return os.path.join(template_dir, "jira-finding-group-description.tpl")
-    return os.path.join(template_dir, "jira-description.tpl")
+        return Path(template_dir) / "jira-finding-group-description.tpl"
+    return Path(template_dir) / "jira-description.tpl"
 
 
 def get_jira_creation(obj):

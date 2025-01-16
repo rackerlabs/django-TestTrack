@@ -2,7 +2,7 @@ import datetime
 
 from dojo.models import Test
 from dojo.tools.aws_prowler.parser import AWSProwlerParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestAwsProwlerParser(DojoTestCase):
@@ -14,12 +14,12 @@ class TestAwsProwlerParser(DojoTestCase):
 
     def test_aws_prowler_parser_with_no_vuln_has_no_findings(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler/no_vuln.csv", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler") / "no_vuln.csv", encoding="utf-8"))
         self.assertEqual(0, len(findings))
 
     def test_aws_prowler_parser_with_critical_vuln_has_one_findings(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler/one_vuln.csv", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler") / "one_vuln.csv", encoding="utf-8"))
         self.assertEqual(1, len(findings))
         self.assertEqual(
             "Root user in the account wasn't accessed in the last 1 days", findings[0].title,
@@ -27,7 +27,7 @@ class TestAwsProwlerParser(DojoTestCase):
 
     def test_aws_prowler_parser_with_many_vuln_has_many_findings(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler/many_vuln.csv", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler") / "many_vuln.csv", encoding="utf-8"))
         self.assertEqual(4, len(findings))
         self.assertEqual(
             "Root user in the account wasn't accessed in the last 1 days", findings[0].title)
@@ -42,7 +42,7 @@ class TestAwsProwlerParser(DojoTestCase):
 
     def test_aws_prowler_parser_with_many_vuln_has_many_findings2(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler/many_vuln2.csv", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler") / "many_vuln2.csv", encoding="utf-8"))
         self.assertEqual(174, len(findings))
         self.assertEqual("Root user in the account wasn't accessed in the last 1 days", findings[0].title)
         self.assertEqual("Info", findings[0].severity)
@@ -52,7 +52,7 @@ class TestAwsProwlerParser(DojoTestCase):
 
     def test_aws_prowler_parser_issue4450(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler/issue4450.csv", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler") / "issue4450.csv", encoding="utf-8"))
         self.assertEqual(4, len(findings))
         with self.subTest(i=0):
             finding = findings[0]
@@ -72,12 +72,12 @@ class TestAwsProwlerParser(DojoTestCase):
 
     def test_aws_prowler_parser_with_no_vuln_has_no_findings_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler/no_vuln.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler") / "no_vuln.json", encoding="utf-8"))
         self.assertEqual(0, len(findings))
 
     def test_aws_prowler_parser_with_critical_vuln_has_one_findings_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler/one_vuln.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler") / "one_vuln.json", encoding="utf-8"))
         self.assertEqual(1, len(findings))
         self.assertEqual("eu-central-1: Only Virtual MFA is enabled for root", findings[0].title)
         self.assertIn("012345678912", findings[0].description)
@@ -97,7 +97,7 @@ class TestAwsProwlerParser(DojoTestCase):
 
     def test_aws_prowler_parser_with_many_vuln_has_many_findings_json(self):
         findings = self.setup(
-            open("unittests/scans/aws_prowler/many_vuln.json", encoding="utf-8"))
+            open(get_unit_tests_scans_path("aws_prowler") / "many_vuln.json", encoding="utf-8"))
         self.assertEqual(4, len(findings))
         with self.subTest(i=0):
             self.assertEqual("eu-central-1: Only Virtual MFA is enabled for root", findings[0].title)

@@ -2,32 +2,32 @@ from datetime import date, datetime
 
 from dojo.models import Finding, Test
 from dojo.tools.hydra.parser import HydraParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestHydraParser(DojoTestCase):
     __test_datetime = datetime(2019, 3, 1, 14, 44, 22)
 
     def test_invalid_json_format(self):
-        with open("unittests/scans/hydra/invalid.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("hydra") / "invalid.json", encoding="utf-8") as testfile:
             parser = HydraParser()
             with self.assertRaises(ValueError):
                 parser.get_findings(testfile, Test())
 
     def test_parser_ensures_data_is_for_hydra_before_parsing(self):
-        with open("unittests/scans/hydra/oddly_familiar_json_that_isnt_us.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("hydra") / "oddly_familiar_json_that_isnt_us.json", encoding="utf-8") as testfile:
             parser = HydraParser()
             with self.assertRaises(ValueError):
                 parser.get_findings(testfile, Test())
 
     def test_hydra_parser_with_no_vuln_has_no_findings(self):
-        with open("unittests/scans/hydra/hydra_report_no_finding.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("hydra") / "hydra_report_no_finding.json", encoding="utf-8") as testfile:
             parser = HydraParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_hydra_parser_with_one_finding_has_one_finding(self):
-        with open("unittests/scans/hydra/hydra_report_one_finding.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("hydra") / "hydra_report_one_finding.json", encoding="utf-8") as testfile:
             parser = HydraParser()
             findings = parser.get_findings(testfile, Test())
             self.__assertAllEndpointsAreClean(findings)
@@ -45,7 +45,7 @@ class TestHydraParser(DojoTestCase):
             )
 
     def test_hydra_parser_with_one_finding_and_missing_date_has_one_finding(self):
-        with open("unittests/scans/hydra/hydra_report_one_finding_missing_date.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("hydra") / "hydra_report_one_finding_missing_date.json", encoding="utf-8") as testfile:
             parser = HydraParser()
             findings = parser.get_findings(testfile, Test())
             self.__assertAllEndpointsAreClean(findings)
@@ -63,7 +63,7 @@ class TestHydraParser(DojoTestCase):
             )
 
     def test_hydra_parser_with_two_findings_with_one_incomplete_has_one_finding(self):
-        with open("unittests/scans/hydra/hydra_report_two_findings_with_one_incomplete.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("hydra") / "hydra_report_two_findings_with_one_incomplete.json", encoding="utf-8") as testfile:
             parser = HydraParser()
             findings = parser.get_findings(testfile, Test())
             self.__assertAllEndpointsAreClean(findings)
@@ -81,7 +81,7 @@ class TestHydraParser(DojoTestCase):
             )
 
     def test_hydra_parser_with_many_findings_has_many_findings(self):
-        with open("unittests/scans/hydra/hydra_report_many_finding.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("hydra") / "hydra_report_many_finding.json", encoding="utf-8") as testfile:
             parser = HydraParser()
             findings = parser.get_findings(testfile, Test())
             self.__assertAllEndpointsAreClean(findings)

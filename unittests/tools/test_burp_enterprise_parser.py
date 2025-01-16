@@ -1,15 +1,13 @@
-from os import path
-from pathlib import Path
 
 from dojo.models import Test
 from dojo.tools.burp_enterprise.parser import BurpEnterpriseParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestBurpEnterpriseParser(DojoTestCase):
 
     def test_burp_enterprise_with_multiple_vulns(self):
-        with open(path.join(Path(__file__).parent, "../scans/burp_enterprise/many_vulns.html"), encoding="utf-8") as test_file:
+        with open(get_unit_tests_scans_path() / "burp_enterprise/many_vulns.html", encoding="utf-8") as test_file:
             parser = BurpEnterpriseParser()
             findings = parser.get_findings(test_file, Test())
             for finding in findings:
@@ -38,7 +36,7 @@ class TestBurpEnterpriseParser(DojoTestCase):
                 self.assertIn("**Issue detail**:\nFingerprint Details:\n\nWAF Type : redacted\nWAF tech. details : Cloud-based CDN, WAF & DDoS prevention", finding.description)
 
     def test_burp_enterprise_with_multiple_vulns_newer_format(self):
-        with open(path.join(Path(__file__).parent, "../scans/burp_enterprise/many_vulns_updated_format.html"), encoding="utf-8") as test_file:
+        with open(get_unit_tests_scans_path() / "burp_enterprise/many_vulns_updated_format.html", encoding="utf-8") as test_file:
             parser = BurpEnterpriseParser()
             findings = parser.get_findings(test_file, Test())
             for finding in findings:

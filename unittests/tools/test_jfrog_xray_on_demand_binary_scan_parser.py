@@ -4,13 +4,13 @@ from dojo.tools.jfrog_xray_on_demand_binary_scan.parser import (
     clean_title,
     get_component_name_version,
 )
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestJFrogXrayOnDemandBinaryScanParser(DojoTestCase):
 
     def test_parse_file_with_one_vuln(self):
-        testfile = open("unittests/scans/jfrog_xray_on_demand_binary_scan/one_vuln.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("jfrog_xray_on_demand_binary_scan") / "one_vuln.json", encoding="utf-8")
         parser = JFrogXrayOnDemandBinaryScanParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -21,7 +21,7 @@ class TestJFrogXrayOnDemandBinaryScanParser(DojoTestCase):
         self.assertEqual("High", item.severity)
 
     def test_parse_file_with_many_vulns(self):
-        testfile = open("unittests/scans/jfrog_xray_on_demand_binary_scan/many_vulns.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("jfrog_xray_on_demand_binary_scan") / "many_vulns.json", encoding="utf-8")
         parser = JFrogXrayOnDemandBinaryScanParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -50,14 +50,14 @@ class TestJFrogXrayOnDemandBinaryScanParser(DojoTestCase):
             self.assertEqual("Processing some specially crafted ASN.1 object identifiers or", clean_title("Issue summary: Processing some specially crafted ASN.1 object identifiers or\ndata containing them may be very slow."))
 
     def test_parse_file_with_many_vulns_docker(self):
-        testfile = open("unittests/scans/jfrog_xray_on_demand_binary_scan/many_vulns_docker.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("jfrog_xray_on_demand_binary_scan") / "many_vulns_docker.json", encoding="utf-8")
         parser = JFrogXrayOnDemandBinaryScanParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
         self.assertEqual(4, len(findings))
 
     def test_parse_file_with_many_vulns_pypi(self):
-        testfile = open("unittests/scans/jfrog_xray_on_demand_binary_scan/many_vulns_pypi.json", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("jfrog_xray_on_demand_binary_scan") / "many_vulns_pypi.json", encoding="utf-8")
         parser = JFrogXrayOnDemandBinaryScanParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()

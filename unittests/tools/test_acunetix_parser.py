@@ -3,13 +3,13 @@ from datetime import datetime as date
 
 from dojo.models import Test
 from dojo.tools.acunetix.parser import AcunetixParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestAcunetixParser(DojoTestCase):
 
     def test_parse_file_with_one_finding(self):
-        with open("unittests/scans/acunetix/one_finding.xml", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "one_finding.xml", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             for finding in findings:
@@ -37,7 +37,7 @@ class TestAcunetixParser(DojoTestCase):
                 self.assertEqual("some/path", endpoint.path)
 
     def test_parse_file_with_multiple_finding(self):
-        with open("unittests/scans/acunetix/many_findings.xml", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "many_findings.xml", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             for finding in findings:
@@ -132,7 +132,7 @@ class TestAcunetixParser(DojoTestCase):
                 self.assertIsInstance(req_resp["resp"], str)
 
     def test_parse_file_with_example_com(self):
-        with open("unittests/scans/acunetix/XML_http_example_co_id_.xml", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "XML_http_example_co_id_.xml", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             for finding in findings:
@@ -204,7 +204,7 @@ class TestAcunetixParser(DojoTestCase):
                 self.assertIsInstance(req_resp["resp"], str)
 
     def test_parse_file_with_one_finding_acunetix360(self):
-        with open("unittests/scans/acunetix/acunetix360_one_finding.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "acunetix360_one_finding.json", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -225,7 +225,7 @@ class TestAcunetixParser(DojoTestCase):
                 self.assertIn("https://online.acunetix360.com/issues/detail/735f4503-e9eb-4b4c-4306-ad49020a4c4b", finding.references)
 
     def test_parse_file_with_one_finding_false_positive(self):
-        with open("unittests/scans/acunetix/acunetix360_one_finding_false_positive.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "acunetix360_one_finding_false_positive.json", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -245,7 +245,7 @@ class TestAcunetixParser(DojoTestCase):
                 self.assertTrue(finding.false_p)
 
     def test_parse_file_with_one_finding_risk_accepted(self):
-        with open("unittests/scans/acunetix/acunetix360_one_finding_accepted_risk.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "acunetix360_one_finding_accepted_risk.json", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -265,7 +265,7 @@ class TestAcunetixParser(DojoTestCase):
                 self.assertTrue(finding.risk_accepted)
 
     def test_parse_file_with_multiple_finding_acunetix360(self):
-        with open("unittests/scans/acunetix/acunetix360_many_findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "acunetix360_many_findings.json", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(16, len(findings))
@@ -306,7 +306,7 @@ class TestAcunetixParser(DojoTestCase):
                 self.assertEqual(str(endpoint), "http://php.testsparker.com")
 
     def test_parse_file_with_mulitple_cwe(self):
-        with open("unittests/scans/acunetix/acunetix360_multiple_cwe.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "acunetix360_multiple_cwe.json", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -325,19 +325,19 @@ class TestAcunetixParser(DojoTestCase):
                 self.assertEqual(str(endpoint), "http://php.testsparker.com/auth/login.php")
 
     def test_parse_file_issue_10370(self):
-        with open("unittests/scans/acunetix/issue_10370.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "issue_10370.json", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
 
     def test_parse_file_issue_10435(self):
-        with open("unittests/scans/acunetix/issue_10435.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "issue_10435.json", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
 
     def test_parse_file_issue_11206(self):
-        with open("unittests/scans/acunetix/issue_11206.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("acunetix") / "issue_11206.json", encoding="utf-8") as testfile:
             parser = AcunetixParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))

@@ -1,7 +1,5 @@
 import string
 
-from django.test import TestCase
-
 from dojo.models import Finding, Test
 from dojo.tools.appcheck_web_application_scanner.engines.appcheck import AppCheckScanningEngineParser
 from dojo.tools.appcheck_web_application_scanner.engines.base import (
@@ -12,18 +10,19 @@ from dojo.tools.appcheck_web_application_scanner.engines.base import (
 )
 from dojo.tools.appcheck_web_application_scanner.engines.nmap import NmapScanningEngineParser
 from dojo.tools.appcheck_web_application_scanner.parser import AppCheckWebApplicationScannerParser
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
-class TestAppCheckWebApplicationScannerParser(TestCase):
+class TestAppCheckWebApplicationScannerParser(DojoTestCase):
 
     def test_appcheck_web_application_scanner_parser_with_no_vuln_has_no_findings(self):
-        with open("unittests/scans/appcheck_web_application_scanner/appcheck_web_application_scanner_zero_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("appcheck_web_application_scanner") / "appcheck_web_application_scanner_zero_vul.json", encoding="utf-8") as testfile:
             parser = AppCheckWebApplicationScannerParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_appcheck_web_application_scanner_parser_with_one_criticle_vuln_has_one_findings(self):
-        with open("unittests/scans/appcheck_web_application_scanner/appcheck_web_application_scanner_one_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("appcheck_web_application_scanner") / "appcheck_web_application_scanner_one_vul.json", encoding="utf-8") as testfile:
             parser = AppCheckWebApplicationScannerParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -57,7 +56,7 @@ class TestAppCheckWebApplicationScannerParser(TestCase):
             self.assertEqual("0.0.0.1", endpoint.host)
 
     def test_appcheck_web_application_scanner_parser_with_many_vuln_has_many_findings(self):
-        with open("unittests/scans/appcheck_web_application_scanner/appcheck_web_application_scanner_many_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("appcheck_web_application_scanner") / "appcheck_web_application_scanner_many_vul.json", encoding="utf-8") as testfile:
             parser = AppCheckWebApplicationScannerParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(6, len(findings))
@@ -223,14 +222,14 @@ class TestAppCheckWebApplicationScannerParser(TestCase):
             self.assertEqual("ajax/ShelfEdgeLabel/ShelfEdgeLabelsPromotionalBatch", endpoint.path)
 
     def test_appcheck_web_application_scanner_parser_dupes(self):
-        with open("unittests/scans/appcheck_web_application_scanner/appcheck_web_application_scanner_dupes.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("appcheck_web_application_scanner") / "appcheck_web_application_scanner_dupes.json", encoding="utf-8") as testfile:
             parser = AppCheckWebApplicationScannerParser()
             findings = parser.get_findings(testfile, Test())
             # Test has 5 entries, but we should only return 3 findings.
             self.assertEqual(3, len(findings))
 
     def test_appcheck_web_application_scanner_parser_http2(self):
-        with open("unittests/scans/appcheck_web_application_scanner/appcheck_web_application_scanner_http2.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("appcheck_web_application_scanner") / "appcheck_web_application_scanner_http2.json", encoding="utf-8") as testfile:
             parser = AppCheckWebApplicationScannerParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(3, len(findings))

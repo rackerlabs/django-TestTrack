@@ -1,13 +1,13 @@
 from dojo.models import Test
 from dojo.tools.solar_appscreener.parser import SolarAppscreenerParser
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestSolarAppscreenerParser(DojoTestCase):
 
     def test_solar_appscreener_parser_with_no_vuln_has_no_findings(self):
         testfile = open(
-            get_unit_tests_path() + "/scans/solar_appscreener/solar_appscreener_zero_vul.csv", encoding="utf-8")
+            get_unit_tests_scans_path("solar_appscreener") / "solar_appscreener_zero_vul.csv", encoding="utf-8")
         parser = SolarAppscreenerParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -15,7 +15,7 @@ class TestSolarAppscreenerParser(DojoTestCase):
 
     def test_solar_appscreener_parser_with_one_criticle_vuln_has_one_findings(self):
         testfile = open(
-            get_unit_tests_path() + "/scans/solar_appscreener/solar_appscreener_one_vul.csv", encoding="utf-8")
+            get_unit_tests_scans_path("solar_appscreener") / "solar_appscreener_one_vul.csv", encoding="utf-8")
         parser = SolarAppscreenerParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()
@@ -33,7 +33,7 @@ class TestSolarAppscreenerParser(DojoTestCase):
 
     def test_solar_appscreener_parser_with_many_vuln_has_many_findings(self):
         testfile = open(
-            get_unit_tests_path() + "/scans/solar_appscreener/solar_appscreener_many_vul.csv", encoding="utf-8")
+            get_unit_tests_scans_path("solar_appscreener") / "solar_appscreener_many_vul.csv", encoding="utf-8")
         parser = SolarAppscreenerParser()
         findings = parser.get_findings(testfile, Test())
         testfile.close()

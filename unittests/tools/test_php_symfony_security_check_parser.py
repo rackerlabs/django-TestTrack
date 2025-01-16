@@ -1,13 +1,13 @@
 from dojo.models import Test
 from dojo.tools.php_symfony_security_check.parser import PhpSymfonySecurityCheckParser
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestPhpSymfonySecurityCheckerParser(DojoTestCase):
 
     def test_php_symfony_security_check_parser_with_no_vuln_has_no_findings(self):
         testfile = open(
-            get_unit_tests_path() + "/scans/php_symfony_security_check/php_symfony_no_vuln.json", encoding="utf-8",
+            get_unit_tests_scans_path("php_symfony_security_check") / "php_symfony_no_vuln.json", encoding="utf-8",
         )
         parser = PhpSymfonySecurityCheckParser()
         findings = parser.get_findings(testfile, Test())
@@ -19,7 +19,7 @@ class TestPhpSymfonySecurityCheckerParser(DojoTestCase):
         self,
     ):
         testfile = open(
-            get_unit_tests_path() + "/scans/php_symfony_security_check/php_symfony_one_vuln.json", encoding="utf-8",
+            get_unit_tests_scans_path("php_symfony_security_check") / "php_symfony_one_vuln.json", encoding="utf-8",
         )
         parser = PhpSymfonySecurityCheckParser()
         findings = parser.get_findings(testfile, Test())
@@ -28,7 +28,7 @@ class TestPhpSymfonySecurityCheckerParser(DojoTestCase):
 
     def test_php_symfony_security_check_parser_with_many_vuln_has_many_findings(self):
         testfile = open(
-            get_unit_tests_path() + "/scans/php_symfony_security_check/php_symfony_many_vuln.json", encoding="utf-8",
+            get_unit_tests_scans_path("php_symfony_security_check") / "php_symfony_many_vuln.json", encoding="utf-8",
         )
         parser = PhpSymfonySecurityCheckParser()
         findings = parser.get_findings(testfile, Test())

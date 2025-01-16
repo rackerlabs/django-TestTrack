@@ -1,10 +1,9 @@
-from django.test import TestCase
-
 from dojo.models import Engagement, Product, Test
 from dojo.tools.ptart.parser import PTARTParser
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
-class TestPTARTParser(TestCase):
+class TestPTARTParser(DojoTestCase):
 
     def setUp(self):
         self.product = Product(name="sample product",
@@ -411,19 +410,19 @@ class TestPTARTParser(TestCase):
             self.assertEqual("Reference1: https://ref.example.com\nReference: https://ref3.example.com", parse_references_from_hit(hit))
 
     def test_ptart_parser_with_empty_json_throws_error(self):
-        with open("unittests/scans/ptart/empty_with_error.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("ptart") / "empty_with_error.json", encoding="utf-8") as testfile:
             parser = PTARTParser()
             findings = parser.get_findings(testfile, self.test)
             self.assertEqual(0, len(findings))
 
     def test_ptart_parser_with_no_assessments_has_no_findings(self):
-        with open("unittests/scans/ptart/ptart_zero_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("ptart") / "ptart_zero_vul.json", encoding="utf-8") as testfile:
             parser = PTARTParser()
             findings = parser.get_findings(testfile, self.test)
             self.assertEqual(0, len(findings))
 
     def test_ptart_parser_with_one_assessment_has_one_finding(self):
-        with open("unittests/scans/ptart/ptart_one_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("ptart") / "ptart_one_vul.json", encoding="utf-8") as testfile:
             parser = PTARTParser()
             findings = parser.get_findings(testfile, self.test)
             self.assertEqual(1, len(findings))
@@ -462,7 +461,7 @@ class TestPTARTParser(TestCase):
                 self.assertEqual("Reference: https://ref.example.com", finding.references)
 
     def test_ptart_parser_with_one_assessment_has_many_findings(self):
-        with open("unittests/scans/ptart/ptart_many_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("ptart") / "ptart_many_vul.json", encoding="utf-8") as testfile:
             parser = PTARTParser()
             findings = parser.get_findings(testfile, self.test)
             self.assertEqual(2, len(findings))
@@ -510,7 +509,7 @@ class TestPTARTParser(TestCase):
                 self.assertEqual(None, finding.references)
 
     def test_ptart_parser_with_multiple_assessments_has_many_findings_correctly_grouped(self):
-        with open("unittests/scans/ptart/ptart_vulns_with_mult_assessments.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("ptart") / "ptart_vulns_with_mult_assessments.json", encoding="utf-8") as testfile:
             parser = PTARTParser()
             findings = parser.get_findings(testfile, self.test)
             self.assertEqual(3, len(findings))
@@ -578,7 +577,7 @@ class TestPTARTParser(TestCase):
                 self.assertEqual(None, finding.references)
 
     def test_ptart_parser_with_single_vuln_on_import_test(self):
-        with open("unittests/scans/ptart/ptart_one_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("ptart") / "ptart_one_vul.json", encoding="utf-8") as testfile:
             parser = PTARTParser()
             tests = parser.get_tests("PTART Report", testfile)
             self.assertEqual(1, len(tests))
@@ -624,7 +623,7 @@ class TestPTARTParser(TestCase):
             self.assertEqual("Reference: https://ref.example.com", finding.references)
 
     def test_ptart_parser_with_retest_campaign(self):
-        with open("unittests/scans/ptart/ptart_vuln_plus_retest.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("ptart") / "ptart_vuln_plus_retest.json", encoding="utf-8") as testfile:
             parser = PTARTParser()
             findings = parser.get_findings(testfile, self.test)
             self.assertEqual(3, len(findings))

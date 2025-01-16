@@ -1,17 +1,17 @@
 from dojo.models import Test
 from dojo.tools.gitlab_dast.parser import GitlabDastParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestGitlabDastParser(DojoTestCase):
     def test_parse_file_with_no_vuln_has_no_findings(self):
-        with open("unittests/scans/gitlab_dast/gitlab_dast_zero_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("gitlab_dast") / "gitlab_dast_zero_vul.json", encoding="utf-8") as testfile:
             parser = GitlabDastParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_file_with_one_vuln_has_one_finding_v14(self):
-        with open("unittests/scans/gitlab_dast/gitlab_dast_one_vul_v14.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("gitlab_dast") / "gitlab_dast_one_vul_v14.json", encoding="utf-8") as testfile:
             parser = GitlabDastParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -39,7 +39,7 @@ class TestGitlabDastParser(DojoTestCase):
             self.assertEqual(359, finding.cwe)
 
     def test_parse_file_with_one_vuln_has_one_finding_v15(self):
-        with open("unittests/scans/gitlab_dast/gitlab_dast_one_vul_v15.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("gitlab_dast") / "gitlab_dast_one_vul_v15.json", encoding="utf-8") as testfile:
             parser = GitlabDastParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -67,7 +67,7 @@ class TestGitlabDastParser(DojoTestCase):
             self.assertEqual(359, finding.cwe)
 
     def test_parse_file_with_multiple_vuln_has_multiple_findings_v14(self):
-        with open("unittests/scans/gitlab_dast/gitlab_dast_many_vul_v14.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("gitlab_dast") / "gitlab_dast_many_vul_v14.json", encoding="utf-8") as testfile:
             parser = GitlabDastParser()
             findings = parser.get_findings(testfile, Test())
 
@@ -105,7 +105,7 @@ class TestGitlabDastParser(DojoTestCase):
             self.assertIn("Ensure that your web server,", finding.mitigation)
 
     def test_parse_file_with_multiple_vuln_has_multiple_findings_v15(self):
-        with open("unittests/scans/gitlab_dast/gitlab_dast_many_vul_v15.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("gitlab_dast") / "gitlab_dast_many_vul_v15.json", encoding="utf-8") as testfile:
             parser = GitlabDastParser()
             findings = parser.get_findings(testfile, Test())
 

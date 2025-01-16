@@ -1,12 +1,11 @@
-import os.path
 
 from dojo.models import Test
 from dojo.tools.trivy_operator.parser import TrivyOperatorParser
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 def sample_path(file_name):
-    return os.path.join(get_unit_tests_path() + "/scans/trivy_operator", file_name)
+    return get_unit_tests_scans_path("trivy_operator") / file_name
 
 
 class TestTrivyOperatorParser(DojoTestCase):

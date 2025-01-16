@@ -1,36 +1,36 @@
 from dojo.models import Test
 from dojo.tools.checkov.parser import CheckovParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestCheckovParser(DojoTestCase):
 
     def test_parse_file_with_no_vuln_has_no_findings(self):
-        with open("unittests/scans/checkov/checkov-report-0-vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("checkov") / "checkov-report-0-vuln.json", encoding="utf-8") as testfile:
             parser = CheckovParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_file_with_no_vuln_has_no_findings_v2(self):
-        with open("unittests/scans/checkov/checkov2-report-0-vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("checkov") / "checkov2-report-0-vuln.json", encoding="utf-8") as testfile:
             parser = CheckovParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_file_with_one_vuln_has_one_finding(self):
-        with open("unittests/scans/checkov/checkov-report-1-vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("checkov") / "checkov-report-1-vuln.json", encoding="utf-8") as testfile:
             parser = CheckovParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
 
     def test_parse_file_with_multiple_vuln_has_multiple_findings(self):
-        with open("unittests/scans/checkov/checkov-report-many-vuln.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("checkov") / "checkov-report-many-vuln.json", encoding="utf-8") as testfile:
             parser = CheckovParser()
             findings = parser.get_findings(testfile, Test())
             self.assertGreater(len(findings), 2)
 
     def test_parse_file_with_multiple_check_type_has_multiple_check_type(self):
-        with open("unittests/scans/checkov/checkov-report-multiple-check_type.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("checkov") / "checkov-report-multiple-check_type.json", encoding="utf-8") as testfile:
             parser = CheckovParser()
             findings = parser.get_findings(testfile, Test())
 
@@ -80,7 +80,7 @@ class TestCheckovParser(DojoTestCase):
             )
 
     def test_parse_file_with_specified_severity(self):
-        with open("unittests/scans/checkov/checkov-report-severity.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("checkov") / "checkov-report-severity.json", encoding="utf-8") as testfile:
             parser = CheckovParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(4, len(findings))

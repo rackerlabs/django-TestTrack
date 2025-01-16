@@ -1,18 +1,18 @@
 from dojo.models import Test
 from dojo.tools.ssl_labs.parser import SslLabsParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestSslLabsParser(DojoTestCase):
     def test_parse_none(self):
         parser = SslLabsParser()
-        with open("unittests/scans/ssl_labs/none.json", encoding="utf-8") as test_file:
+        with open(get_unit_tests_scans_path("ssl_labs") / "none.json", encoding="utf-8") as test_file:
             findings = parser.get_findings(test_file, Test())
         self.assertEqual(0, len(findings))
 
     def test_parse_ok(self):
         parser = SslLabsParser()
-        with open("unittests/scans/ssl_labs/ssl_labs_ok_v1.5.0.json", encoding="utf-8") as test_file:
+        with open(get_unit_tests_scans_path("ssl_labs") / "ssl_labs_ok_v1.5.0.json", encoding="utf-8") as test_file:
             findings = parser.get_findings(test_file, Test())
         for finding in findings:
             for endpoint in finding.unsaved_endpoints:
@@ -26,7 +26,7 @@ class TestSslLabsParser(DojoTestCase):
 
     def test_parse_dh1024(self):
         parser = SslLabsParser()
-        with open("unittests/scans/ssl_labs/ssl_labs_dh1024_v1.5.0.json", encoding="utf-8") as test_file:
+        with open(get_unit_tests_scans_path("ssl_labs") / "ssl_labs_dh1024_v1.5.0.json", encoding="utf-8") as test_file:
             findings = parser.get_findings(test_file, Test())
         for finding in findings:
             for endpoint in finding.unsaved_endpoints:
@@ -41,7 +41,7 @@ class TestSslLabsParser(DojoTestCase):
 
     def test_parse_3des(self):
         parser = SslLabsParser()
-        with open("unittests/scans/ssl_labs/ssl_labs_3des_v1.5.0.json", encoding="utf-8") as test_file:
+        with open(get_unit_tests_scans_path("ssl_labs") / "ssl_labs_3des_v1.5.0.json", encoding="utf-8") as test_file:
             findings = parser.get_findings(test_file, Test())
         for finding in findings:
             for endpoint in finding.unsaved_endpoints:
@@ -56,7 +56,7 @@ class TestSslLabsParser(DojoTestCase):
 
     def test_parse_revoked(self):
         parser = SslLabsParser()
-        with open("unittests/scans/ssl_labs/ssl_labs_revoked_v1.5.0.json", encoding="utf-8") as test_file:
+        with open(get_unit_tests_scans_path("ssl_labs") / "ssl_labs_revoked_v1.5.0.json", encoding="utf-8") as test_file:
             findings = parser.get_findings(test_file, Test())
         for finding in findings:
             for endpoint in finding.unsaved_endpoints:
@@ -71,7 +71,7 @@ class TestSslLabsParser(DojoTestCase):
 
     def test_parse_multiple(self):
         parser = SslLabsParser()
-        with open("unittests/scans/ssl_labs/ssl_labs_multiple_v1.5.0.json", encoding="utf-8") as test_file:
+        with open(get_unit_tests_scans_path("ssl_labs") / "ssl_labs_multiple_v1.5.0.json", encoding="utf-8") as test_file:
             findings = parser.get_findings(test_file, Test())
         for finding in findings:
             for endpoint in finding.unsaved_endpoints:

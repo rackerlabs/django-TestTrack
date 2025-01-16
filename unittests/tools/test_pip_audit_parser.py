@@ -1,13 +1,13 @@
 from dojo.models import Test
 from dojo.tools.pip_audit.parser import PipAuditParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestPipAuditParser(DojoTestCase):
 
     def test_parser_empty(self):
-        testfiles = ["unittests/scans/pip_audit/empty.json",
-                     "unittests/scans/pip_audit/empty_new.json"]
+        testfiles = [get_unit_tests_scans_path("pip_audit") / "empty.json",
+                     get_unit_tests_scans_path("pip_audit") / "empty_new.json"]
         for path in testfiles:
             testfile = open(path, encoding="utf-8")
             parser = PipAuditParser()
@@ -16,8 +16,8 @@ class TestPipAuditParser(DojoTestCase):
             self.assertEqual(0, len(findings))
 
     def test_parser_zero_findings(self):
-        testfiles = ["unittests/scans/pip_audit/zero_vulns.json",
-                     "unittests/scans/pip_audit/zero_vulns_new.json"]
+        testfiles = [get_unit_tests_scans_path("pip_audit") / "zero_vulns.json",
+                     get_unit_tests_scans_path("pip_audit") / "zero_vulns_new.json"]
         for path in testfiles:
             testfile = open(path, encoding="utf-8")
             parser = PipAuditParser()
@@ -26,8 +26,8 @@ class TestPipAuditParser(DojoTestCase):
             self.assertEqual(0, len(findings))
 
     def test_parser_many_vulns(self):
-        testfiles = ["unittests/scans/pip_audit/many_vulns.json",
-                     "unittests/scans/pip_audit/many_vulns_new.json"]
+        testfiles = [get_unit_tests_scans_path("pip_audit") / "many_vulns.json",
+                     get_unit_tests_scans_path("pip_audit") / "many_vulns_new.json"]
         for path in testfiles:
             testfile = open(path, encoding="utf-8")
             parser = PipAuditParser()

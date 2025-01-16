@@ -4,7 +4,7 @@ from django.test import override_settings
 
 from dojo.models import Test
 from dojo.tools.qualys.parser import QualysParser
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestQualysParser(DojoTestCase):
@@ -18,7 +18,7 @@ class TestQualysParser(DojoTestCase):
 
     def parse_file_with_no_vuln_has_no_findings(self):
         with open(
-            get_unit_tests_path() + "/scans/qualys/empty.xml", encoding="utf-8",
+            get_unit_tests_scans_path("qualys") / "empty.xml", encoding="utf-8",
         ) as testfile:
             parser = QualysParser()
             findings = parser.get_findings(testfile, Test())
@@ -35,7 +35,7 @@ class TestQualysParser(DojoTestCase):
 
     def parse_file_with_multiple_vuln_has_multiple_findings(self):
         with open(
-            get_unit_tests_path() + "/scans/qualys/Qualys_Sample_Report.xml", encoding="utf-8",
+            get_unit_tests_scans_path("qualys") / "Qualys_Sample_Report.xml", encoding="utf-8",
         ) as testfile:
             parser = QualysParser()
             findings = parser.get_findings(testfile, Test())
@@ -82,7 +82,7 @@ class TestQualysParser(DojoTestCase):
 
     def parse_file_with_no_vuln_has_no_findings_csv(self):
         with open(
-            get_unit_tests_path() + "/scans/qualys/empty.csv", encoding="utf-8",
+            get_unit_tests_scans_path("qualys") / "empty.csv", encoding="utf-8",
         ) as testfile:
             parser = QualysParser()
             findings = parser.get_findings(testfile, Test())
@@ -99,7 +99,7 @@ class TestQualysParser(DojoTestCase):
 
     def parse_file_with_multiple_vuln_has_multiple_findings_csv(self):
         with open(
-            get_unit_tests_path() + "/scans/qualys/Qualys_Sample_Report.csv", encoding="utf-8",
+            get_unit_tests_scans_path("qualys") / "Qualys_Sample_Report.csv", encoding="utf-8",
         ) as testfile:
             parser = QualysParser()
             findings = parser.get_findings(testfile, Test())
@@ -136,7 +136,7 @@ class TestQualysParser(DojoTestCase):
 
     def test_parse_file_monthly_pci_issue6932(self):
         with open(
-            get_unit_tests_path() + "/scans/qualys/monthly_pci_issue6932.csv", encoding="utf-8",
+            get_unit_tests_scans_path("qualys") / "monthly_pci_issue6932.csv", encoding="utf-8",
         ) as testfile:
             parser = QualysParser()
             findings = parser.get_findings(testfile, Test())
@@ -144,7 +144,7 @@ class TestQualysParser(DojoTestCase):
 
     def test_parse_file_with_cvss_values_and_scores(self):
         with open(
-            get_unit_tests_path() + "/scans/qualys/Qualys_Sample_Report.xml", encoding="utf-8",
+            get_unit_tests_scans_path("qualys") / "Qualys_Sample_Report.xml", encoding="utf-8",
         ) as testfile:
             parser = QualysParser()
             findings = parser.get_findings(testfile, Test())
@@ -179,7 +179,7 @@ class TestQualysParser(DojoTestCase):
             )
 
     def test_get_severity_legacy(self):
-        with open(get_unit_tests_path() + "/scans/qualys/Qualys_Sample_Report.xml", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("qualys") / "Qualys_Sample_Report.xml", encoding="utf-8") as testfile:
             parser = QualysParser()
             findings = parser.get_findings(testfile, Test())
             counts = {}
@@ -197,7 +197,7 @@ class TestQualysParser(DojoTestCase):
 
     @override_settings(USE_QUALYS_LEGACY_SEVERITY_PARSING=False)
     def test_get_severity(self):
-        with open(get_unit_tests_path() + "/scans/qualys/Qualys_Sample_Report.xml", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("qualys") / "Qualys_Sample_Report.xml", encoding="utf-8") as testfile:
             parser = QualysParser()
             findings = parser.get_findings(testfile, Test())
             counts = {}

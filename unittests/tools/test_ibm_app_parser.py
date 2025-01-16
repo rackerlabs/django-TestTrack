@@ -1,12 +1,12 @@
 from dojo.models import Test
 from dojo.tools.ibm_app.parser import IbmAppParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestIbmAppParser(DojoTestCase):
 
     def test_parse_file(self):
-        testfile = open("unittests/scans/ibm_app/testfire.xml", encoding="utf-8")
+        testfile = open(get_unit_tests_scans_path("ibm_app") / "testfire.xml", encoding="utf-8")
         parser = IbmAppParser()
         findings = parser.get_findings(testfile, Test())
         for finding in findings:

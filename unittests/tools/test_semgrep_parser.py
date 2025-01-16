@@ -1,18 +1,18 @@
 from dojo.models import Test
 from dojo.tools.semgrep.parser import SemgrepParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestSemgrepParser(DojoTestCase):
 
     def test_parse_empty(self):
-        with open("unittests/scans/semgrep/empty.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("semgrep") / "empty.json", encoding="utf-8") as testfile:
             parser = SemgrepParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(0, len(findings))
 
     def test_parse_one_finding(self):
-        with open("unittests/scans/semgrep/one_finding.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("semgrep") / "one_finding.json", encoding="utf-8") as testfile:
             parser = SemgrepParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -27,7 +27,7 @@ class TestSemgrepParser(DojoTestCase):
             self.assertIn("Using CBC with PKCS5Padding is susceptible to padding orcale attacks", finding.description)
 
     def test_parse_many_finding(self):
-        with open("unittests/scans/semgrep/many_findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("semgrep") / "many_findings.json", encoding="utf-8") as testfile:
             parser = SemgrepParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(3, len(findings))
@@ -47,7 +47,7 @@ class TestSemgrepParser(DojoTestCase):
             self.assertEqual("java.lang.security.audit.cbc-padding-oracle.cbc-padding-oracle", finding.vuln_id_from_tool)
 
     def test_parse_repeated_finding(self):
-        with open("unittests/scans/semgrep/repeated_findings.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("semgrep") / "repeated_findings.json", encoding="utf-8") as testfile:
             parser = SemgrepParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -61,7 +61,7 @@ class TestSemgrepParser(DojoTestCase):
             self.assertEqual(2, finding.nb_occurences)
 
     def test_parse_many_vulns(self):
-        with open("unittests/scans/semgrep/many_vulns.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("semgrep") / "many_vulns.json", encoding="utf-8") as testfile:
             parser = SemgrepParser()
             findings = parser.get_findings(testfile, Test())
             testfile.close()
@@ -91,7 +91,7 @@ class TestSemgrepParser(DojoTestCase):
             self.assertEqual("python.lang.security.unquoted-csv-writer.unquoted-csv-writer", finding.vuln_id_from_tool)
 
     def test_parse_cwe_list(self):
-        with open("unittests/scans/semgrep/cwe_list.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("semgrep") / "cwe_list.json", encoding="utf-8") as testfile:
             parser = SemgrepParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -105,10 +105,10 @@ class TestSemgrepParser(DojoTestCase):
             self.assertIn("A CSRF middleware was not detected in your express application. Ensure you are either using one  such as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your routes with a token or cookies.", finding.description)
 
     def test_different_lines_same_fingerprint(self):
-        with open("unittests/scans/semgrep/semgrep_version_1_30_0_line_26.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("semgrep") / "semgrep_version_1_30_0_line_26.json", encoding="utf-8") as testfile:
             parser = SemgrepParser()
             findings_first = parser.get_findings(testfile, Test())
-            with open("unittests/scans/semgrep/semgrep_version_1_30_0_line_27.json", encoding="utf-8") as testfile2:
+            with open(get_unit_tests_scans_path("semgrep") / "semgrep_version_1_30_0_line_27.json", encoding="utf-8") as testfile2:
                 parser = SemgrepParser()
                 findings_second = parser.get_findings(testfile2, Test())
                 self.assertEqual(len(findings_first), len(findings_second))
@@ -116,19 +116,19 @@ class TestSemgrepParser(DojoTestCase):
                     self.assertEqual(first.unique_id_from_tool, second.unique_id_from_tool)
 
     def test_parse_issue_8435(self):
-        with open("unittests/scans/semgrep/issue_8435.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("semgrep") / "issue_8435.json", encoding="utf-8") as testfile:
             parser = SemgrepParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
 
     def test_parse_low_medium_high_severity(self):
-        with open("unittests/scans/semgrep/high-medium-low-severities.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("semgrep") / "high-medium-low-severities.json", encoding="utf-8") as testfile:
             parser = SemgrepParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(3, len(findings))
 
     def test_parse_sca_deployments_vulns(self):
-        with open("unittests/scans/semgrep/sca-deployments-vulns.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("semgrep") / "sca-deployments-vulns.json", encoding="utf-8") as testfile:
             parser = SemgrepParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(18, len(findings))

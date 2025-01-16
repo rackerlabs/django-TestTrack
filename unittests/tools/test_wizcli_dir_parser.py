@@ -1,17 +1,17 @@
 from dojo.models import Test
 from dojo.tools.wizcli_dir.parser import WizcliDirParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestWizcliDirParser(DojoTestCase):
     def test_no_findings(self):
-        with open("unittests/scans/wizcli_dir/wizcli_dir_zero_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("wizcli_dir") / "wizcli_dir_zero_vul.json", encoding="utf-8") as testfile:
             parser = WizcliDirParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(len(findings), 0)
 
     def test_one_findings(self):
-        with open("unittests/scans/wizcli_dir/wizcli_dir_one_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("wizcli_dir") / "wizcli_dir_one_vul.json", encoding="utf-8") as testfile:
             parser = WizcliDirParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
@@ -35,7 +35,7 @@ class TestWizcliDirParser(DojoTestCase):
             )
 
     def test_multiple_findings(self):
-        with open("unittests/scans/wizcli_dir/wizcli_dir_many_vul.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("wizcli_dir") / "wizcli_dir_many_vul.json", encoding="utf-8") as testfile:
             parser = WizcliDirParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(7, len(findings))

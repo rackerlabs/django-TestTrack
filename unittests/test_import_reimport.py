@@ -1823,7 +1823,7 @@ class ImportReimportTestUI(DojoAPITestCase, ImportReimportMixin):
         elif not verified:
             verifiedPayload = "force_to_false"
 
-        with open(get_unit_tests_path() + filename, encoding="utf-8") as testfile:
+        with open(get_unit_tests_path() / filename, encoding="utf-8") as testfile:
             payload = {
                     "minimum_severity": minimum_severity,
                     "active": activePayload,
@@ -1861,7 +1861,7 @@ class ImportReimportTestUI(DojoAPITestCase, ImportReimportMixin):
         if not verified:
             verifiedPayload = "force_to_false"
 
-        with open(get_unit_tests_path() + filename, encoding="utf-8") as testfile:
+        with open(get_unit_tests_path() / filename, encoding="utf-8") as testfile:
             payload = {
                     "minimum_severity": minimum_severity,
                     "active": activePayload,

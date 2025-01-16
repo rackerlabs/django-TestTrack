@@ -1,12 +1,12 @@
 from dojo.models import Test
 from dojo.tools.burp_api.parser import BurpApiParser, convert_confidence, convert_severity
-from unittests.dojo_test_case import DojoTestCase, get_unit_tests_path
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestParser(DojoTestCase):
 
     def test_example_report(self):
-        testfile = get_unit_tests_path() + "/scans/burp_api/example.json"
+        testfile = get_unit_tests_scans_path() / "/burp_api/example.json"
         with open(testfile, encoding="utf-8") as f:
             parser = BurpApiParser()
             findings = parser.get_findings(f, Test())
@@ -24,7 +24,7 @@ class TestParser(DojoTestCase):
             self.assertIsNotNone(item.impact)
 
     def test_validate_more(self):
-        testfile = get_unit_tests_path() + "/scans/burp_api/many_vulns.json"
+        testfile = get_unit_tests_scans_path() / "/burp_api/many_vulns.json"
         with open(testfile, encoding="utf-8") as f:
             parser = BurpApiParser()
             findings = parser.get_findings(f, Test())
@@ -61,7 +61,7 @@ class TestParser(DojoTestCase):
             self.assertIsNone(convert_confidence({}))
 
     def test_fix_issue_9128(self):
-        testfile = get_unit_tests_path() + "/scans/burp_api/fix_issue_9128.json"
+        testfile = get_unit_tests_scans_path() / "/burp_api/fix_issue_9128.json"
         with open(testfile, encoding="utf-8") as f:
             parser = BurpApiParser()
             findings = parser.get_findings(f, Test())

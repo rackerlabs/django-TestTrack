@@ -31,7 +31,7 @@ class IBMAppScanTest(BaseTestCase):
         # Select `Default` as the Environment
         Select(driver.find_element(By.ID, "id_environment")).select_by_visible_text("Development")
         # Upload Scan result file
-        scanner_file = os.path.join(dir_path, "ibm_appscan_xml_file.xml")
+        scanner_file = Path(dir_path) / "ibm_appscan_xml_file.xml"
         driver.find_element(By.NAME, "file").send_keys(scanner_file)
         # click on upload button
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()

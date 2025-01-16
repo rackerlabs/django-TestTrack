@@ -1,17 +1,17 @@
 from dojo.models import Test
 from dojo.tools.dsop.parser import DsopParser
-from unittests.dojo_test_case import DojoTestCase
+from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 
 class TestDsopParser(DojoTestCase):
     def test_zero_findings(self):
-        with open("unittests/scans/dsop/zero_vuln.xlsx", "rb") as testfile:
+        with open(get_unit_tests_scans_path("dsop") / "zero_vuln.xlsx", "rb") as testfile:
             parser = DsopParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(len(findings), 0)
 
     def test_many_findings(self):
-        with open("unittests/scans/dsop/many_vuln.xlsx", "rb") as testfile:
+        with open(get_unit_tests_scans_path("dsop") / "many_vuln.xlsx", "rb") as testfile:
             parser = DsopParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(len(findings), 4)
