@@ -72,6 +72,7 @@
                             {% if product_tab and not 'DISABLE_FINDING_MERGE'|setting_enabled %}
                                 <button type="button"
                                         id="merge_findings"
+                                        aria-label="Merge selected findings"
                                         class="btn btn-sm  btn-primary"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
@@ -86,7 +87,8 @@
                                         class="btn btn-sm  btn-primary"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        title="Delete Findings">
+                                        title="Delete Findings"
+                                        aria-label="Delete selected findings">
                                     <a class="white-color delete-bulk" href="#" alt="Delete Findings">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
@@ -273,7 +275,7 @@
                                                         data-toggle="dropdown"
                                                         aria-haspopup="true"
                                                         aria-expanded="true"
-                                                        aria-label="bulk-edit-dropdown-menu">
+                                                        aria-label="Select all findings dropdown">
                                                     <form class="inline-form" action="#">
                                                         <input type="checkbox" name="select_all" id="select_all" aria-label="select-all"/>
                                                     </form>
@@ -406,37 +408,37 @@
                                         <td>
                                             <div class="align-top">
                                                 <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">&nbsp;<i class="fa-solid fa-ellipsis-vertical"></i>&nbsp;</a>
+                                                    <a href="#" aria-label="More options for finding {{ finding.id}}" class="dropdown-toggle pull-left" data-toggle="dropdown">&nbsp;<i class="fa-solid fa-ellipsis-vertical"></i>&nbsp;</a>
                                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                                        <li>
-                                                            <a class="" href="{% url 'view_finding' finding.id %}">
+                                                        <li role="presentation">
+                                                            <a class="" href="{% url 'view_finding' finding.id %}" role="menuitem">
                                                                 <i class="fa-solid fa-circle-right"></i> {% trans "View" %}
                                                             </a>
                                                         </li>
                                                         {% if finding|has_object_permission:"Finding_Edit" %}
-                                                            <li>
-                                                                <a class="" href="{% url 'edit_finding' finding.id %}?return_url={{ request.get_full_path|urlencode }}">
+                                                            <li role="presentation">
+                                                                <a class="" href="{% url 'edit_finding' finding.id %}?return_url={{ request.get_full_path|urlencode }}" role="menuitem">
                                                                     <i class="fa-solid fa-pen-to-square"></i> {% trans "Edit" %}
                                                                 </a>
                                                             </li>
-                                                            <li>
-                                                                <a class="" href="{% url 'copy_finding' finding.id %}?return_url={{ request.get_full_path|urlencode }}"/>
+                                                            <li role="presentation">
+                                                                <a class="" href="{% url 'copy_finding' finding.id %}?return_url={{ request.get_full_path|urlencode }}" role="menuitem">
                                                                     <i class="fa-solid fa-copy"></i> {% trans "Copy" %}
                                                                 </a>
                                                             </li>
-                                                            <li class="divider"></li>
+                                                            <li class="divider" role="separator"></li>
                                                         {% endif %}
                                                         {% if finding|has_object_permission:"Finding_View" %}
                                                             {% user_can_clear_peer_review finding request.user as clear_peer_review %}
                                                             {% if finding|has_object_permission:"Finding_Edit" and clear_peer_review %}
                                                                 <li role="presentation">
-                                                                    <a href="{% url 'clear_finding_review' finding.id %}">
+                                                                    <a href="{% url 'clear_finding_review' finding.id %}" role="menuitem">
                                                                         <i class="icon-user-check"></i> {% trans "Clear Review" %}
                                                                     </a>
                                                                 </li>
                                                             {% elif not finding.under_review %}
                                                                 <li role="presentation">
-                                                                    <a href="{% url 'request_finding_review' finding.id %}">
+                                                                    <a href="{% url 'request_finding_review' finding.id %}" role="menuitem">
                                                                         <i class="icon-user-check"></i> {% trans "Request Peer Review" %}
                                                                     </a>
                                                                 </li>
@@ -444,21 +446,21 @@
                                                         {% endif %}
                                                         {% if finding|has_object_permission:"Finding_Edit" %}
                                                             <li role="presentation">
-                                                                <a href="{% url 'touch_finding' finding.id %}?return_url={{ request.get_full_path|urlencode }}">
+                                                                <a href="{% url 'touch_finding' finding.id %}?return_url={{ request.get_full_path|urlencode }}" role="menuitem">
                                                                     <i class="fa-solid fa-clock"></i> {% trans "Touch Finding" %}
                                                                 </a>
                                                             </li>
                                                         {% endif %}
                                                         {% if finding|has_object_permission:"Finding_Add" %}
                                                             <li role="presentation">
-                                                                <a href="{% url 'mktemplate' finding.id %}">
+                                                                <a href="{% url 'mktemplate' finding.id %}" role="menuitem">
                                                                     <i class="fa-solid fa-copy"></i> {% trans "Make Finding a Template" %}
                                                                 </a>
                                                             </li>
                                                         {% endif %}
                                                         {% if finding|has_object_permission:"Finding_Edit" %}
                                                             <li role="presentation">
-                                                                <a href="{% url 'find_template_to_apply' finding.id %}">
+                                                                <a href="{% url 'find_template_to_apply' finding.id %}" role="menuitem">
                                                                     <i class="fa-solid fa-copy"></i> {% trans "Apply Template to Finding" %}
                                                                 </a>
                                                             </li>
@@ -466,23 +468,23 @@
                                                         {% if finding|has_object_permission:"Finding_Edit" %}
                                                             {% if finding.active %}
                                                                 <li role="presentation">
-                                                                    <a href="{% url 'close_finding' finding.id %}">
+                                                                    <a href="{% url 'close_finding' finding.id %}" role="menuitem">
                                                                         <i class="fa-solid fa-fire-extinguisher"></i> {% trans "Close Finding" %}
                                                                     </a>
                                                                 </li>
                                                             {% else %}
                                                                 <li role="presentation">
-                                                                    <a href="{% url 'reopen_finding' finding.id %}">
+                                                                    <a href="{% url 'reopen_finding' finding.id %}" role="menuitem">
                                                                         <i class="fa-solid fa-bug"></i> {% trans "Open Finding" %}
                                                                     </a>
                                                                 </li>
                                                             {% endif %}
                                                         {% endif %}
-                                                        <li class="divider"></li>
+                                                        <li class="divider" role="separator"></li>
                                                         {% if finding|has_object_permission:"Risk_Acceptance" %}
                                                             {% if finding.risk_accepted %}
                                                                 <li role="presentation">
-                                                                    <a href="{% url 'risk_unaccept_finding' finding.id %}?return_url={{ request.get_full_path|urlencode }}">
+                                                                    <a href="{% url 'risk_unaccept_finding' finding.id %}?return_url={{ request.get_full_path|urlencode }}" role="menuitem">
                                                                         <i class="fa-solid fa-circle-exclamation"></i> {% trans "Unaccept Risk" %}
                                                                     </a>
                                                                 </li>
@@ -490,14 +492,14 @@
                                                                 {% if not finding.duplicate %}
                                                                     {% if finding.test.engagement.product.enable_simple_risk_acceptance %}
                                                                         <li role="presentation">
-                                                                            <a href="{% url 'simple_risk_accept_finding' finding.id %}?return_url={{ request.get_full_path|urlencode }}">
+                                                                            <a href="{% url 'simple_risk_accept_finding' finding.id %}?return_url={{ request.get_full_path|urlencode }}" role="menuitem">
                                                                                 <i class="fa-solid fa-circle-exclamation"></i> {% trans "Accept Risk" %}
                                                                             </a>
                                                                         </li>
                                                                     {% endif %}
                                                                     {% if finding.test.engagement.product.enable_full_risk_acceptance %}
                                                                         <li role="presentation">
-                                                                            <a href="{% url 'add_risk_acceptance' finding.test.engagement.id finding.id %}">
+                                                                            <a href="{% url 'add_risk_acceptance' finding.test.engagement.id finding.id %}" role="menuitem">
                                                                                 <i class="fa-solid fa-circle-exclamation"></i> {% trans "Add Risk Acceptance..." %}
                                                                             </a>
                                                                         </li>
@@ -506,19 +508,19 @@
                                                             {% endif %}
                                                         {% endif %}
                                                         <li role="presentation">
-                                                            <a href="{% url 'action_history' finding|content_type finding.id %}">
+                                                            <a href="{% url 'action_history' finding|content_type finding.id %}" aria-label="View history for finding {{ finding.id }}" role="menuitem">
                                                                 <i class="fa-solid fa-clock-rotate-left"></i> {% trans "View History" %}
                                                             </a>
                                                         </li>
                                                         {% if finding|has_object_permission:"Finding_Delete" %}
-                                                            <li class="divider"> </li>
-                                                            <li>
+                                                            <li class="divider" role="separator"> </li>
+                                                            <li role="presentation">
                                                                 <form method="post" action="{% url 'delete_finding' finding.id %}" style="display: inline" class="form-inline form" id="delete-finding-menu-{{ finding.id }}-form">
                                                                     {% csrf_token %}
                                                                     <input type="hidden" label="return_url" aria-label="return_url" name="return_url" value="{{ request.get_full_path }}"/>
                                                                     <input type="hidden" label="id" aria-label="id" name="id" value="{{ finding.id }}"/>
                                                                 </form>
-                                                                <a class="text-danger delete-finding" id="delete-finding-menu-{{ finding.id }}" href="#">
+                                                                <a class="text-danger delete-finding" id="delete-finding-menu-{{ finding.id }}" href="#" role="button" aria-label="Delete finding {{ finding.id }}">
                                                                     <i class="fa-solid fa-trash"></i> {% trans "Delete" %}
                                                                 </a>
                                                             </li>

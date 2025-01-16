@@ -49,7 +49,7 @@
                 </h3>
                     <div class="dropdown pull-right">
                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
-                                data-toggle="dropdown" aria-expanded="true">
+                                data-toggle="dropdown" aria-expanded="true" aria-label="Findings options">
                             <span class="fa-solid fa-bars"></span>
                             <span class="caret"></span>
                         </button>
@@ -743,7 +743,7 @@
                         data-placement="bottom" data-container="body">
                     </i>
                     <span class="pull-right">
-                        <button id="show-filters" data-toggle="collapse" data-target="#the-filters-wrapper" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
+                        <button id="show-filters" aria-label="Filters" data-toggle="collapse" data-target="#the-filters-wrapper" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
                         &nbsp;
                         <a data-toggle="collapse" href="#the-filters-wrapper"><i class="glyphicon glyphicon-chevron-down"></i></a>
                     </span>
@@ -772,7 +772,7 @@
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <div class="btn-group mr-2" role="group" aria-label="Second group">
                 <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenu2"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" aria-label="Bulk Edit">
                     Bulk Edit
                     <span class="caret"></span>
                 </button>
@@ -827,6 +827,7 @@
                         </i>
                         <div class="dropdown pull-right">
                             <button id="show-filters"
+                                    aria-label="Filters"
                                     data-toggle="collapse"
                                     data-target="#import-history-filters"
                                     class="btn btn-primary toggle-filters">

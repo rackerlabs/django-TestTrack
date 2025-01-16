@@ -13,10 +13,10 @@
                     <h3 class="has-filters">
                         {% trans "Product Type List" %}
                         <div class="dropdown pull-right">
-                            <button id="show-filters" data-toggle="collapse" data-target="#the-filters" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
+                            <button id="show-filters" aria-label="Filters" data-toggle="collapse" data-target="#the-filters" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
                             {% if "Product_Type_Add"|has_global_permission %}
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
-                                    data-toggle="dropdown" aria-expanded="true">
+                                    data-toggle="dropdown" aria-expanded="true" aria-label="Product type options">
                                 <span class="fa-solid fa-screwdriver-wrench"></span>
                                 <span class="caret"></span>
                             </button>
@@ -62,37 +62,37 @@
                                 <td>
                                     <ul>
                                         <li class="dropdown" style="list-style:none;position:absolute">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" id="dropdownMenuProductType">&nbsp;<b class="fa-solid fa-ellipsis-vertical"></b>&nbsp;</a>
+                                            <a href="#" aria-label="Product type options menu" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" id="dropdownMenuProductType">&nbsp;<b class="fa-solid fa-ellipsis-vertical"></b>&nbsp;</a>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuProductType">
                                                 <li role="presentation">
-                                                    <a class="" href="{% url 'view_product_type' pt.id %}">
+                                                    <a class="" href="{% url 'view_product_type' pt.id %}" role="menuitem">
                                                     <i class="fa-solid fa-rectangle-list"></i> {% trans "View" %}</a>
                                                 </li>
                                                 {% if pt|has_object_permission:"Product_Type_Edit" %}
                                                 <li role="presentation">
-                                                    <a class="" href="{% url 'edit_product_type' pt.id %}">
+                                                    <a class="" href="{% url 'edit_product_type' pt.id %}" role="menuitem">
                                                     <i class="fa-solid fa-pen-to-square"></i> {% trans "Edit" %}</a>
                                                 </li>
                                                 {% endif %}
                                                 {% if pt|has_object_permission:"Product_Type_Add_Product" %}
                                                 <li role="presentation">
-                                                    <a class="" href="{% url 'add_product_to_product_type' pt.id %}">
+                                                    <a class="" href="{% url 'add_product_to_product_type' pt.id %}" role="menuitem">
                                                     <i class="fa-solid fa-plus"></i> {% trans "Add Product" %}</a>
                                                 </li>
                                                 {% endif %}
                                                 <li role="separator" class="divider"></li>
                                                 <li role="presentation">
-                                                    <a class="" href="{% url 'product_type_metrics' pt.id %}">
+                                                    <a class="" href="{% url 'product_type_metrics' pt.id %}" role="menuitem">
                                                     <i class="fa-solid fa-chart-line"></i> {% trans "Metrics" %}</a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a class="" href="{% url 'product_type_report' pt.id %}">
+                                                    <a class="" href="{% url 'product_type_report' pt.id %}" role="menuitem">
                                                     <i class="fa-solid fa-file-lines"></i> {% trans "Product Type Report" %}</a>
                                                 </li>
                                                 {% if pt|has_object_permission:"Product_Type_Delete" %}
                                                 <li role="separator" class="divider"></li>
                                                 <li role="presentation">
-                                                    <a class="" href="{% url 'delete_product_type' pt.id %}">
+                                                    <a class="" href="{% url 'delete_product_type' pt.id %}" role="menuitem">
                                                     <i class="fa-solid fa-trash"></i> {% trans "Delete" %}</a>
                                                 </li>
                                                 {% endif %}

@@ -31,7 +31,7 @@
                                 </a>
                             </li>
                             </ul>
-                            <button id="show-filters" data-toggle="collapse" data-target="#the-filters" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
+                            <button id="show-filters" aria-label="Filters" data-toggle="collapse" data-target="#the-filters" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
                         </div>
                     </h3>
                 </div>
@@ -72,70 +72,70 @@
                                 <td class="nowrap">
                                     <div class="align-top">
                                         <div class="dropdown">
-                                            <a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">&nbsp;<i class="fa-solid fa-ellipsis-vertical"></i>&nbsp;</a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a class="" href="{% url 'view_engagement' e.id %}">
+                                            <a href="#" aria-label="More engagement options" class="dropdown-toggle pull-left" data-toggle="dropdown" id="dropdownMenuToggle" role="button">&nbsp;<i class="fa-solid fa-ellipsis-vertical"></i>&nbsp;</a>
+                                            <ul aria-labelledby="dropdownMenuToggle" class="dropdown-menu" role="menu">
+                                                <li role="presentation">
+                                                    <a class="" href="{% url 'view_engagement' e.id %}" role="menuitem">
                                                         <i class="fa-solid fa-rectangle-list"></i> View
                                                 </li>
                                                 {% if e|has_object_permission:"Engagement_Edit" %}
-                                                <li>
-                                                    <a class="" href="{% url 'edit_engagement' e.id %}">
+                                                <li role="presentation">
+                                                    <a class="" href="{% url 'edit_engagement' e.id %}" role="menuitem">
                                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                                     </a>
                                                 </li>
-                                                <li class="divider"></li>
+                                                <li class="divider" role="separator"></li>
                                                 {% endif %}
                                                 {% if e|has_object_permission:"Test_Add" %}
                                                 <li role="presentation">
-                                                    <a class="" href="{% url 'add_tests' e.id %}">
+                                                    <a class="" href="{% url 'add_tests' e.id %}" role="menuitem">
                                                         <i class="fa-solid fa-plus"></i> Add Tests
                                                     </a>
                                                 </li>
                                                 {% endif %}
                                                 {% if e|has_object_permission:"Import_Scan_Result" %}
                                                 <li role="presentation">
-                                                    <a class="" href="{% url 'import_scan_results' e.id %}">
+                                                    <a class="" href="{% url 'import_scan_results' e.id %}" role="menuitem">
                                                         <i class="fa-solid fa-upload"></i> Import Scan Results
                                                     </a>
                                                 </li>
                                                 {% endif %}
-                                                <li class="divider"></li>
+                                                <li class="divider" role="separator"></li>
                                                 <li role="presentation">
-                                                    <a href="{% url 'engagement_open_findings' e.id %}">
+                                                    <a href="{% url 'engagement_open_findings' e.id %}" role="menuitem">
                                                         <i class="fa-solid fa-file-lines"></i> View Active Findings
                                                     </a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a href="{% url 'engagement_verified_findings' e.id %}">
+                                                    <a href="{% url 'engagement_verified_findings' e.id %}" role="menuitem">
                                                         <i class="fa-solid fa-file-lines"></i> View Active and Verified Findings
                                                     </a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a href="{% url 'engagement_closed_findings' e.id %}">
+                                                    <a href="{% url 'engagement_closed_findings' e.id %}" role="menuitem">
                                                         <i class="fa-solid fa-file-lines"></i> View Mitigated Findings
                                                     </a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a href="{% url 'engagement_accepted_findings' e.id %}">
+                                                    <a href="{% url 'engagement_accepted_findings' e.id %}" role="menuitem">
                                                         <i class="fa-solid fa-file-lines"></i> View Accepted Findings
                                                     </a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a href="{% url 'engagement_all_findings' e.id %}">
+                                                    <a href="{% url 'engagement_all_findings' e.id %}" role="menuitem">
                                                         <i class="fa-solid fa-file-lines"></i> View All Findings
                                                     </a>
                                                 </li>
-                                                <li class="divider"></li>
+                                                <li class="divider" role="separator"></li>
                                                 <li role="presentation">
-                                                    <a href="{% url 'engagement_report' e.id %}?title=&active=1&verified=1&false_p=2&duplicate=2">
+                                                    <a href="{% url 'engagement_report' e.id %}?title=&active=1&verified=1&false_p=2&duplicate=2" role="menuitem">
                                                         <i class="fa-solid fa-file-lines"></i> Engagement Report
                                                     </a>
                                                 </li>
                                                 {% if e|has_object_permission:"Engagement_Delete" %}
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a class="text-danger" href="{% url 'delete_engagement' e.id %}">
+                                                <li class="divider" role="separator"></li>
+                                                <li role="presentation">
+                                                    <a class="text-danger" href="{% url 'delete_engagement' e.id %}" role="menuitem">
                                                         <i class="fa-solid fa-trash"></i> Delete Engagement
                                                     </a>
                                                 </li>

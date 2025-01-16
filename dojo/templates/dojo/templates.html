@@ -16,7 +16,7 @@
                             Finding Templates
                         {% endif %}
                         <div class="dropdown pull-right">
-                            <button id="show-filters" data-toggle="collapse" data-target="#the-filters" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
+                            <button id="show-filters" aria-label="Filters" data-toggle="collapse" data-target="#the-filters" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
                             {% if "Finding_Add"|has_global_permission and not add_from_template and not apply_template %}
                                 <a href="{% url 'add_template' %}" class="btn btn-primary"
                                    title="Add Finding Template">
@@ -36,7 +36,7 @@
                                 </a>
                             {% endif %}
                             <button class="btn btn-primary download_templates" type="submit"
-                                   title="Export to file">
+                                   title="Export to file" aria-label="Export to file">
                                     <i class="fa-solid fa-box-archive"></i>
                             </button>
                         </div>

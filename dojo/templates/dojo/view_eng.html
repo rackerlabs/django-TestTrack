@@ -20,7 +20,7 @@
                         </h4>
                         <div class="dropdown pull-right">
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
-                                data-toggle="dropdown" aria-expanded="true">
+                                data-toggle="dropdown" aria-expanded="true" aria-label="Engagement options">
                             <span class="fa-solid fa-bars"></span>
                             <span class="caret"></span>
                             </button>
@@ -118,7 +118,7 @@
                                     {% if eng.product|has_object_permission:"Product_Edit" %}
                                         <div class="dropdown pull-right">
                                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
-                                                data-toggle="dropdown" aria-expanded="true">
+                                                data-toggle="dropdown" aria-expanded="true" aria-label="Engagement preset options">
                                             <span class="fa-solid fa-bars"></span>
                                             <span class="caret"></span>
                                             </button>
@@ -194,9 +194,9 @@
                                 <h4>
                                     Tests ({{tests.paginator.count}}) <small>{{ eng.id|get_severity_count:"engagement" }}</small>
                                     <div class="dropdown pull-right">
-                                        <button id="show-filters" data-toggle="collapse" data-target="#the-filters" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
+                                        <button id="show-filters" aria-label="Filters" data-toggle="collapse" data-target="#the-filters" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
                                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
-                                            data-toggle="dropdown" aria-expanded="true">
+                                            data-toggle="dropdown" aria-expanded="true" aria-label="Test options">
                                         <span class="fa-solid fa-bars"></span>
                                         <span class="caret"></span>
                                         </button>
@@ -264,52 +264,52 @@
                                             {% block test_body %}
                                             <td>
                                                 <div class="dropdown">
-                                                    <a href="#" id="test-menu" class="dropdown-toggle pull-left" data-toggle="dropdown">&nbsp;<i class="fa-solid fa-ellipsis-vertical"></i>&nbsp;</a>
+                                                    <a href="#" aria-haspopup="true" aria-label="Test options menu" id="test-menu" class="dropdown-toggle pull-left" data-toggle="dropdown" role="button">&nbsp;<i class="fa-solid fa-ellipsis-vertical"></i>&nbsp;</a>
                                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                                        <li>
-                                                            <a class="" href="{% url 'view_test' test.id %}">
+                                                        <li role="presentation">
+                                                            <a class="" href="{% url 'view_test' test.id %}" role="menuitem">
                                                             <i class="fa-solid fa-rectangle-list"></i> View</a>
                                                         </li>
                                                         {% if test|has_object_permission:"Test_Edit" %}
-                                                            <li>
-                                                                <a class="" href="{% url 'edit_test' test.id %}">
+                                                            <li role="presentation">
+                                                                <a class="" href="{% url 'edit_test' test.id %}" role="menuitem">
                                                                 <i class="fa-solid fa-pen-to-square"></i> Edit</a>
                                                             </li>
-                                                            <li>
-                                                                <a class="" href="{% url 'copy_test' test.id %}">
+                                                            <li role="presentation">
+                                                                <a class="" href="{% url 'copy_test' test.id %}" role="menuitem">
                                                                 <i class="fa-solid fa-copy"></i> Copy</a>
                                                             </li>
                                                         {% endif %}
                                                         {% if test|has_object_permission:"Finding_Add" %}
-                                                            <li class="divider"></li>
-                                                            <li>
-                                                                <a class="" href="{% url 'add_findings' test.id %}">
+                                                            <li class="divider" role="separator"></li>
+                                                            <li role="presentation">
+                                                                <a class="" href="{% url 'add_findings' test.id %}" role="menuitem">
                                                                 <i class="fa-solid fa-plus"></i> Add Finding to Test
                                                                 </a>
                                                             </li>
-                                                            <li>
-                                                                <a title="Add Finding from Template" href="{% url 'search' test.id %}">
+                                                            <li role="presentation">
+                                                                <a title="Add Finding from Template" href="{% url 'search' test.id %}" role="menuitem">
                                                                 <span class="icon-add-template"></span> Finding From Template
                                                                 </a>
                                                             </li>
                                                         {% endif %}
                                                         {% if test|has_object_permission:"Import_Scan_Result" %}
                                                             <li class="divider"></li>
-                                                            <li><a class="" href="{% url 're_import_scan_results' test.id %}">
+                                                            <li><a class="" href="{% url 're_import_scan_results' test.id %}" role="menuitem">
                                                                 <i class="fa-solid fa-upload"></i> Re-Upload Scan Results
                                                                 </a>
                                                             </li>
                                                         {% endif %}
-                                                        <li class="divider"></li>
+                                                        <li class="divider" role="separator"></li>
                                                         <li role="presentation">
-                                                            <a href="{% url 'test_report' test.id %}?title=&active=1&verified=1&false_p=2&duplicate=2">
+                                                            <a href="{% url 'test_report' test.id %}?title=&active=1&verified=1&false_p=2&duplicate=2" role="menuitem">
                                                             <i class="fa-solid fa-file-lines"></i> Test Report
                                                             </a>
                                                         </li>
                                                         {% if test|has_object_permission:"Test_Delete" %}
-                                                            <li class="divider"></li>
+                                                            <li class="divider" role="separator"></li>
                                                             <li>
-                                                                <a class="text-danger" href="{% url 'delete_test' test.id %}">
+                                                                <a class="text-danger" href="{% url 'delete_test' test.id %}" role="menuitem">
                                                                 <i class="fa-solid fa-trash"></i> Delete</a>
                                                             </li>
                                                         {% endif %}
@@ -410,8 +410,8 @@
                                                 <td class="centered">
                                                     <ul>
                                                         <li class="dropdown" style="list-style:none;position:absolute">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">&nbsp;<b class="fa-solid fa-ellipsis-vertical"></b>&nbsp;</a>
-                                                            <ul class="dropdown-menu">
+                                                            <a href="#" aria-expanded="true" aria-haspopup="true" aria-label="Risk acceptance options menu" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenuRiskAcceptance" role="button">&nbsp;<b class="fa-solid fa-ellipsis-vertical"></b>&nbsp;</a>
+                                                            <ul class="dropdown-menu" role="menu">
                                                                 {% with engagement=eng %}
                                                                     {% include 'dojo/snippets/risk_acceptance_actions_snippet.html' with include_view=True %}
                                                                 {% endwith %}

@@ -11,9 +11,9 @@
                     <h3 class="has-filters">
                         Product List
                         <div class="dropdown pull-right">
-                            <button id="show-filters" data-toggle="collapse" data-target="#the-filters" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
+                            <button id="show-filters" aria-label="Filters" data-toggle="collapse" data-target="#the-filters" class="btn btn-primary toggle-filters"> <i class="fa-solid fa-filter"></i> <i class="caret"></i> </button>
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
-                                    data-toggle="dropdown" aria-expanded="true">
+                                    data-toggle="dropdown" aria-expanded="true" aria-label="Product options">
                                 <span class="fa-solid fa-screwdriver-wrench"></span>
                                 <span class="caret"></span>
                             </button>
@@ -21,14 +21,14 @@
                                 aria-labelledby="dropdownMenu1">
                                 {% if request.user|can_add_product %}
                                     <li role="presentation">
-                                        <a href="{% url 'new_product' %}">
+                                        <a href="{% url 'new_product' %}" role="menuitem">
                                             <i class="fa-solid fa-plus"></i> Add Product
                                         </a>
                                     </li>
                                 {% endif %}
 
                                 <li role="presentation">
-                                    <a href="{% url 'product_findings_report' %}">
+                                    <a href="{% url 'product_findings_report' %}" role="menuitem">
                                         <i class="fa-solid fa-file-lines"></i> Findings Report
                                     </a>
                                 </li>
@@ -75,8 +75,8 @@
                                 <td>
                                   <div class="pull-left">
                                     <div class="dropdown">
-                                      <a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">&nbsp;<b class="fa-solid fa-ellipsis-vertical"></b>&nbsp;</a>
-                                      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                      <a href="#" aria-expanded="false" aria-label="Product options menu" class="dropdown-toggle pull-left" data-toggle="dropdown" id="product-options-toggle" role="button">&nbsp;<b class="fa-solid fa-ellipsis-vertical"></b></a>
+                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" role="menu">
                                         <li role="presentation">
                                           <a class="" href="{% url 'view_product' prod.id %}">
                                               <i class="fa-solid fa-rectangle-list"></i> View
