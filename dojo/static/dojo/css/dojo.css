@@ -446,6 +446,11 @@ form ul {
     padding-left: 0px
 }
 
+form ul li a#reset-password,
+form ul li a#forgot-username {
+    color: rgb(51, 122, 183)
+}
+
 form ul#id_accepted_findings {
     list-style: none;
     margin-left: 0;
