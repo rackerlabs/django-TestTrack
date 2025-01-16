@@ -18,14 +18,6 @@ class Sql_GroupConcat(Aggregate):
             **extra,
         )
 
-    def as_mysql(self, compiler, connection):
-        return super().as_sql(
-            compiler,
-            connection,
-            template="%(function)s(%(distinct)s%(expressions)s%(ordering)s%(separator)s)",
-            separator=f" SEPARATOR '{self.separator}'",
-        )
-
     def as_sql(self, compiler, connection, **extra):
         return super().as_sql(
             compiler,

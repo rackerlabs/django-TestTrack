@@ -8,9 +8,7 @@ from typing import Any, NamedTuple, TypeVar
 
 from dateutil.relativedelta import relativedelta
 from django.contrib import messages
-from django.db import connection
 from django.db.models import Case, Count, F, IntegerField, Q, Sum, Value, When
-from django.db.models.expressions import RawSQL
 from django.db.models.functions import Coalesce, ExtractDay, Now, TruncMonth, TruncWeek
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
@@ -539,18 +537,7 @@ def get_in_period_details(
     ).order_by("product_name")
 
     # Approach to age determination is db-engine dependent
-    if "postgresql" in connection.settings_dict["ENGINE"]:
-        age_detail = findings.annotate(age=ExtractDay(Coalesce("mitigated", Now()) - F("date")))
-    elif "mysql" in connection.settings_dict["ENGINE"]:
-        # MySQL doesn't support durations natively and using an expression with subtraction yields unwanted results,
-        # so datediff() it is.
-        finding_table = Finding.objects.model._meta.db_table
-        age_detail = findings.annotate(
-            age=RawSQL(f"DATEDIFF(COALESCE({finding_table}.mitigated, CURRENT_TIMESTAMP), {finding_table}.date)", []),
-        )
-    else:
-        raise ValueError
-
+    age_detail = findings.annotate(age=ExtractDay(Coalesce("mitigated", Now()) - F("date")))
     age_detail = age_detail.aggregate(
         age_under_30=Sum(Case(When(age__lte=30, then=Value(1))), default=Value(0), output_field=IntegerField()),
         age_31_60=Sum(Case(When(age__range=[31, 60], then=Value(1))), default=Value(0), output_field=IntegerField()),

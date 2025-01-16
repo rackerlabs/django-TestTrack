@@ -10,7 +10,7 @@ DD_SECRET_KEY=#DD_SECRET_KEY#
 # Key for encrypting credentials in the manager
 DD_CREDENTIAL_AES_256_KEY=#DD_CREDENTIAL_AES_256_KEY#
 
-# Database URL, options: postgres://, mysql://, sqlite://, to use unsafe characters encode with urllib.parse.encode
+# Database URL, options: postgres://, to use unsafe characters encode with urllib.parse.encode
 DD_DATABASE_URL=#DD_DATABASE_URL#
 
 # Hosts/domain names that are valid for this site;
