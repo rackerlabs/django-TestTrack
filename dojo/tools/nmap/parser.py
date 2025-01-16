@@ -96,6 +96,7 @@ class NmapParser:
                             "**Extra Info:** {}\n".format(port_element.find("service").attrib["extrainfo"])
                         )
                     description += service_info
+                script_id = None
                 if script := port_element.find("script"):
                     if script_id := script.attrib.get("id"):
                         description += f"**Script ID:** {script_id}\n"
@@ -126,6 +127,7 @@ class NmapParser:
                         severity=severity,
                         mitigation="N/A",
                         impact="No impact provided",
+                        vuln_id_from_tool=script_id,
                     )
                     find.unsaved_endpoints = []
                     dupes[dupe_key] = find
