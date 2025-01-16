@@ -114,7 +114,7 @@
         {% if include_disclaimer%}
             <div style="background-color:#DADCE2; border:1px #003333; padding:.8em; ">
                 <span style="font-size:16pt;  font-family: 'Cambria','times new roman','garamond',serif; color:#ff0000;">Disclaimer</span><br/>
-                <p style="font-size:11pt; line-height:10pt; font-family: 'Cambria','times roman',serif;">{{ disclaimer }}</p>
+                <p style="font-size:11pt; line-height:10pt; font-family: 'Cambria','times roman',serif;">{{ disclaimer | safe }}</p>
             </div>
 		{% endif %}
         <div class="row">

@@ -31,11 +31,11 @@
                 {% url 'notifications' as notification_url %}
                 {% trans "You can manage your notification settings here" %}: <a href="{{ notification_url|full_url }}">{{ notification_url|full_url }}</a>
             </p>
-            {% if system_settings.disclaimer and system_settings.disclaimer.strip %}
+            {% if system_settings.disclaimer_notifications and system_settings.disclaimer_notifications.strip %}
                 <br/>
                 <div style="background-color:#DADCE2; border:1px #003333; padding:.8em; ">
                     <span style="font-size:16pt;  font-family: 'Cambria','times new roman','garamond',serif; color:#ff0000;">{% trans "Disclaimer" %}</span><br/>
-                    <p style="font-size:11pt; line-height:10pt; font-family: 'Cambria','times roman',serif;">{{ system_settings.disclaimer }}</p>
+                    <p style="font-size:11pt; line-height:10pt; font-family: 'Cambria','times roman',serif;">{{ system_settings.disclaimer_notifications }}</p>
                 </div>
             {% endif %}
         {% endautoescape %}

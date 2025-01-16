@@ -860,6 +860,8 @@ class RiskAcceptanceForm(EditRiskAcceptanceForm):
             self.fields["expiration_date"].initial = expiration_date
         # self.fields['path'].help_text = 'Existing proof uploaded: %s' % self.instance.filename() if self.instance.filename() else 'None'
         self.fields["accepted_findings"].queryset = get_authorized_findings(Permissions.Risk_Acceptance)
+        if disclaimer := get_system_setting("disclaimer_notes"):
+            self.disclaimer = disclaimer.strip()
 
 
 class BaseManageFileFormSet(forms.BaseModelFormSet):
@@ -1569,6 +1571,8 @@ class FindingBulkUpdateForm(forms.ModelForm):
         self.fields["severity"].required = False
         # we need to defer initialization to prevent multiple initializations if other forms are shown
         self.fields["tags"].widget.tag_options = tagulous.models.options.TagOptions(autocomplete_settings={"width": "200px", "defer": True})
+        if disclaimer := get_system_setting("disclaimer_notes"):
+            self.disclaimer = disclaimer.strip()
 
     def clean(self):
         cleaned_data = super().clean()
@@ -1712,6 +1716,11 @@ class NoteForm(forms.ModelForm):
         model = Notes
         fields = ["entry", "private"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if disclaimer := get_system_setting("disclaimer_notes"):
+            self.disclaimer = disclaimer.strip()
+
 
 class TypedNoteForm(NoteForm):
 
@@ -1763,6 +1772,8 @@ class CloseFindingForm(forms.ModelForm):
             self.fields["mitigated_by"].queryset = get_authorized_users(Permissions.Test_Edit)
             self.fields["mitigated"].initial = self.instance.mitigated
             self.fields["mitigated_by"].initial = self.instance.mitigated_by
+        if disclaimer := get_system_setting("disclaimer_notes"):
+            self.disclaimer = disclaimer.strip()
 
     def _post_clean(self):
         super()._post_clean()
@@ -1815,6 +1826,11 @@ class DefectFindingForm(forms.ModelForm):
         model = Notes
         fields = ["entry"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if disclaimer := get_system_setting("disclaimer_notes"):
+            self.disclaimer = disclaimer.strip()
+
 
 class ClearFindingReviewForm(forms.ModelForm):
     entry = forms.CharField(
@@ -1828,6 +1844,11 @@ class ClearFindingReviewForm(forms.ModelForm):
     class Meta:
         model = Finding
         fields = ["active", "verified", "false_p", "out_of_scope", "duplicate", "is_mitigated"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if disclaimer := get_system_setting("disclaimer_notes"):
+            self.disclaimer = disclaimer.strip()
 
 
 class ReviewFindingForm(forms.Form):
@@ -1866,6 +1887,8 @@ class ReviewFindingForm(forms.Form):
         self.reviewer_queryset = users
         # Set the users in the form
         self.fields["reviewers"].choices = self._get_choices(self.reviewer_queryset)
+        if disclaimer := get_system_setting("disclaimer_notes"):
+            self.disclaimer = disclaimer.strip()
 
     @staticmethod
     def _get_choices(queryset):
@@ -2303,6 +2326,13 @@ class ReportOptionsForm(forms.Form):
     include_disclaimer = forms.ChoiceField(choices=yes_no, label="Disclaimer")
     report_type = forms.ChoiceField(choices=(("HTML", "HTML"),))
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if get_system_setting("disclaimer_reports_forced"):
+            self.fields["include_disclaimer"].disabled = True
+            self.fields["include_disclaimer"].initial = "1"  # represents yes
+            self.fields["include_disclaimer"].help_text = "Administrator of the system enforced placement of disclaimer in all reports. You are not able exclude disclaimer from this report."
+
 
 class CustomReportOptionsForm(forms.Form):
     yes_no = (("0", "No"), ("1", "Yes"))
@@ -2737,6 +2767,11 @@ class EngagementPresetsForm(forms.ModelForm):
     class Meta:
         model = Engagement_Presets
         exclude = ["product"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if disclaimer := get_system_setting("disclaimer_notes"):
+            self.disclaimer = disclaimer.strip()
 
 
 class DeleteEngagementPresetsForm(forms.ModelForm):

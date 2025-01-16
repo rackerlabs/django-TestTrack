@@ -11,10 +11,10 @@
             "activityImage": "https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/master/dojo/static/dojo/img/chop.png",
             "text": "{% autoescape on %} {{ description }} {% endautoescape %}"
         }
-        {% if system_settings.disclaimer and system_settings.disclaimer.strip %}
+        {% if system_settings.disclaimer_notifications and system_settings.disclaimer_notifications.strip %}
             ,{
                 "activityTitle": "{% trans "Disclaimer" %}",
-                "text": "{{ system_settings.disclaimer }}"
+                "text": "{{ system_settings.disclaimer_notifications }}"
             }
         {% endif %}
     ],

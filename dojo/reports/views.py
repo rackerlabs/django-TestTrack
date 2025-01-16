@@ -132,6 +132,10 @@ class CustomReport(View):
         self.host = report_url_resolver(request)
         self.selected_widgets = self.get_selected_widgets(request)
         self.widgets = list(self.selected_widgets.values())
+        self.include_disclaimer = get_system_setting("disclaimer_reports_forced", 0)
+        self.disclaimer = get_system_setting("disclaimer_reports")
+        if self.include_disclaimer and len(self.disclaimer) == 0:
+            self.disclaimer = "Please configure in System Settings."
 
     def get_selected_widgets(self, request):
         selected_widgets = report_widget_factory(json_data=request.POST["json"], request=request, host=self.host,
@@ -164,7 +168,10 @@ class CustomReport(View):
             "host": self.host,
             "finding_notes": self.finding_notes,
             "finding_images": self.finding_images,
-            "user_id": self.request.user.id}
+            "user_id": self.request.user.id,
+            "include_disclaimer": self.include_disclaimer,
+            "disclaimer": self.disclaimer,
+        }
 
 
 def report_findings(request):
@@ -285,8 +292,8 @@ def product_endpoint_report(request, pid):
     include_finding_images = int(request.GET.get("include_finding_images", 0))
     include_executive_summary = int(request.GET.get("include_executive_summary", 0))
     include_table_of_contents = int(request.GET.get("include_table_of_contents", 0))
-    include_disclaimer = int(request.GET.get("include_disclaimer", 0))
-    disclaimer = get_system_setting("disclaimer")
+    include_disclaimer = int(request.GET.get("include_disclaimer", 0)) or (get_system_setting("disclaimer_reports_forced", 0))
+    disclaimer = get_system_setting("disclaimer_reports")
     if include_disclaimer and len(disclaimer) == 0:
         disclaimer = "Please configure in System Settings."
     generate = "_generate" in request.GET
@@ -363,8 +370,8 @@ def generate_report(request, obj, host_view=False):
     include_finding_images = int(request.GET.get("include_finding_images", 0))
     include_executive_summary = int(request.GET.get("include_executive_summary", 0))
     include_table_of_contents = int(request.GET.get("include_table_of_contents", 0))
-    include_disclaimer = int(request.GET.get("include_disclaimer", 0))
-    disclaimer = get_system_setting("disclaimer")
+    include_disclaimer = int(request.GET.get("include_disclaimer", 0)) or (get_system_setting("disclaimer_reports_forced", 0))
+    disclaimer = get_system_setting("disclaimer_reports")
 
     if include_disclaimer and len(disclaimer) == 0:
         disclaimer = "Please configure in System Settings."

@@ -6,8 +6,8 @@
     More information on this event can be found here: {{ event_url }}
 {% endblocktranslate %}
 {% endif %}
-{% if system_settings.disclaimer|length %}
+{% if system_settings.disclaimer_notifications|length %}
 
     {% trans "Disclaimer" %}:
-    {{ system_settings.disclaimer }}
+    {{ system_settings.disclaimer_notifications }}
 {% endif %}

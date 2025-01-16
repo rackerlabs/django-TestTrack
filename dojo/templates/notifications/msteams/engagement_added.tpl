@@ -21,10 +21,10 @@
                 }
             ]
         }
-        {% if system_settings.disclaimer and system_settings.disclaimer.strip %}
+        {% if system_settings.disclaimer_notifications and system_settings.disclaimer_notifications.strip %}
             ,{
                 "activityTitle": "{% trans "Disclaimer" %}",
-                "text": "{{ system_settings.disclaimer }}"
+                "text": "{{ system_settings.disclaimer_notifications }}"
             }
         {% endif %}
         

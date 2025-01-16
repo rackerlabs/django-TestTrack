@@ -848,6 +848,12 @@
                                 {{ bulk_edit_form.media.css }}
                                 {{ bulk_edit_form.media.js }}
                                 {{ bulk_edit_form.tags }}
+                                {% if bulk_edit_form.disclaimer %}
+                                    <div style="background-color:#DADCE2; border:1px #003333; padding:.3em; margin:.1em; ">
+                                        <div style="color:#ff0000;">Disclaimer</div>
+                                        <div>{{ bulk_edit_form.disclaimer }}</div>
+                                    </div>
+                                {% endif %}
                                 <input type="submit"
                                     class="btn btn-sm btn-secondary"
                                     value="Submit"

@@ -490,9 +490,20 @@ class System_Settings(models.Model):
         help_text=_("Enable anyone with a link to the survey to answer a survey"),
     )
     credentials = models.TextField(max_length=3000, blank=True)
-    disclaimer = models.TextField(max_length=3000, default="", blank=True,
-                                  verbose_name=_("Custom Disclaimer"),
-                                  help_text=_("Include this custom disclaimer on all notifications and generated reports"))
+    disclaimer_notifications = models.TextField(max_length=3000, default="", blank=True,
+                                  verbose_name=_("Custom Disclaimer for Notifications"),
+                                  help_text=_("Include this custom disclaimer on all notifications"))
+    disclaimer_reports = models.TextField(max_length=5000, default="", blank=True,
+                                  verbose_name=_("Custom Disclaimer for Reports"),
+                                  help_text=_("Include this custom disclaimer on generated reports"))
+    disclaimer_reports_forced = models.BooleanField(
+        default=False,
+        blank=False,
+        verbose_name=_("Force to add disclaimer reports"),
+        help_text=_("Disclaimer will be added to all reports even if user didn't selected 'Include disclaimer'."))
+    disclaimer_notes = models.TextField(max_length=3000, default="", blank=True,
+                                  verbose_name=_("Custom Disclaimer for Notes"),
+                                  help_text=_("Include this custom disclaimer next to input form for notes"))
     risk_acceptance_form_default_days = models.IntegerField(null=True, blank=True, default=180, help_text=_("Default expiry period for risk acceptance form."))
     risk_acceptance_notify_before_expiration = models.IntegerField(null=True, blank=True, default=10,
                     verbose_name=_("Risk acceptance expiration heads up days"), help_text=_("Notify X days before risk acceptance expires. Leave empty to disable."))
