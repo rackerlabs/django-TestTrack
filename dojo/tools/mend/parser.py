@@ -39,6 +39,7 @@ class MendParser:
             description = "No Description Available"
             cvss3_score = None
             mitigation = "N/A"
+            locations = []
             if "component" in node:
                 description = (
                     "**Vulnerability Description**: "
@@ -56,18 +57,19 @@ class MendParser:
                     + "**Library Type**: "
                     + node["component"].get("libraryType", "")
                     + "\n"
-                    + "**Location Found**: "
-                    + node["component"].get("path", "")
-                    + "\n"
-                    + "**Direct or Transitive Dependency**: "
-                    + node["component"].get("dependencyType", "")
-                    + "\n"
                 )
                 lib_name = node["component"].get("name")
                 component_name = node["component"].get("artifactId")
                 component_version = node["component"].get("version")
-                impact = node["component"].get("dependencyType")
+                impact = (
+                    "**Direct or Transitive Vulnerability**: "
+                    + node["component"].get("dependencyType", "")
+                    + "\n"
+                )
                 cvss3_score = node["vulnerability"].get("score", None)
+                component_path = node["component"].get("path", None)
+                if component_path:
+                    locations.append(component_path)
                 if "topFix" in node:
                     try:
                         topfix_node = node.get("topFix")
@@ -82,7 +84,6 @@ class MendParser:
                         )
                     except Exception:
                         logger.exception("Error handling topFix node.")
-
             elif "library" in node:
                 node.get("project")
                 description = (
@@ -136,18 +137,6 @@ class MendParser:
             )
             cwe = 1035  # default OWASP a9 until the report actually has them
 
-            # comment out the below for now - working on adding this into the above conditional statements since format can be slightly different
-            # mitigation = "N/A"
-            # if "topFix" in node:
-            #     try:
-            #         topfix_node = node.get("topFix")
-            #         mitigation = "**Resolution** ({}): {}\n".format(
-            #             topfix_node.get("date"),
-            #             topfix_node.get("fixResolution"),
-            #         )
-            #     except Exception:
-            #         logger.exception("Error handling topFix node.")
-
             filepaths = []
             if "sourceFiles" in node:
                 try:
@@ -159,7 +148,6 @@ class MendParser:
                         "Error handling local paths for vulnerability.",
                     )
 
-            locations = []
             if "locations" in node:
                 try:
                     locations_node = node.get("locations", [])
@@ -171,8 +159,31 @@ class MendParser:
                     logger.exception(
                         "Error handling local paths for vulnerability.",
                     )
+            if locations:
+                # Join the locations into a single string
+                joined_locations = ", ".join(locations)
 
-            filepaths = locations or filepaths
+                # If the length exceeds 3999 characters, trim it
+                if len(joined_locations) > 3999:
+                    # Iterate over the locations and trim until the total length is <= 3999
+                    total_length = 0
+                    truncated_locations = []
+
+                    for loc in locations:
+                        loc_length = len(loc)
+                        # Check if adding this location will exceed the limit
+                        if total_length + loc_length + len(truncated_locations) <= 3996:  # 3999 - len("...") = 3996
+                            truncated_locations.append(loc)
+                            total_length += loc_length
+                        else:
+                            # Stop if adding the next location will exceed the limit
+                            break
+
+                    # Add ellipsis at the end to indicate truncation
+                    locations = truncated_locations
+                    locations.append("...")  # Add the ellipsis to the end of the locations list
+
+            filepaths = filepaths
 
             new_finding = Finding(
                 title=title,
@@ -188,7 +199,8 @@ class MendParser:
                 dynamic_finding=True,
                 cvssv3=cvss3_vector,
                 cvssv3_score=float(cvss3_score) if cvss3_score is not None else None,
-                impact=impact,
+                impact=impact if impact is not None else None,
+                steps_to_reproduce="**Locations Found**: " + ", ".join(locations) if locations is not None else None,
             )
             if cve:
                 new_finding.unsaved_vulnerability_ids = [cve]
@@ -238,7 +250,8 @@ class MendParser:
             tree_node = content["response"]
             if tree_node:
                 for node in tree_node:
-                    findings.append(_build_common_output(node))
+                    if node.get("findingInfo", {}).get("status") == "ACTIVE":
+                        findings.append(_build_common_output(node))
 
         def create_finding_key(f: Finding) -> str:
             # """Hashes the finding's description and title to retrieve a key for deduplication."""
