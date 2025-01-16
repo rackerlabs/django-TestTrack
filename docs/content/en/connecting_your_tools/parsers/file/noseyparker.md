@@ -6,8 +6,7 @@ Input Type:
 -
 This parser takes JSON Lines Output from Nosey Parker: https://github.com/praetorian-inc/noseyparkerSupports
 
-Supports version 0.16.0: 
-https://github.com/praetorian-inc/noseyparker/releases/tag/v0.16.0
+Supports versions [0.16.0](https://github.com/praetorian-inc/noseyparker/releases/tag/v0.16.0) and [0.22.0](https://github.com/praetorian-inc/noseyparker/releases/tag/v0.22.0) 
 
 Things to note about the Nosey Parker Parser:
 - 
