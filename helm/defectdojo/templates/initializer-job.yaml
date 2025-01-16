@@ -44,6 +44,11 @@ spec:
       - name: {{ .Values.imagePullSecrets }}
       {{- end }}
       volumes:
+      {{- if  .Values.localsettingspy }}
+      - name: localsettingspy
+        configMap:
+          name: {{ $fullName }}-localsettingspy
+      {{- end }}
       {{- range .Values.initializer.extraVolumes }}
       - name: userconfig-{{ .name }}
         {{ .type }}:
@@ -107,6 +112,12 @@ spec:
           {{- toYaml .Values.securityContext.djangoSecurityContext | nindent 10 }}
         {{- end }}
         volumeMounts:
+        {{- if  .Values.localsettingspy }}
+        - name: localsettingspy
+          readOnly: true
+          mountPath: /app/dojo/settings/local_settings.py
+          subPath: file
+        {{- end }}
         {{- range .Values.initializer.extraVolumes }}
         - name: userconfig-{{ .name }}
           readOnly: true

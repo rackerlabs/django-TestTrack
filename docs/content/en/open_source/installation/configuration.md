@@ -23,7 +23,7 @@ When you deploy DefectDojo in a **Kubernetes** cluster, you can set environment 
 
 An example can be found in [`template_env`](https://github.com/DefectDojo/django-DefectDojo/blob/master/dojo/settings/template-env).
 
-### local_settings.py (not with Kubernetes)
+### local_settings.py
 
 `local_settings.py` can contain more complex customizations such as adding MIDDLEWARE or INSTALLED_APP entries.
 This file is processed *after* settings.dist.py is processed, so you can modify settings delivered by DefectDojo out of the box.
@@ -33,6 +33,8 @@ If the file is missing feel free to create it. Do not edit `settings.dist.py` di
 An example can be found in [`dojo/settings/template-local_settings`](https://github.com/DefectDojo/django-DefectDojo/blob/master/dojo/settings/template-local_settings).
 
 In Docker Compose release mode, files in `docker/extra_settings/` (relative to the file `docker-compose.yml`) will be copied into `dojo/settings/` in the docker container on startup.
+
+`local_settings.py` can be used in Kubernetes as well. Variable `localsettingspy` will be stored as ConfigMap and mounted to responsible location of containers.
 
 ## Configuration in the UI
 

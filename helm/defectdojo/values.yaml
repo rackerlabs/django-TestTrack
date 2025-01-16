@@ -541,3 +541,15 @@ extraConfigs: {}
 #     configMapKeyRef:
 #       name: my-other-postgres-configmap
 #       key: cluster_endpoint
+
+# To add code snippet which would extend setting functionality, you might add it here
+# It will be stored as ConfigMap and mounted `dojo/settings/local_settings.py`.
+# For more see: https://documentation.defectdojo.com/getting_started/configuration/
+# For example:
+# localsettingspy: |
+#   INSTALLED_APPS += (
+#     'debug_toolbar',
+#   )
+#   MIDDLEWARE = [
+#       'debug_toolbar.middleware.DebugToolbarMiddleware',
+#   ] + MIDDLEWARE
