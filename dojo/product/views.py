@@ -1044,7 +1044,7 @@ def delete_product(request, pid):
 
 
 @user_is_authorized(Product, Permissions.Engagement_Add, "pid")
-def new_eng_for_app(request, pid, cicd=False):
+def new_eng_for_app(request, pid, *, cicd=False):
     jira_project_form = None
     jira_epic_form = None
 

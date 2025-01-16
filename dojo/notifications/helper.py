@@ -51,7 +51,7 @@ def create_notification(
     requested_by: Dojo_User | None = None,
     reviewers: list[Dojo_User] | list[str] | None = None,
     recipients: list[Dojo_User] | list[str] | None = None,
-    no_users: bool = False,  # noqa: FBT001
+    no_users: bool = False,  # noqa: FBT001, FBT002
     url: str | None = None,
     url_api: str | None = None,
     **kwargs: dict,

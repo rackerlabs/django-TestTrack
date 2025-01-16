@@ -190,7 +190,7 @@ def manage_files(request, oid, obj_type):
 
 
 @login_required
-def protected_serve(request, path, document_root=None, show_indexes=False):
+def protected_serve(request, path, document_root=None, *, show_indexes=False):
     """Serve the file only after verifying the user is supposed to see the file."""
     file = FileUpload.objects.get(file=path)
     if not file:
@@ -211,7 +211,7 @@ def protected_serve(request, path, document_root=None, show_indexes=False):
     return generate_file_response(file)
 
 
-def access_file(request, fid, oid, obj_type, url=False):
+def access_file(request, fid, oid, obj_type, *, url=False):
     def check_file_belongs_to_object(file, object_manager, object_id):
         if not object_manager.filter(id=object_id).exists():
             raise PermissionDenied

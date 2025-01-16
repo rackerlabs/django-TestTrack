@@ -294,7 +294,7 @@ class CloseOldDedupeTest(BaseTestCase):
         self.check_nb_duplicates(4)
 
 
-def add_close_old_tests_to_suite(suite, jira=False, github=False, block_execution=False):
+def add_close_old_tests_to_suite(suite, *, jira=False, github=False, block_execution=False):
     suite.addTest(BaseTestCase("test_login"))
     set_suite_settings(suite, jira=jira, github=github, block_execution=block_execution)
 

@@ -175,7 +175,7 @@ class BlackduckComponentRiskParser:
             desc += "**Scan:** Unable to find scan in source data."
         return desc
 
-    def license_mitigation(self, component, violation=True):
+    def license_mitigation(self, component, *, violation=True):
         """
         Uses Component name and Component version name to display the package.
         :param component: Dictionary containing all components.

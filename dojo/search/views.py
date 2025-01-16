@@ -450,7 +450,7 @@ def vulnerability_id_fix(keyword):
     return keyword
 
 
-def apply_tag_filters(qs, operators, skip_relations=False):
+def apply_tag_filters(qs, operators, *, skip_relations=False):
     tag_filters = {"tag": ""}
 
     if qs.model == Finding:

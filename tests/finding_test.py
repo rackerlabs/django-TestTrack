@@ -506,7 +506,7 @@ class FindingTest(BaseTestCase):
         self.assertTrue(self.is_element_by_css_selector_present("table"))
 
 
-def add_finding_tests_to_suite(suite, jira=False, github=False, block_execution=False):
+def add_finding_tests_to_suite(suite, *, jira=False, github=False, block_execution=False):
     suite.addTest(BaseTestCase("test_login"))
     set_suite_settings(suite, jira=jira, github=github, block_execution=block_execution)
 

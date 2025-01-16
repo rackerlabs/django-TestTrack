@@ -1807,7 +1807,7 @@ class ImportReimportTestUI(DojoAPITestCase, ImportReimportMixin):
         test = Test.objects.get(id=response.url.split("/")[-1])
         return {"test": test.id}
 
-    def import_scan_with_params_ui(self, filename, scan_type="ZAP Scan", engagement=1, minimum_severity="Low", active=True, verified=False,
+    def import_scan_with_params_ui(self, filename, scan_type="ZAP Scan", engagement=1, minimum_severity="Low", *, active=True, verified=False,
                                    push_to_jira=None, endpoint_to_add=None, tags=None, close_old_findings=False, scan_date=None, service=None,
                                    forceActive=False, forceVerified=False):
 
@@ -1852,7 +1852,7 @@ class ImportReimportTestUI(DojoAPITestCase, ImportReimportMixin):
 
             return self.import_scan_ui(engagement, payload)
 
-    def reimport_scan_with_params_ui(self, test_id, filename, scan_type="ZAP Scan", minimum_severity="Low", active=True, verified=False, push_to_jira=None, tags=None, close_old_findings=True, scan_date=None):
+    def reimport_scan_with_params_ui(self, test_id, filename, scan_type="ZAP Scan", minimum_severity="Low", *, active=True, verified=False, push_to_jira=None, tags=None, close_old_findings=True, scan_date=None):
         # Mimic old functionality for active/verified to avoid breaking tests
         activePayload = "force_to_true"
         if not active:

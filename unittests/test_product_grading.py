@@ -36,10 +36,10 @@ class ProductGradeTest(DojoTestCase):
     def tearDown(self):
         self.product.delete()
 
-    def create_finding_on_test(self, severity, verified=True):
+    def create_finding_on_test(self, severity, *, verified=True):
         Finding.objects.create(title=str(uuid.uuid4()), severity=severity, verified=verified, **self.default_finding_options)
 
-    def create_single_critical_and_assert_grade(self, expected_grade, verified=False):
+    def create_single_critical_and_assert_grade(self, expected_grade, *, verified=False):
         self.assertIsNone(self.product.prod_numeric_grade)
         # Add a single critical finding
         self.create_finding_on_test(severity="Critical", verified=verified)

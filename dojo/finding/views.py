@@ -130,7 +130,7 @@ JFORM_PUSH_TO_JIRA_MESSAGE = "jform.push_to_jira: %s"
 logger = logging.getLogger(__name__)
 
 
-def prefetch_for_findings(findings, prefetch_type="all", exclude_untouched=True):
+def prefetch_for_findings(findings, prefetch_type="all", *, exclude_untouched=True):
     prefetched_findings = findings
     if isinstance(
         findings, QuerySet,
@@ -2224,7 +2224,7 @@ def export_templates_to_json(request):
     return HttpResponse(leads_as_json, content_type="json")
 
 
-def apply_cwe_mitigation(apply_to_findings, template, update=True):
+def apply_cwe_mitigation(apply_to_findings, template, *, update=True):
     count = 0
     if apply_to_findings and template.template_match and template.cwe is not None:
         # Update active, verified findings with the CWE template

@@ -178,7 +178,7 @@ def can_be_pushed_to_jira(obj, form=None):
 
 
 # use_inheritance=True means get jira_project config from product if engagement itself has none
-def get_jira_project(obj, use_inheritance=True):
+def get_jira_project(obj, *, use_inheritance=True):
     if not is_jira_enabled():
         return None
 
@@ -673,7 +673,7 @@ def push_to_jira(obj, *args, **kwargs):
     return None
 
 
-def add_issues_to_epic(jira, obj, epic_id, issue_keys, ignore_epics=True):
+def add_issues_to_epic(jira, obj, epic_id, issue_keys, *, ignore_epics=True):
     try:
         return jira.add_issues_to_epic(epic_id=epic_id, issue_keys=issue_keys, ignore_epics=ignore_epics)
     except JIRAError as e:
@@ -1071,7 +1071,7 @@ def issue_from_jira_is_active(issue_from_jira):
     return issue_from_jira.fields.resolution == "None"
 
 
-def push_status_to_jira(obj, jira_instance, jira, issue, save=False):
+def push_status_to_jira(obj, jira_instance, jira, issue, *, save=False):
     status_list = obj.status()
     issue_closed = False
     # check RESOLVED_STATUS first to avoid corner cases with findings that are Inactive, but verified
@@ -1386,7 +1386,7 @@ def jira_get_issue(jira_project, issue_key):
 @app.task
 @dojo_model_from_id(model=Notes, parameter=1)
 @dojo_model_from_id
-def add_comment(obj, note, force_push=False, **kwargs):
+def add_comment(obj, note, *, force_push=False, **kwargs):
     if not is_jira_configured_and_enabled(obj):
         return False
 

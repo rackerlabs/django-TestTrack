@@ -363,7 +363,7 @@ class EndpointList(Widget):
         return mark_safe(html)
 
 
-def report_widget_factory(json_data=None, request=None, user=None, finding_notes=False, finding_images=False,
+def report_widget_factory(json_data=None, request=None, user=None, *, finding_notes=False, finding_images=False,
                           host=None):
     selected_widgets = OrderedDict()
     widgets = json.loads(json_data)

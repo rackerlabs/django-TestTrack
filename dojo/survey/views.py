@@ -200,7 +200,7 @@ def view_questionnaire(request, eid, sid):
     })
 
 
-def get_answered_questions(survey=None, read_only=False):
+def get_answered_questions(survey=None, *, read_only=False):
     if survey is None:
         return None
 

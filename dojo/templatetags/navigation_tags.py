@@ -69,7 +69,7 @@ def dojo_sort(request, display="Name", value="title", default=None):
 
 
 class PaginationNav:
-    def __init__(self, page_number=None, display=None, is_current=False):
+    def __init__(self, page_number=None, display=None, *, is_current=False):
         self.page_number = page_number
         self.is_current = is_current
         self.display = display or page_number or ""

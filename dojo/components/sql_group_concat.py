@@ -6,7 +6,7 @@ class Sql_GroupConcat(Aggregate):
     allow_distinct = True
 
     def __init__(
-        self, expression, separator, distinct=False, ordering=None, **extra,
+        self, expression, separator, *, distinct=False, ordering=None, **extra,
     ):
         self.separator = separator
         super().__init__(
