@@ -2286,7 +2286,7 @@ class CommonImportScanSerializer(serializers.Serializer):
         """
         context = dict(data)
         # update some vars
-        context["scan"] = data.pop("file")
+        context["scan"] = data.pop("file", None)
 
         if context.get("auto_create_context"):
             environment = Development_Environment.objects.get_or_create(name=data.get("environment", "Development"))[0]
