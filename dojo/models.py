@@ -327,6 +327,10 @@ class System_Settings(models.Model):
                                         verbose_name=_("Add vulnerability Id as a JIRA label"),
                                         blank=False)
 
+    enable_linear = models.BooleanField(default=False,
+                                        verbose_name=_("Enable Linear integration"),
+                                        blank=False)
+
     enable_github = models.BooleanField(default=False,
                                       verbose_name=_("Enable GITHUB integration"),
                                       blank=False)
@@ -4017,6 +4021,36 @@ class JIRA_Issue(models.Model):
             raise TypeError(msg)
 
 
+class Linear_Instance(models.Model):
+    LINEAR_API_URL = "https://api.linear.app/graphql"
+
+    instance_name = models.CharField(
+        max_length=2000,
+        help_text=_("Enter a name to give to this configuration"),
+        default="",
+        unique=True
+    )
+    team_id = models.CharField(
+        max_length=64,
+        help_text=_("Enter the UUID of the Team where you want to file Issues"),
+        default=""
+    )
+    addl_json_input = models.JSONField(
+        max_length=2000,
+        blank=True,
+        null=True,
+        default=dict,
+        help_text=_('Enter any additional JSON input you want to use when creating new Issues, e.g. { "labelIds": ["your-label-uuid"] }')
+    )
+    api_key = models.CharField(max_length=2000)
+
+    def __str__(self):
+        return self.instance_name
+
+class Linear_Issue(models.Model):
+    url = models.URLField(max_length=2000, unique=True)
+    findings = models.ManyToManyField(Finding, related_name="linear_issues")
+
 NOTIFICATION_CHOICE_SLACK = ("slack", "slack")
 NOTIFICATION_CHOICE_MSTEAMS = ("msteams", "msteams")
 NOTIFICATION_CHOICE_MAIL = ("mail", "mail")
@@ -4666,6 +4700,8 @@ admin.site.register(Alerts)
 admin.site.register(JIRA_Issue)
 admin.site.register(JIRA_Instance, JIRA_Instance_Admin)
 admin.site.register(JIRA_Project)
+admin.site.register(Linear_Instance)
+admin.site.register(Linear_Issue)
 admin.site.register(GITHUB_Conf)
 admin.site.register(GITHUB_Issue)
 admin.site.register(GITHUB_Clone)

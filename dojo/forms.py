@@ -71,6 +71,7 @@ from dojo.models import (
     JIRA_Instance,
     JIRA_Issue,
     JIRA_Project,
+    Linear_Instance,
     Note_Type,
     Notes,
     Notification_Webhooks,
@@ -1306,6 +1307,30 @@ class PromoteFindingForm(forms.ModelForm):
         exclude = ("reporter", "url", "numerical_severity", "active", "false_p", "verified", "endpoint_status", "cve", "inherited_tags",
                    "duplicate", "out_of_scope", "under_review", "reviewers", "review_requested_by", "is_mitigated", "jira_creation", "jira_change", "planned_remediation_date", "planned_remediation_version", "effort_for_fixing")
 
+class LinearFindingForm(forms.ModelForm):
+    title = forms.CharField(max_length=1000)
+    description = forms.CharField(widget=forms.Textarea)
+    linear = forms.ModelChoiceField(
+        required=True,
+        queryset = Linear_Instance.objects.all().order_by("instance_name")
+    )
+
+    class Meta:
+        fields = ["title", "description", "linear"]
+        model = Finding
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        queryset = Linear_Instance.objects.all().order_by("instance_name")
+        self.fields["linear"].queryset = queryset
+
+        # if we only have one Linear instance, prefill and make the field read-only
+        if queryset.count() == 1:
+            single_instance = queryset.first()
+            self.fields["linear"].initial = single_instance
+            self.fields["linear"].widget.attrs['readonly'] = True
+
 
 class FindingForm(forms.ModelForm):
     title = forms.CharField(max_length=1000)
@@ -2436,6 +2461,28 @@ class BaseJiraForm(forms.ModelForm):
         self.test_jira_connection()
         return self.cleaned_data
 
+class LinearForm(forms.ModelForm):
+    class Meta:
+        model = Linear_Instance
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["team_id"].widget = forms.TextInput(
+            attrs={
+                "placeholder": "https://developers.linear.app/docs/graphql/working-with-the-graphql-api"
+            }
+        )
+        self.fields["addl_json_input"].label = "Additional JSON Input"
+        self.fields["addl_json_input"].widget = forms.Textarea(attrs={'rows': 3})
+        self.fields["addl_json_input"].validators = [self.validate_addl_json]
+        self.fields["api_key"].widget = forms.PasswordInput(render_value=True)
+        if self.instance and self.instance.pk:
+            self.fields['api_key'].initial = self.instance.api_key
+
+    def validate_addl_json(self, value):
+        if not isinstance(value, dict):
+            raise ValidationError("Value must be an object with key-value pairs.")
 
 class AdvancedJIRAForm(BaseJiraForm):
     issue_template_dir = forms.ChoiceField(required=False,
@@ -2515,6 +2562,15 @@ class DeleteProduct_API_Scan_ConfigurationForm(forms.ModelForm):
 
     class Meta:
         model = Product_API_Scan_Configuration
+        fields = ["id"]
+
+
+class DeleteLinearInstanceForm(forms.ModelForm):
+    id = forms.IntegerField(required=True,
+                            widget=forms.widgets.HiddenInput())
+
+    class Meta:
+        model = Linear_Instance
         fields = ["id"]
 
 
