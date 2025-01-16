@@ -204,24 +204,28 @@ class DefaultReImporter(BaseImporter, DefaultReImporterOptions):
             deduplicationLogger.debug(f"found {len(matched_findings)} findings matching with current new finding")
             # Determine how to proceed based on whether matches were found or not
             if matched_findings:
-                existing_finding = matched_findings[0]
-                finding, force_continue = self.process_matched_finding(
-                    unsaved_finding,
-                    existing_finding,
-                )
-                # Determine if we should skip the rest of the loop
-                if force_continue:
-                    continue
-                # Update endpoints on the existing finding with those on the new finding
-                if finding.dynamic_finding:
-                    logger.debug(
-                        "Re-import found an existing dynamic finding for this new "
-                        "finding. Checking the status of endpoints",
-                    )
-                    self.endpoint_manager.update_endpoint_status(
-                        existing_finding,
+                for existing_finding in matched_findings:
+                    finding, force_continue = self.process_matched_finding(
                         unsaved_finding,
-                        self.user,
+                        existing_finding,
+                    )
+                    # Determine if we should skip the rest of the loop
+                    if force_continue:
+                        continue
+
+                    last_existing_finding = existing_finding
+
+                if last_existing_finding is not None:
+                    # Update endpoints on the existing finding with those on the new finding
+                    if finding.dynamic_finding:
+                        logger.debug(
+                            "Re-import found an existing dynamic finding for this new "
+                            "finding. Checking the status of endpoints",
+                        )
+                        self.endpoint_manager.update_endpoint_status(
+                            last_existing_finding,
+                            unsaved_finding,
+                            self.user,
                     )
             else:
                 finding = self.process_finding_that_was_not_matched(unsaved_finding)
