@@ -19,6 +19,6 @@ dependencies:
     alias: postgresqlha
     condition: postgresqlha.enabled
   - name: redis
-    version: ~19.6.0
+    version: ~20.6.0
     repository: "https://charts.bitnami.com/bitnami"
     condition: redis.enabled
