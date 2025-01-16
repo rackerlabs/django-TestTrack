@@ -110,6 +110,9 @@ class TestRustyhogParser(DojoTestCase):
             parser = RustyhogParser()
             findings = parser.get_items(testfile, "Essex Hog", Test())
             self.assertEqual(3, len(findings))
+            self.assertEqual("https://confluence.com/pages/viewpage.action?pageId=12345", findings[0].file_path)
+            self.assertEqual("['-----BEGIN EC PRIVATE KEY-----']", findings[0].payload)
+            self.assertEqual("**Reason:** SSH (EC) private key", findings[0].description[:32])
 
     def test_parse_file_with_multiple_vuln_has_multiple_finding_essexhog_content(self):
         with open("unittests/scans/rusty_hog/essexhog_many_vulns.json", encoding="utf-8") as testfile:
