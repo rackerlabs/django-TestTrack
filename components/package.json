@@ -12,7 +12,7 @@
     "chosen-bootstrap": "https://github.com/dbtek/chosen-bootstrap",
     "chosen-js": "^1.8.7",
     "clipboard": "^2.0.11",
-    "datatables.net": "^1.13.4",
+    "datatables.net": "^2.2.1",
     "datatables.net-buttons-bs": "^2.3.6",    
     "datatables.net-buttons-dt": "^2.3.6",
     "datatables.net-colreorder": "^1.6.1",
