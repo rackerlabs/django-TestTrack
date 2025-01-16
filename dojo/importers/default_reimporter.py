@@ -414,7 +414,7 @@ class DefaultReImporter(BaseImporter, DefaultReImporterOptions):
             # this is left as is for simplicity.
             # Re-writing the legacy deduplication here would be complicated and counter-productive.
             # If you have use cases going through this section, you're advised to create a deduplication configuration for your parser
-            logger.debug("Legacy reimport. In case of issue, you're advised to create a deduplication configuration in order not to go through this section")
+            logger.warning("Legacy reimport. In case of issue, you're advised to create a deduplication configuration in order not to go through this section")
             return Finding.objects.filter(
                     title=unsaved_finding.title,
                     test=self.test,
