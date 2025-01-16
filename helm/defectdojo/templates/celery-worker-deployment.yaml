@@ -47,6 +47,8 @@ spec:
         checksum/esecret: {{ include (print $.Template.BasePath "/extra-secret.yaml") . | sha256sum }}
       {{- end }}
     spec:
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       serviceAccountName: {{ $fullName }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -102,10 +104,8 @@ spec:
       - name: celery
         image: "{{ template "celery.repository" . }}:{{ .Values.tag }}"
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        {{- if .Values.securityContext.enabled }}
         securityContext:
           {{- toYaml .Values.securityContext.djangoSecurityContext | nindent 10 }}
-        {{- end }}
         command: ['/entrypoint-celery-worker.sh']
         volumeMounts:
         {{- if  .Values.django.uwsgi.certificates.enabled }}

@@ -57,7 +57,7 @@ spec:
       {{- end }}
       {{- if .Values.django.mediaPersistentVolume.enabled }}
       securityContext:
-        fsGroup: {{ .Values.django.mediaPersistentVolume.fsGroup | default 1001 }}
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- end }}
       volumes:
       - name: run
@@ -137,10 +137,8 @@ spec:
       - name: uwsgi
         image: '{{ template "django.uwsgi.repository" . }}:{{ .Values.tag }}'
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        {{- if .Values.securityContext.enabled }}
         securityContext:
           {{- toYaml .Values.securityContext.djangoSecurityContext | nindent 10 }}
-        {{- end }}
         volumeMounts:
         - name: run
           mountPath: /run/defectdojo
@@ -228,10 +226,8 @@ spec:
       - name: nginx
         image: '{{ template "django.nginx.repository" . }}:{{ .Values.tag }}'
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        {{- if .Values.securityContext.enabled }}
         securityContext:
           {{- toYaml .Values.securityContext.nginxSecurityContext | nindent 10 }}
-        {{- end }}
         volumeMounts:
         - name: run
           mountPath: /run/defectdojo

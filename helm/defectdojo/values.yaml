@@ -81,8 +81,10 @@ podLabels: {}
 # Allow overriding of revisionHistoryLimit across all deployments.
 # revisionHistoryLimit: 10
 
+podSecurityContext:
+  fsGroup: 1001
+
 securityContext:
-  enabled: true
   djangoSecurityContext:
     # django dockerfile sets USER=1001
     runAsUser: 1001

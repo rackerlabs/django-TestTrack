@@ -46,6 +46,8 @@ spec:
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
         checksum/esecret: {{ include (print $.Template.BasePath "/extra-secret.yaml") . | sha256sum }}
       {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
     spec:
       serviceAccountName: {{ $fullName }}
       {{- if .Values.imagePullSecrets }}
@@ -106,10 +108,8 @@ spec:
         name: celery
         image: "{{ template "celery.repository" . }}:{{ .Values.tag }}"
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        {{- if .Values.securityContext.enabled }}
         securityContext:
           {{- toYaml .Values.securityContext.djangoSecurityContext | nindent 10 }}
-        {{- end }}
         volumeMounts:
         - name: run
           mountPath: /run/defectdojo
