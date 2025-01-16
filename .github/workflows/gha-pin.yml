@@ -1,0 +1,17 @@
+name: SHA Pin Check
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+jobs:
+  ruff-linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+            
+      - name: Check GHA pins
+        uses: suzuki-shunsuke/pinact-action@a60b07ee63e41654915780a3297ff9f5f6b6db63 # v0.1.0
+        with:
+          skip_push: false
