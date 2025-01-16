@@ -5,6 +5,7 @@ from dojo.authorization.authorization import get_roles_for_permission, user_has_
 from dojo.models import (
     Dojo_Group_Member,
     Dojo_User,
+    Global_Role,
     Product_Group,
     Product_Member,
     Product_Type_Group,
@@ -22,9 +23,12 @@ def get_authorized_users_for_product_type(users, product_type, permission):
         .select_related("user")
     product_type_groups = Product_Type_Group.objects \
         .filter(product_type=product_type, role__in=roles)
+    global_roles = Global_Role.objects.filter(role__in=roles)
     group_members = Dojo_Group_Member.objects \
-        .filter(group__in=[ptg.group for ptg in product_type_groups]) \
+        .filter(Q(group__in=[ptg.group for ptg in product_type_groups])
+                | Q(group__in=[gr.group for gr in global_roles])) \
         .select_related("user")
+
     return users.filter(Q(id__in=[ptm.user.id for ptm in product_type_members])
         | Q(id__in=[gm.user.id for gm in group_members])
         | Q(global_role__role__in=roles)
@@ -36,6 +40,7 @@ def get_authorized_users_for_product_and_product_type(users, product, permission
         users = Dojo_User.objects.filter(is_active=True)
 
     roles = get_roles_for_permission(permission)
+
     product_members = Product_Member.objects \
         .filter(product=product, role__in=roles) \
         .select_related("user")
@@ -46,11 +51,14 @@ def get_authorized_users_for_product_and_product_type(users, product, permission
         .filter(product=product, role__in=roles)
     product_type_groups = Product_Type_Group.objects \
         .filter(product_type=product.prod_type, role__in=roles)
+    global_roles = Global_Role.objects.filter(role__in=roles)
     group_members = Dojo_Group_Member.objects \
         .filter(
             Q(group__in=[pg.group for pg in product_groups])
-            | Q(group__in=[ptg.group for ptg in product_type_groups])) \
+            | Q(group__in=[ptg.group for ptg in product_type_groups])
+            | Q(group__in=[gr.group for gr in global_roles])) \
         .select_related("user")
+
     return users.filter(Q(id__in=[pm.user.id for pm in product_members])
         | Q(id__in=[ptm.user.id for ptm in product_type_members])
         | Q(id__in=[gm.user.id for gm in group_members])
