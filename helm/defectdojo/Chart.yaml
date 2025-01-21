@@ -14,7 +14,7 @@ dependencies:
     repository: "https://charts.bitnami.com/bitnami"
     condition: postgresql.enabled
   - name: postgresql-ha
-    version: ~9.4.0
+    version: ~15.1.0
     repository: "https://charts.bitnami.com/bitnami"
     alias: postgresqlha
     condition: postgresqlha.enabled
