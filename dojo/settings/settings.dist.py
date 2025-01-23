@@ -765,7 +765,7 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": (
         "rest_framework.renderers.JSONRenderer",
     ),
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "DEFAULT_PAGINATION_CLASS": "dojo.api_v2.mixins.DeprecationWarningLimitOffsetPagination",
     "PAGE_SIZE": 25,
     "EXCEPTION_HANDLER": "dojo.api_v2.exception_handler.custom_exception_handler",
 }
