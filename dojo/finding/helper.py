@@ -450,7 +450,7 @@ def reset_duplicate_before_delete(dupe):
 
 
 def reset_duplicates_before_delete(qs):
-    mass_model_updater(Finding, qs, lambda f: reset_duplicate_before_delete(f), fields=["duplicate", "duplicate_finding"])
+    mass_model_updater(Finding, qs, reset_duplicate_before_delete, fields=["duplicate", "duplicate_finding"])
 
 
 def set_new_original(finding, new_original):

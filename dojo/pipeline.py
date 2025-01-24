@@ -176,7 +176,7 @@ def update_product_access(backend, uid, user=None, social=None, *args, **kwargs)
 
 def sanitize_username(username):
     allowed_chars_regex = re.compile(r"[\w@.+_-]")
-    allowed_chars = filter(lambda char: allowed_chars_regex.match(char), list(username))
+    allowed_chars = filter(allowed_chars_regex.match, list(username))
     return "".join(allowed_chars)
 
 
