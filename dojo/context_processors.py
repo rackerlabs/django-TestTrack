@@ -1,3 +1,5 @@
+import contextlib
+
 # import the settings file
 from django.conf import settings
 
@@ -47,12 +49,10 @@ def bind_alert_count(request):
 def bind_announcement(request):
     from dojo.models import UserAnnouncement
 
-    try:
+    with contextlib.suppress(Exception):  # TODO: this should be replaced with more meaningful exception
         if request.user.is_authenticated:
             user_announcement = UserAnnouncement.objects.select_related(
                 "announcement",
             ).get(user=request.user)
             return {"announcement": user_announcement.announcement}
-        return {}
-    except Exception:
-        return {}
+    return {}

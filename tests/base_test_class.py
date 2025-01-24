@@ -261,9 +261,9 @@ class BaseTestCase(unittest.TestCase):
     def is_element_by_id_present(self, id):
         try:
             self.driver.find_element(By.ID, id)
-            return True
         except NoSuchElementException:
             return False
+        return True
 
     def is_success_message_present(self, text=None):
         return self.is_element_by_css_selector_present(".alert-success", text=text)

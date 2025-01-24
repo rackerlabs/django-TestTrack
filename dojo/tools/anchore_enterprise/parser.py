@@ -114,11 +114,11 @@ def policy_name(policies, policy_id):
 def extract_vulnerability_id(trigger_id):
     try:
         vulnerability_id, _ = trigger_id.split("+", 2)
-        if vulnerability_id.startswith("CVE"):
-            return vulnerability_id
-        return None
     except ValueError:
         return None
+    if vulnerability_id.startswith("CVE"):
+        return vulnerability_id
+    return None
 
 
 def search_filepath(text):
