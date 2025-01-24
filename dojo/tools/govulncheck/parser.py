@@ -50,7 +50,7 @@ class GovulncheckParser:
                         version = trace.get("version", "Unknown version")
                         package = trace.get("module", "Unknown package")
                         function = trace.get("function", "Unknown function")
-                        filename = filename = trace.get("position", {}).get("filename", "Unknown filename")
+                        filename = trace.get("position", {}).get("filename", "Unknown filename")
                         line = trace.get("position", {}).get("line", "Unknown line")
                         trace_info_str = f"\tModule: {module}, Version: {version}, Package: {package}, Function: {function}, File: {filename}, Line: {line}"
                         trace_info_strs.append(trace_info_str)

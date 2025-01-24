@@ -95,7 +95,6 @@ def get_item(item_node, tree, test):
     """Return the individual Findigns from items found in report."""
     references = []
     mitigation = ""
-    test = test
     static_finding = True
     title = ""
     unique_id_from_tool = ""

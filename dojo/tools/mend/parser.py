@@ -183,8 +183,6 @@ class MendParser:
                     locations = truncated_locations
                     locations.append("...")  # Add the ellipsis to the end of the locations list
 
-            filepaths = filepaths
-
             new_finding = Finding(
                 title=title,
                 test=test,
