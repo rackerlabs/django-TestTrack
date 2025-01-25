@@ -116,7 +116,7 @@ RUN \
     chown ${appuser} components/node_modules
 USER ${uid}
 ENV \
-  # Only variables that are not defined in settings.dist.py
+  # Only variables that are not defined in settings_dist.py
   DD_ADMIN_USER=admin \
   DD_ADMIN_MAIL=admin@defectdojo.local \
   DD_ADMIN_PASSWORD='' \

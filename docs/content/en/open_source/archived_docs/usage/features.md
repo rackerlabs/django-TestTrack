@@ -234,12 +234,12 @@ Note that currently deduplication does not occur across different products.
 ### Deduplication algorithms
 
 The behavior of the deduplication can be configured for each parser in
-settings.dist.py (or settings.py after install) by configuring the
+settings_dist.py (or settings.py after install) by configuring the
 `DEDUPLICATION_ALGORITHM_PER_PARSER` variable, or via the env variable (useful for Kubernetes deployments) `DD_DEDUPLICATION_ALGORITHM_PER_PARSER` with a JSON string like
 ```json
 {"ScannerName":"algorithm"}
 ```
-The environment variable will override the settings in `settings.dist.py`, replacing by matching the keys.
+The environment variable will override the settings in `settings_dist.py`, replacing by matching the keys.
 
 
 The available algorithms are:
@@ -304,11 +304,11 @@ DEDUPE_ALGO_LEGACY (value for `DD_DEDUPLICATION_ALGORITHM_PER_PARSER`: `legacy`)
 
 The hash_code computation can be configured for each parser using the
 parameter `HASHCODE_FIELDS_PER_SCANNER` in
-`settings.dist.py`, or via the env variable (useful for Kubernetes deployments) `DD_HASHCODE_FIELDS_PER_SCANNER` with a JSON string like 
+`settings_dist.py`, or via the env variable (useful for Kubernetes deployments) `DD_HASHCODE_FIELDS_PER_SCANNER` with a JSON string like 
 ```json
 {"ScannerName":["field1", "field2"]}
 ```
-The environment variable will override the settings in `settings.dist.py`, replacing by matching the keys.
+The environment variable will override the settings in `settings_dist.py`, replacing by matching the keys.
 
 The parameter `HASHCODE_ALLOWED_FIELDS` list the fields
 from finding table that were tested and are known to be working when
@@ -384,7 +384,7 @@ Please note the deduplication process is resource intensive and can take a long 
 There is a specific logger that can be activated in order to have
 details about the deduplication process : switch
 `dojo.specific-loggers.deduplication` to debug in
-`settings.dist.py`.
+`settings_dist.py`.
 
 ### Deduplication - APIv2 parameters
 
