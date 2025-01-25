@@ -44,8 +44,8 @@ class TestGitlabAPIFuzzingParser(DojoTestCase):
             )
 
     def test_gitlab_api_fuzzing_parser_with_invalid_json(self):
-        with open(get_unit_tests_scans_path("gitlab_api_fuzzing") / "gitlab_api_fuzzing_invalid.json", encoding="utf-8") as testfile:
+        with open(get_unit_tests_scans_path("gitlab_api_fuzzing") / "gitlab_api_fuzzing_invalid.json", encoding="utf-8") as testfile, \
+          self.assertRaises((KeyError, ValueError)):
             # Something is wrong with JSON file
-            with self.assertRaises((KeyError, ValueError)):
-                parser = GitlabAPIFuzzingParser()
-                parser.get_findings(testfile, Test())
+            parser = GitlabAPIFuzzingParser()
+            parser.get_findings(testfile, Test())

@@ -7,10 +7,10 @@ from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 
 class TestZapParser(DojoTestCase):
     def test_parse_wrong_file(self):
-        with self.assertRaises(ValueError):
-            with open(get_unit_tests_scans_path("coverity_api") / "wrong.json", encoding="utf-8") as testfile:
-                parser = CoverityApiParser()
-                parser.get_findings(testfile, Test())
+        with self.assertRaises(ValueError), \
+          open(get_unit_tests_scans_path("coverity_api") / "wrong.json", encoding="utf-8") as testfile:
+            parser = CoverityApiParser()
+            parser.get_findings(testfile, Test())
 
     def test_parse_no_findings(self):
         with open(get_unit_tests_scans_path("coverity_api") / "empty.json", encoding="utf-8") as testfile:

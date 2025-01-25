@@ -54,10 +54,10 @@ class TestIntSightsParser(DojoTestCase):
             self.assertEqual(9, len(findings))
 
     def test_intsights_parser_invalid_text_with_error_csv(self):
-        with self.assertRaises(ValueError):
-            with open(get_unit_tests_scans_path("intsights") / "intsights_invalid_file.txt", encoding="utf-8") as testfile:
-                parser = IntSightsParser()
-                parser.get_findings(testfile, Test())
+        with self.assertRaises(ValueError), \
+          open(get_unit_tests_scans_path("intsights") / "intsights_invalid_file.txt", encoding="utf-8") as testfile:
+            parser = IntSightsParser()
+            parser.get_findings(testfile, Test())
 
     def test_intsights_parser_with_no_alerts_json(self):
         with open(get_unit_tests_scans_path("intsights") / "intsights_zero_vuln.json", encoding="utf-8") as testfile:

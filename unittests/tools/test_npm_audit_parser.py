@@ -63,19 +63,19 @@ class TestNpmAuditParser(DojoTestCase):
             self.assertEqual("1.9.2", findings[0].component_version)
 
     def test_npm_audit_parser_empty_with_error(self):
-        with self.assertRaises(ValueError) as context:
-            with open(get_unit_tests_scans_path("npm_audit") / "empty_with_error.json", encoding="utf-8") as testfile:
-                parser = NpmAuditParser()
-                parser.get_findings(testfile, Test())
+        with self.assertRaises(ValueError) as context, \
+          open(get_unit_tests_scans_path("npm_audit") / "empty_with_error.json", encoding="utf-8") as testfile:
+            parser = NpmAuditParser()
+            parser.get_findings(testfile, Test())
 
         self.assertIn("npm audit report contains errors:", str(context.exception))
         self.assertIn("ENOAUDIT", str(context.exception))
 
     def test_npm_audit_parser_many_vuln_npm7(self):
-        with self.assertRaises(ValueError) as context:
-            with open(get_unit_tests_scans_path("npm_audit") / "many_vuln_npm7.json", encoding="utf-8") as testfile:
-                parser = NpmAuditParser()
-                parser.get_findings(testfile, Test())
+        with self.assertRaises(ValueError) as context, \
+          open(get_unit_tests_scans_path("npm_audit") / "many_vuln_npm7.json", encoding="utf-8") as testfile:
+            parser = NpmAuditParser()
+            parser.get_findings(testfile, Test())
 
         self.assertIn("npm7 with auditReportVersion 2 or higher not yet supported", str(context.exception))
 

@@ -44,10 +44,10 @@ class TestThreatComposerParser(DojoTestCase):
             self.assertEqual(21, len(findings))
 
     def test_threat_composer_parser_empty_with_error(self):
-        with self.assertRaises(ValueError) as context:
-            with open(sample_path("threat_composer_no_threats_with_error.json"), encoding="utf-8") as testfile:
-                parser = ThreatComposerParser()
-                parser.get_findings(testfile, Test())
+        with self.assertRaises(ValueError) as context, \
+          open(sample_path("threat_composer_no_threats_with_error.json"), encoding="utf-8") as testfile:
+            parser = ThreatComposerParser()
+            parser.get_findings(testfile, Test())
 
         self.assertNotIn("No threats found in the JSON file", str(context.exception))
 

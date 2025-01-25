@@ -32,13 +32,13 @@ class TestNoseyParkerParser(DojoTestCase):
             self.assertEqual(3, len(findings))
 
     def test_noseyparker_parser_error(self):
-        with self.assertRaises(ValueError) as context:
-            with open(get_unit_tests_scans_path("noseyparker") / "empty_with_error.json", encoding="utf-8") as testfile:
-                parser = NoseyParkerParser()
-                findings = parser.get_findings(testfile, Test())
-                testfile.close()
-                self.assertEqual(0, len(findings))
-                self.assertIn(
-                    "Invalid Nosey Parker data, make sure to use Nosey Parker v0.16.0", str(context.exception),
-                )
-                self.assertIn("ECONNREFUSED", str(context.exception))
+        with self.assertRaises(ValueError) as context, \
+          open(get_unit_tests_scans_path("noseyparker") / "empty_with_error.json", encoding="utf-8") as testfile:
+            parser = NoseyParkerParser()
+            findings = parser.get_findings(testfile, Test())
+            testfile.close()
+            self.assertEqual(0, len(findings))
+            self.assertIn(
+                "Invalid Nosey Parker data, make sure to use Nosey Parker v0.16.0", str(context.exception),
+            )
+            self.assertIn("ECONNREFUSED", str(context.exception))
