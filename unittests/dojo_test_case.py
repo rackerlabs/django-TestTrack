@@ -125,16 +125,16 @@ class DojoTestUtilsMixin:
         test.save()
         return test
 
-    def get_test(self, id):
-        return Test.objects.get(id=id)
+    def get_test(self, test_id):
+        return Test.objects.get(id=test_id)
 
     def get_test_api(self, test_id):
         response = self.client.patch(reverse("engagement-list") + f"{test_id}/")
         self.assertEqual(200, response.status_code, response.content[:1000])
         return response.data
 
-    def get_engagement(self, id):
-        return Engagement.objects.get(id=id)
+    def get_engagement(self, eng_id):
+        return Engagement.objects.get(id=eng_id)
 
     def get_engagement_api(self, engagement_id):
         response = self.client.patch(reverse("engagement-list") + f"{engagement_id}/")

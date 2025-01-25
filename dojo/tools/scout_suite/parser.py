@@ -70,7 +70,7 @@ class ScoutSuiteParser:
         tests = []
         test = ParserTest(
             name=self.ID,
-            type=data["provider_name"],
+            parser_type=data["provider_name"],
             version=last_run.get("version"),
         )
         test.description = test_description

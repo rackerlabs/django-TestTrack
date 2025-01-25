@@ -41,10 +41,10 @@ class DeepfenceThreatmapperCompliance:
             test=test,
         )
 
-    def compliance_severity(self, input):
-        if input == "pass" or input == "info":
+    def compliance_severity(self, severity_input):
+        if severity_input == "pass" or severity_input == "info":
             output = "Info"
-        elif input == "warn":
+        elif severity_input == "warn":
             output = "Medium"
         else:
             output = "Info"

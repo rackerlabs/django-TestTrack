@@ -37,7 +37,7 @@ class GitlabSastParser:
 
         test = ParserTest(
             name=scanner_name,
-            type=scanner_type,
+            parser_type=scanner_type,
             version=scanner_version,
         )
         test.findings = self.get_items(tree)

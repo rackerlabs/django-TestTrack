@@ -49,8 +49,8 @@ class Command(BaseCommand):
         # the outside decorator only outside
 
 
-def test2(clazz, id):
-    model = clazz.objects.get(id=id)
+def test2(clazz, clazz_id):
+    model = clazz.objects.get(id=clazz_id)
     logger.debug(model)
 
 

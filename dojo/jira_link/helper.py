@@ -750,7 +750,7 @@ def prepare_jira_issue_fields(
 
 
 def add_jira_issue(obj, *args, **kwargs):
-    def failure_to_add_message(message: str, exception: Exception, object: Any) -> bool:
+    def failure_to_add_message(message: str, exception: Exception, _: Any) -> bool:
         if exception:
             logger.exception(exception)
         logger.error(message)

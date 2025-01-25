@@ -1540,9 +1540,9 @@ def engagement_ics(request, eid):
     return response
 
 
-def get_list_index(list, index):
+def get_list_index(full_list, index):
     try:
-        element = list[index]
+        element = full_list[index]
     except Exception:
         element = None
     return element

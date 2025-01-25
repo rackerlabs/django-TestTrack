@@ -10,9 +10,9 @@ from user_test import UserTest
 
 class AnnouncementBannerTest(BaseTestCase):
 
-    def __init__(self, method_name, type):
+    def __init__(self, method_name, anno_type):
         super().__init__(method_name)
-        self.type = type
+        self.type = anno_type
 
     def test_setup(self):
         driver = self.driver

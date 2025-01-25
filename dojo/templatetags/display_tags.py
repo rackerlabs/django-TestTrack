@@ -579,9 +579,9 @@ def internet_accessible_icon(value):
 
 
 @register.filter
-def get_severity_count(id, table):
-    if table == "test":
-        counts = Finding.objects.filter(test=id). \
+def get_severity_count(elem_id, table_type):
+    if table_type == "test":
+        counts = Finding.objects.filter(test=elem_id). \
             prefetch_related("test__engagement__product").aggregate(
             total=Sum(
                 Case(When(severity__in=("Critical", "High", "Medium", "Low"),
@@ -608,8 +608,8 @@ def get_severity_count(id, table):
                           then=Value(1)),
                      output_field=IntegerField())),
         )
-    elif table == "engagement":
-        counts = Finding.objects.filter(test__engagement=id, active=True, duplicate=False). \
+    elif table_type == "engagement":
+        counts = Finding.objects.filter(test__engagement=elem_id, active=True, duplicate=False). \
             prefetch_related("test__engagement__product").aggregate(
             total=Sum(
                 Case(When(severity__in=("Critical", "High", "Medium", "Low"),
@@ -636,8 +636,8 @@ def get_severity_count(id, table):
                           then=Value(1)),
                      output_field=IntegerField())),
         )
-    elif table == "product":
-        counts = Finding.objects.filter(test__engagement__product=id). \
+    elif table_type == "product":
+        counts = Finding.objects.filter(test__engagement__product=elem_id). \
             prefetch_related("test__engagement__product").aggregate(
             total=Sum(
                 Case(When(severity__in=("Critical", "High", "Medium", "Low"),
@@ -695,9 +695,9 @@ def get_severity_count(id, table):
         "Info: " + str(info),
     ))
 
-    if table == "test":
+    if table_type == "test":
         display_counts.append("Total: " + str(total) + " Findings")
-    elif table == "engagement" or table == "product":
+    elif table_type == "engagement" or table_type == "product":
         display_counts.append("Total: " + str(total) + " Active Findings")
 
     return ", ".join([str(item) for item in display_counts])

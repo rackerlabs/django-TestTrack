@@ -56,7 +56,7 @@ class RustyhogParser:
                 break
         test = ParserTest(
             name=parsername,
-            type=parsername,
+            parser_type=parsername,
             version="",
         )
         if (

@@ -290,9 +290,9 @@ class SchemaChecker:
 
         # print('_check_type ok for: %s: %s' % (schema, obj))
 
-    def _with_prefix(self, prefix, callable, *args):
+    def _with_prefix(self, prefix, callable_function, *args):
         self._push_prefix(prefix)
-        callable(*args)
+        callable_function(*args)
         self._pop_prefix()
 
     def check(self, schema, obj):

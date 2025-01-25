@@ -40,20 +40,20 @@ def check_post_permission(request, post_model, post_pk, post_permission):
 
 def check_object_permission(
     request,
-    object,
+    obj,
     get_permission,
     put_permission,
     delete_permission,
     post_permission=None,
 ):
     if request.method == "GET":
-        return user_has_permission(request.user, object, get_permission)
+        return user_has_permission(request.user, obj, get_permission)
     if request.method == "PUT" or request.method == "PATCH":
-        return user_has_permission(request.user, object, put_permission)
+        return user_has_permission(request.user, obj, put_permission)
     if request.method == "DELETE":
-        return user_has_permission(request.user, object, delete_permission)
+        return user_has_permission(request.user, obj, delete_permission)
     if request.method == "POST":
-        return user_has_permission(request.user, object, post_permission)
+        return user_has_permission(request.user, obj, post_permission)
     return False
 
 

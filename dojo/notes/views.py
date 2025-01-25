@@ -20,8 +20,8 @@ from dojo.models import Cred_User, Engagement, Finding, Note_Type, NoteHistory, 
 logger = logging.getLogger(__name__)
 
 
-def delete_note(request, id, page, objid):
-    note = get_object_or_404(Notes, id=id)
+def delete_note(request, note_id, page, objid):
+    note = get_object_or_404(Notes, id=note_id)
     reverse_url = None
     object_id = None
 
@@ -64,8 +64,8 @@ def delete_note(request, id, page, objid):
     return HttpResponseRedirect(reverse(reverse_url, args=(object_id, )))
 
 
-def edit_note(request, id, page, objid):
-    note = get_object_or_404(Notes, id=id)
+def edit_note(request, note_id, page, objid):
+    note = get_object_or_404(Notes, id=note_id)
     reverse_url = None
     object_id = None
 
@@ -142,8 +142,8 @@ def edit_note(request, id, page, objid):
         })
 
 
-def note_history(request, id, page, objid):
-    note = get_object_or_404(Notes, id=id)
+def note_history(request, elem_id, page, objid):
+    note = get_object_or_404(Notes, id=elem_id)
     reverse_url = None
     object_id = None
 

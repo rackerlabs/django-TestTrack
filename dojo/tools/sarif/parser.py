@@ -46,7 +46,7 @@ class SarifParser:
         for run in tree.get("runs", []):
             test = ParserTest(
                 name=run["tool"]["driver"]["name"],
-                type=run["tool"]["driver"]["name"],
+                parser_type=run["tool"]["driver"]["name"],
                 version=run["tool"]["driver"].get("version"),
             )
             test.findings = self.__get_items_from_run(run)
