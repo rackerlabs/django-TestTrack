@@ -51,14 +51,14 @@ class RapplexParser:
                     issue_sections = issue_definition.get("Sections", {})
                     ref = html2text(issue_sections.get("References", ""))
                     rem = issue_sections.get("Remediation", "")
-                    sum = issue_sections.get("Summary", "")
+                    summary = issue_sections.get("Summary", "")
 
                     finding = Finding(
                         title=title,
                         test=test,
                         severity=severity_level,
                         date=formatted_date,
-                        description=sum,
+                        description=summary,
                         mitigation=rem,
                         cwe=cwe_val,
                         references=ref,

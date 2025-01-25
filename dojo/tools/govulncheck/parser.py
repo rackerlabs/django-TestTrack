@@ -137,7 +137,7 @@ class GovulncheckParser:
                         formatted_ranges = []
                         summary = osv_data.get("summary", "Unknown")
                         component_name = affected_package["name"]
-                        id = osv_data["id"]
+                        osv_id = osv_data["id"]
 
                         for r in affected_ranges:
                             events = r["events"]
@@ -192,7 +192,7 @@ class GovulncheckParser:
                             "references": references,
                             "file_path": path,
                             "url": db_specific_url,
-                            "unique_id_from_tool": id,
+                            "unique_id_from_tool": osv_id,
                         }
 
                         findings.append(Finding(**d))

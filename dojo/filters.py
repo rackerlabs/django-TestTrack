@@ -103,8 +103,8 @@ EARLIEST_FINDING = None
 
 def custom_filter(queryset, name, value):
     values = value.split(",")
-    filter = (f"{name}__in")
-    return queryset.filter(Q(**{filter: values}))
+    cust_filter = (f"{name}__in")
+    return queryset.filter(Q(**{cust_filter: values}))
 
 
 def custom_vulnerability_id_filter(queryset, name, value):

@@ -26,7 +26,7 @@ class DetectSecretsParser:
             find_date = dateutil.parser.parse(data.get("generated_at"))
         for detect_file in data.get("results"):
             for item in data.get("results").get(detect_file):
-                type = item.get("type")
+                item_type = item.get("type")
                 file = item.get("filename")
                 hashed_secret = item.get("hashed_secret")
                 is_verified = item.get("is_verified")
@@ -34,10 +34,10 @@ class DetectSecretsParser:
                 description = "Detected potential secret with the following related data:\n"
                 description += "**Filename:** " + file + "\n"
                 description += "**Line:** " + str(line) + "\n"
-                description += "**Type:** " + type + "\n"
+                description += "**Type:** " + item_type + "\n"
 
                 dupe_key = hashlib.sha256(
-                    (type + file + str(line) + hashed_secret).encode("utf-8"),
+                    (item_type + file + str(line) + hashed_secret).encode("utf-8"),
                 ).hexdigest()
 
                 if dupe_key in dupes:
@@ -45,7 +45,7 @@ class DetectSecretsParser:
                     finding.nb_occurences += 1
                 else:
                     finding = Finding(
-                        title=f"{type}",
+                        title=item_type,
                         test=test,
                         description=description,
                         cwe=798,

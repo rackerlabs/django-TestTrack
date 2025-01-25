@@ -573,12 +573,12 @@ def get_labels(obj):
 
     if system_settings.add_vulnerability_id_to_jira_label or (jira_project and jira_project.add_vulnerability_id_to_jira_label):
         if isinstance(obj, Finding) and obj.vulnerability_ids:
-            for id in obj.vulnerability_ids:
-                labels.append(id)
+            for vul_id in obj.vulnerability_ids:
+                labels.append(vul_id)
         elif isinstance(obj, Finding_Group):
             for finding in obj.findings.all():
-                for id in finding.vulnerability_ids:
-                    labels.append(id)
+                for vul_id in finding.vulnerability_ids:
+                    labels.append(vul_id)
 
     return labels
 

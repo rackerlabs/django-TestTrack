@@ -195,12 +195,12 @@ class TrivyParser:
                 references = "\n".join(vuln.get("References", []))
                 mitigation = vuln.get("FixedVersion", "")
                 cwe = int(vuln["CweIDs"][0].split("-")[1]) if len(vuln.get("CweIDs", [])) > 0 else 0
-                type = target_data.get("Type", "")
+                vul_type = target_data.get("Type", "")
                 title = f"{vuln_id} {package_name} {package_version}"
                 description = DESCRIPTION_TEMPLATE.format(
                     title=vuln.get("Title", ""),
                     target=target,
-                    type=type,
+                    type=vul_type,
                     fixed_version=mitigation,
                     description_text=vuln.get("Description", ""),
                 )
@@ -218,7 +218,7 @@ class TrivyParser:
                     cvssv3=cvssv3,
                     static_finding=True,
                     dynamic_finding=False,
-                    tags=[type, target_class],
+                    tags=[vul_type, target_class],
                     service=service_name,
                 )
 
@@ -308,14 +308,14 @@ class TrivyParser:
                 items.append(finding)
 
             licenses = target_data.get("Licenses", [])
-            for license in licenses:
-                license_severity = license.get("Severity")
-                license_category = license.get("Category")
-                license_pkgname = license.get("PkgName")
-                license_filepath = license.get("FilePath")
-                license_name = license.get("Name")
-                license_confidence = license.get("Confidence")
-                license_link = license.get("Link")
+            for lic in licenses:
+                license_severity = lic.get("Severity")
+                license_category = lic.get("Category")
+                license_pkgname = lic.get("PkgName")
+                license_filepath = lic.get("FilePath")
+                license_name = lic.get("Name")
+                license_confidence = lic.get("Confidence")
+                license_link = lic.get("Link")
 
                 title = f"License detected in {target_target} - {license_name}"
                 description = LICENSE_DESCRIPTION_TEMPLATE.format(

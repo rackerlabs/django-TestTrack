@@ -33,8 +33,8 @@ def check_post_permission(request, post_model, post_pk, post_permission):
         if request.data.get(post_pk) is None:
             msg = f"Unable to check for permissions: Attribute '{post_pk}' is required"
             raise ParseError(msg)
-        object = get_object_or_404(post_model, pk=request.data.get(post_pk))
-        return user_has_permission(request.user, object, post_permission)
+        obj = get_object_or_404(post_model, pk=request.data.get(post_pk))
+        return user_has_permission(request.user, obj, post_permission)
     return True
 
 
@@ -158,29 +158,29 @@ class UserHasDojoMetaPermission(permissions.BasePermission):
             has_permission_result = True
             product_id = request.data.get("product", None)
             if product_id:
-                object = get_object_or_404(Product, pk=product_id)
+                obj = get_object_or_404(Product, pk=product_id)
                 has_permission_result = (
                     has_permission_result
                     and user_has_permission(
-                        request.user, object, Permissions.Product_Edit,
+                        request.user, obj, Permissions.Product_Edit,
                     )
                 )
             finding_id = request.data.get("finding", None)
             if finding_id:
-                object = get_object_or_404(Finding, pk=finding_id)
+                obj = get_object_or_404(Finding, pk=finding_id)
                 has_permission_result = (
                     has_permission_result
                     and user_has_permission(
-                        request.user, object, Permissions.Finding_Edit,
+                        request.user, obj, Permissions.Finding_Edit,
                     )
                 )
             endpoint_id = request.data.get("endpoint", None)
             if endpoint_id:
-                object = get_object_or_404(Endpoint, pk=endpoint_id)
+                obj = get_object_or_404(Endpoint, pk=endpoint_id)
                 has_permission_result = (
                     has_permission_result
                     and user_has_permission(
-                        request.user, object, Permissions.Endpoint_Edit,
+                        request.user, obj, Permissions.Endpoint_Edit,
                     )
                 )
             return has_permission_result
@@ -744,20 +744,20 @@ class UserHasJiraProductPermission(permissions.BasePermission):
             has_permission_result = True
             engagement_id = request.data.get("engagement", None)
             if engagement_id:
-                object = get_object_or_404(Engagement, pk=engagement_id)
+                obj = get_object_or_404(Engagement, pk=engagement_id)
                 has_permission_result = (
                     has_permission_result
                     and user_has_permission(
-                        request.user, object, Permissions.Engagement_Edit,
+                        request.user, obj, Permissions.Engagement_Edit,
                     )
                 )
             product_id = request.data.get("product", None)
             if product_id:
-                object = get_object_or_404(Product, pk=product_id)
+                obj = get_object_or_404(Product, pk=product_id)
                 has_permission_result = (
                     has_permission_result
                     and user_has_permission(
-                        request.user, object, Permissions.Product_Edit,
+                        request.user, obj, Permissions.Product_Edit,
                     )
                 )
             return has_permission_result
@@ -798,29 +798,29 @@ class UserHasJiraIssuePermission(permissions.BasePermission):
             has_permission_result = True
             engagement_id = request.data.get("engagement", None)
             if engagement_id:
-                object = get_object_or_404(Engagement, pk=engagement_id)
+                obj = get_object_or_404(Engagement, pk=engagement_id)
                 has_permission_result = (
                     has_permission_result
                     and user_has_permission(
-                        request.user, object, Permissions.Engagement_Edit,
+                        request.user, obj, Permissions.Engagement_Edit,
                     )
                 )
             finding_id = request.data.get("finding", None)
             if finding_id:
-                object = get_object_or_404(Finding, pk=finding_id)
+                obj = get_object_or_404(Finding, pk=finding_id)
                 has_permission_result = (
                     has_permission_result
                     and user_has_permission(
-                        request.user, object, Permissions.Finding_Edit,
+                        request.user, obj, Permissions.Finding_Edit,
                     )
                 )
             finding_group_id = request.data.get("finding_group", None)
             if finding_group_id:
-                object = get_object_or_404(Finding_Group, pk=finding_group_id)
+                obj = get_object_or_404(Finding_Group, pk=finding_group_id)
                 has_permission_result = (
                     has_permission_result
                     and user_has_permission(
-                        request.user, object, Permissions.Finding_Group_Edit,
+                        request.user, obj, Permissions.Finding_Group_Edit,
                     )
                 )
             return has_permission_result

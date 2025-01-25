@@ -82,15 +82,13 @@ def get_item(vuln):
     ]  # this finding is false positive
     active = not false_positive and not risk_accepted
 
-    hash = hashlib.sha256()
     unique_id = (
         vuln["report_hash"]
         + "."
         + vuln["analyzer_result_file_path"]
         + description
     )
-    hash.update(unique_id.encode())
-    unique_id_from_tool = hash.hexdigest()
+    unique_id_from_tool = hashlib.sha256(unique_id.encode()).hexdigest()
 
     title = ""
     if "checker_name" in vuln:

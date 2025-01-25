@@ -2373,9 +2373,9 @@ class async_delete:
     @dojo_async_task
     @app.task
     def delete_chunk(self, objects, **kwargs):
-        for object in objects:
+        for obj in objects:
             try:
-                object.delete()
+                obj.delete()
             except AssertionError:
                 logger.debug("ASYNC_DELETE: object has already been deleted elsewhere. Skipping")
                 # The id must be None
