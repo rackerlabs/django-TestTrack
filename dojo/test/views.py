@@ -1002,7 +1002,7 @@ class ReImportScanResultsView(View):
                 untouched_finding_count=untouched_finding_count,
             ))
         except Exception as e:
-            logger.exception(e)
+            logger.exception("An exception error occurred during the report import")
             return f"An exception error occurred during the report import: {e}"
         return None
 

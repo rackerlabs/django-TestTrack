@@ -409,7 +409,7 @@ def get_jira_connection_raw(jira_server, jira_username, jira_password):
 
         return jira
     except JIRAError as e:
-        logger.exception(e)
+        logger.exception("logged in to JIRA %s unsuccessful", jira_server)
 
         error_message = e.text if hasattr(e, "text") else e.message if hasattr(e, "message") else e.args[0]
 
@@ -422,7 +422,7 @@ def get_jira_connection_raw(jira_server, jira_username, jira_password):
         raise
 
     except requests.exceptions.RequestException as re:
-        logger.exception(re)
+        logger.exception("Unknown JIRA Connection Error")
         error_message = re.text if hasattr(re, "text") else re.message if hasattr(re, "message") else re.args[0]
         log_jira_generic_alert("Unknown JIRA Connection Error", re)
 
@@ -462,7 +462,7 @@ def jira_transition(jira, issue, transition_id):
             return True
     except JIRAError as jira_error:
         logger.debug("error transitioning jira issue " + issue.key + " " + str(jira_error))
-        logger.exception(jira_error)
+        logger.exception("Error with Jira transation issue")
         alert_text = f"JiraError HTTP {jira_error.status_code}"
         if jira_error.url:
             alert_text += f" url: {jira_error.url}"
@@ -677,8 +677,7 @@ def add_issues_to_epic(jira, obj, epic_id, issue_keys, ignore_epics=True):
     try:
         return jira.add_issues_to_epic(epic_id=epic_id, issue_keys=issue_keys, ignore_epics=ignore_epics)
     except JIRAError as e:
-        logger.error("error adding issues %s to epic %s for %s", issue_keys, epic_id, obj.id)
-        logger.exception(e)
+        logger.exception("error adding issues %s to epic %s for %s", issue_keys, epic_id, obj.id)
         log_jira_alert(e.text, obj)
         return False
 
@@ -1040,8 +1039,7 @@ def get_jira_issue_from_jira(find):
         return jira.issue(j_issue.jira_id)
 
     except JIRAError as e:
-        logger.exception(e)
-        logger.error("jira_meta for project: %s and url: %s meta: %s", jira_project.project_key, jira_project.jira_instance.url, json.dumps(meta, indent=4))  # this is None safe
+        logger.exception("jira_meta for project: %s and url: %s meta: %s", jira_project.project_key, jira_project.jira_instance.url, json.dumps(meta, indent=4))  # this is None safe
         log_jira_alert(e.text, find)
         return None
 
@@ -1198,7 +1196,7 @@ def jira_attachment(finding, jira, issue, file, jira_filename=None):
                     jira.add_attachment(issue=issue, attachment=f)
             return True
         except JIRAError as e:
-            logger.exception(e)
+            logger.exception("Unable to add attachment")
             log_jira_alert("Attachment: " + e.text, finding)
             return False
     return None
@@ -1252,7 +1250,7 @@ def close_epic(eng, push_to_jira, **kwargs):
                     return False
                 return True
             except JIRAError as e:
-                logger.exception(e)
+                logger.exception("Jira Engagement/Epic Close Error")
                 log_jira_generic_alert("Jira Engagement/Epic Close Error", str(e))
                 return False
         return None
@@ -1294,7 +1292,7 @@ def update_epic(engagement, **kwargs):
             issue.update(**jira_issue_update_kwargs)
             return True
         except JIRAError as e:
-            logger.exception(e)
+            logger.exception("Jira Engagement/Epic Update Error")
             log_jira_generic_alert("Jira Engagement/Epic Update Error", str(e))
             return False
     else:
@@ -1351,12 +1349,12 @@ def add_epic(engagement, **kwargs):
             # but it's just a non-existent project (or maybe a project for which the account has no create permission?)
             #
             # {"errorMessages":[],"errors":{"project":"project is required"}}
-            logger.exception(e)
             error = str(e)
             message = ""
             if "customfield" in error:
                 message = "The 'Epic name id' in your DefectDojo Jira Configuration does not appear to be correct. Please visit, " + jira_instance.url + \
                     "/rest/api/2/field and search for Epic Name. Copy the number out of cf[number] and place in your DefectDojo settings for Jira and try again. For example, if your results are cf[100001] then copy 100001 and place it in 'Epic name id'. (Your Epic Id will be different.) \n\n"
+            logger.exception(message)
 
             log_jira_generic_alert("Jira Engagement/Epic Creation Error",
                                    message + error)
@@ -1373,8 +1371,7 @@ def jira_get_issue(jira_project, issue_key):
         return jira.issue(issue_key)
 
     except JIRAError as jira_error:
-        logger.debug("error retrieving jira issue " + issue_key + " " + str(jira_error))
-        logger.exception(jira_error)
+        logger.exception("error retrieving jira issue %s", issue_key)
         log_jira_generic_alert("error retrieving jira issue " + issue_key, str(jira_error))
         return None
 
@@ -1580,9 +1577,9 @@ def process_jira_project_form(request, instance=None, target=None, product=None,
                                                 extra_tags="alert-success")
                         error = False
                         logger.debug("stored JIRA_Project successfully")
-            except Exception as e:
+            except Exception:
                 error = True
-                logger.exception(e)
+                logger.exception("Unable to store Jira project")
         else:
             logger.debug(jform.errors)
             error = True
