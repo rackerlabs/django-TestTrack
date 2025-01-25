@@ -67,10 +67,10 @@
     {
       "name": "Password in URL",
       "description": "Password in URL detected; please remove and revoke it if this is a leak.",
-      "cve": "dojo/settings/settings.dist.py:ac48da3029b35c40a4126d516386d226bbe00c27f9d6b44834458c29ef9d8779:Password in URL",
+      "cve": "dojo/settings/settings_dist.py:ac48da3029b35c40a4126d516386d226bbe00c27f9d6b44834458c29ef9d8779:Password in URL",
       "severity": "Critical",
       "location": {
-        "file": "dojo/settings/settings.dist.py",
+        "file": "dojo/settings/settings_dist.py",
         "start_line": 155,
         "end_line": 155,
         "dependency": {

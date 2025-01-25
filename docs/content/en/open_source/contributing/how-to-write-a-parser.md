@@ -36,7 +36,7 @@ $ docker compose build --build-arg uid=1000
 |`dojo/tools/<parser_dir>/parser.py`            | The meat. This is where you write your actual parser. The class name must be the Python module name without underscores plus `Parser`. **Example:** When the name of the Python module is `dependency_check`, the class name shall be `DependencyCheckParser`
 |`unittests/scans/<parser_dir>/{many_vulns,no_vuln,one_vuln}.json` | Sample files containing meaningful data for unit tests. The minimal set.
 |`unittests/tools/test_<parser_name>_parser.py` | Unit tests of the parser.
-|`dojo/settings/settings.dist.py`               | If you want to use a modern hashcode based deduplication algorithm
+|`dojo/settings/settings_dist.py`               | If you want to use a modern hashcode based deduplication algorithm
 |`doc/content/en/integrations/parsers/<file/api>/<parser_file>.md` | Documentation, what kind of file format is required and how it should be obtained 
 
 ## Factory contract
