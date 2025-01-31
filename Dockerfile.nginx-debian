@@ -30,32 +30,21 @@ COPY requirements.txt ./
 # https://github.com/unbit/uwsgi/issues/1318#issuecomment-542238096
 RUN CPUCOUNT=1 pip3 wheel --wheel-dir=/tmp/wheels -r ./requirements.txt
 
+FROM node:20.11.0@sha256:7bf4a586b423aac858176b3f683e35f08575c84500fbcfd1d433ad8568972ec6 AS yarn
+
+WORKDIR /app
+
+# yarn already installed but we want to reproduce with exact version
+RUN npm -g --force i yarn@1.22.19
+
+COPY components/ ./components/
+RUN \
+  cd components && \
+  yarn
 
 FROM build AS collectstatic
 
 USER root
-ENV \
-  # This will point yarn to whatever version of node you decide to use
-  # due to the use of nodejs instead of node name in some distros
-  node="nodejs"
-RUN \
-  apt-get -y update && \
-  apt-get -y install --no-install-recommends apt-transport-https ca-certificates curl wget gnupg && \
-  curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add --no-tty - && \
-  echo 'deb https://deb.nodesource.com/node_20.x bullseye main' > /etc/apt/sources.list.d/nodesource.list && \
-  echo 'deb-src https://deb.nodesource.com/node_20.x bullseye main' >> /etc/apt/sources.list.d/nodesource.list && \
-  apt-get update -y -o Dir::Etc::sourcelist="sources.list.d/nodesource.list" \
-  -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0" && \
-  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-  wget https://github.com/yarnpkg/yarn/releases/download/v1.22.10/yarn_1.22.10_all.deb && \
-  dpkg -i yarn_1.22.10_all.deb && \
-  echo "$(yarn --version)" && \
-  apt-get -y install --no-install-recommends nodejs && \
-  echo "$(node --version)" && \
-  apt-get clean && \
-  rm yarn_1.22.10_all.deb && \
-  rm -rf /var/lib/apt/lists && \
-  true
 
 RUN pip3 install \
 	--no-cache-dir \
@@ -63,10 +52,7 @@ RUN pip3 install \
   --find-links=/tmp/wheels \
 	-r ./requirements.txt
 
-COPY components/ ./components/
-RUN \
-  cd components && \
-  yarn
+COPY --from=yarn /app/components/ ./components/
 
 COPY manage.py ./
 COPY dojo/ ./dojo/
