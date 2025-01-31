@@ -36,7 +36,7 @@ integration_tests:
 settings_changes:
   - changed-files:
     - any-glob-to-any-file:
-      - dojo/settings/settings.dist.py
+      - dojo/settings/settings_dist.py
 
 apiv2:
   - changed-files:

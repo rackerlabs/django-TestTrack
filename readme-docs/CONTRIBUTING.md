@@ -91,7 +91,7 @@ DefectDojo.
 
 0. In dev branch, the code should be python 3.11 compliant.
 
-[dojo_settings]: /dojo/settings/settings.dist.py "DefectDojo settings file"
+[dojo_settings]: /dojo/settings/settings_dist.py "DefectDojo settings file"
 [pep8]: https://www.python.org/dev/peps/pep-0008/ "PEP8"
 [flake8 built-in commit hooks]: https://flake8.pycqa.org/en/latest/user/using-hooks.html#built-in-hook-integration
 
