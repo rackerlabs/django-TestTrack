@@ -62,8 +62,8 @@
                             {% if system_settings.enable_github %}
                             <th class="text-center">GitHub</th>
                             {% endif %}
-                            <th class="text-center">{% dojo_sort request 'Active (Verified) Findings' 'findings_count' %}</th>
-                            <th class="text-center"> Vulnerable Hosts / Endpoints</th>
+                            <th>{% dojo_sort request 'Active (Verified) Findings' 'findings_count' %}</th>
+                            <th> Vulnerable Hosts / Endpoints</th>
                             <th> Contact</th>
                             {% comment %} The display field is translated in the function. No need to translate here as well{% endcomment %}
                             <th>{% dojo_sort request 'Product Type' 'prod_type__name' %}</th>
@@ -241,7 +241,7 @@
                                 </td>
                                 {% endif %}
 
-                                <td class="text-center">
+                                <td class="text-right">
                                     {% if prod.findings_count %}
                                         <a href="{% url 'product_open_findings' prod.id %}?test__engagement__product={{ prod.id }}"><b>{{ prod.findings_count }}</b></a>
                                         &nbsp;(<a href="{% url 'product_verified_findings' prod.id %}?test__engagement__product={{ prod.id }}">{{ prod.findings_active_verified_count }}</a>)
@@ -249,7 +249,7 @@
                                         0
                                     {% endif %}
                                 </td>
-                                <td class="text-center">
+                                <td class="text-right">
                                     <a href="{% url 'vulnerable_endpoint_hosts' %}?product={{ prod.id }}"><b>{{ prod.endpoint_host_count }}</b></a> /
                                     <a href="{% url 'vulnerable_endpoints' %}?product={{ prod.id }}"><b>{{ prod.endpoint_count }}</b></a>
                                 </td>

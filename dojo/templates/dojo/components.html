@@ -4,6 +4,7 @@
 {% load static %}
 {% block content %}
     {{ block.super }}
+
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -28,9 +29,9 @@
                     <tr>
                         <th>Name</th>
                         <th>Version</th>
-                        <th class="text-center">Active</th>
-                        <th class="text-center">Duplicate</th>
-                        <th class="text-center">Total</th>
+                        <th>Active</th>
+                        <th>Duplicate</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,7 +46,7 @@
                         </td>
 
                         <td>{{result.component_version}} </td>
-                        <td class="text-center">
+                        <td class="text-right">
                             {% if result.active and result.component_name == none %}
                             <a href="{% url 'open_findings' %}?has_component=false"><b>{{ result.active }}</b></a>
                             {% elif result.active%}
@@ -54,7 +55,7 @@
                             0
                             {% endif %}
                         </td>
-                        <td class="text-center">
+                        <td class="text-right">
                             {% if result.duplicate and result.component_name == none %}
                             <a href="{% url 'all_findings' %}?has_component=false&duplicate=1"><b>{{ result.duplicate }}</b></a>
                             {% elif result.duplicate %}
@@ -63,7 +64,7 @@
                             0
                             {% endif %}
                         </td>
-                        <td class="text-center">
+                        <td class="text-right">
                             {% if result.total and result.component_name == none %}
                             <a href="{% url 'all_findings' %}?has_component=false"><b>{{ result.total }}</b></a>
                             {% elif result.total %}

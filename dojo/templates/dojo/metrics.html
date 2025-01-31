@@ -319,11 +319,11 @@
                                                     <tr>
                                                         <td><a href="{% url 'view_product' t.id %}">{{ t.name }}</a>
                                                         </td>
-                                                        <td>{{ t.critical|default_if_none:0 }}</td>
-                                                        <td>{{ t.high|default_if_none:0 }}</td>
-                                                        <td>{{ t.medium|default_if_none:0 }}</td>
-                                                        <td>{{ t.low|default_if_none:0 }}</td>
-                                                        <td>{{ t.total|default_if_none:0 }}</td>
+                                                        <td class="text-right">{{ t.critical|default_if_none:0 }}</td>
+                                                        <td class="text-right">{{ t.high|default_if_none:0 }}</td>
+                                                        <td class="text-right">{{ t.medium|default_if_none:0 }}</td>
+                                                        <td class="text-right">{{ t.low|default_if_none:0 }}</td>
+                                                        <td class="text-right">{{ t.total|default_if_none:0 }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </table>
@@ -356,7 +356,7 @@
                                                         </span>
                                                     </td>
                                                     <td>{{ finding.severity_display }}</td>
-                                                    <td>
+                                                    <td class="text-right">
                                                         {{ finding.epss_score|format_epss }}
                                                         /
                                                         {{ finding.epss_percentile|format_epss }}
@@ -364,7 +364,7 @@
                                                     <td><a href="{% url 'view_finding' finding.id %}"
                                                            title="{{ finding.title }}">{{ finding.title|truncatechars_html:20 }}</a>
                                                     </td>
-                                                    <td>{{ finding.age }}</td>
+                                                    <td class="text-right">{{ finding.age }}</td>
                                                     <td>{{ finding.status }}</td>
                                                     <td>{{ finding.reporter }}</td>
                                                 </tr>
@@ -385,12 +385,12 @@
                                                     <th>{% trans "Total" %}</th>
                                                 </tr>
                                                 <tr>
-                                                    <td>{{ in_period_counts.critical }}</td>
-                                                    <td>{{ in_period_counts.high }}</td>
-                                                    <td>{{ in_period_counts.medium }}</td>
-                                                    <td>{{ in_period_counts.low }}</td>
-                                                    <td>{{ in_period_counts.info }}</td>
-                                                    <td>{{ in_period_counts.total }}</td>
+                                                    <td class="text-right">{{ in_period_counts.critical }}</td>
+                                                    <td class="text-right">{{ in_period_counts.high }}</td>
+                                                    <td class="text-right">{{ in_period_counts.medium }}</td>
+                                                    <td class="text-right">{{ in_period_counts.low }}</td>
+                                                    <td class="text-right">{{ in_period_counts.info }}</td>
+                                                    <td class="text-right">{{ in_period_counts.total }}</td>
                                                 </tr>
                                             </table>
                                             <table
@@ -411,12 +411,12 @@
                                                                 {{ product.product_name }}
                                                             </a>
                                                         </td>
-                                                        <td>{{ product.critical }}</td>
-                                                        <td>{{ product.high }}</td>
-                                                        <td>{{ product.medium }}</td>
-                                                        <td>{{ product.low }}</td>
-                                                        <td>{{ product.info }}</td>
-                                                        <td>{{ product.total }}</td>
+                                                        <td class="text-right">{{ product.critical }}</td>
+                                                        <td class="text-right">{{ product.high }}</td>
+                                                        <td class="text-right">{{ product.medium }}</td>
+                                                        <td class="text-right">{{ product.low }}</td>
+                                                        <td class="text-right">{{ product.info }}</td>
+                                                        <td class="text-right">{{ product.total }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </table>
@@ -436,12 +436,12 @@
                                                     <th>{% trans "Total" %}</th>
                                                 </tr>
                                                 <tr>
-                                                    <td>{{ accepted_in_period_counts.critical|default_if_none:0 }}</td>
-                                                    <td>{{ accepted_in_period_counts.high|default_if_none:0 }}</td>
-                                                    <td>{{ accepted_in_period_counts.medium|default_if_none:0 }}</td>
-                                                    <td>{{ accepted_in_period_counts.low|default_if_none:0 }}</td>
-                                                    <td>{{ accepted_in_period_counts.info|default_if_none:0 }}</td>
-                                                    <td>{{ accepted_in_period_counts.total|default_if_none:0 }}</td>
+                                                    <td class="text-right">{{ accepted_in_period_counts.critical|default_if_none:0 }}</td>
+                                                    <td class="text-right">{{ accepted_in_period_counts.high|default_if_none:0 }}</td>
+                                                    <td class="text-right">{{ accepted_in_period_counts.medium|default_if_none:0 }}</td>
+                                                    <td class="text-right">{{ accepted_in_period_counts.low|default_if_none:0 }}</td>
+                                                    <td class="text-right">{{ accepted_in_period_counts.info|default_if_none:0 }}</td>
+                                                    <td class="text-right">{{ accepted_in_period_counts.total|default_if_none:0 }}</td>
                                                 </tr>
                                             </table>
                                             <table
@@ -462,12 +462,12 @@
                                                                 {{ product.product_name }}
                                                             </a>
                                                         </td>
-                                                        <td>{{ product.critical }}</td>
-                                                        <td>{{ product.high }}</td>
-                                                        <td>{{ product.medium }}</td>
-                                                        <td>{{ product.low }}</td>
-                                                        <td>{{ product.info }}</td>
-                                                        <td>{{ product.total }}</td>
+                                                        <td class="text-right">{{ product.critical }}</td>
+                                                        <td class="text-right">{{ product.high }}</td>
+                                                        <td class="text-right">{{ product.medium }}</td>
+                                                        <td class="text-right">{{ product.low }}</td>
+                                                        <td class="text-right">{{ product.info }}</td>
+                                                        <td class="text-right">{{ product.total }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </table>
@@ -489,12 +489,12 @@
                                                     <th>{% trans "Total" %}</th>
                                                 </tr>
                                                 <tr>
-                                                    <td>{{ closed_in_period_counts.critical }}</td>
-                                                    <td>{{ closed_in_period_counts.high }}</td>
-                                                    <td>{{ closed_in_period_counts.medium }}</td>
-                                                    <td>{{ closed_in_period_counts.low }}</td>
-                                                    <td>{{ closed_in_period_counts.info }}</td>
-                                                    <td>{{ closed_in_period_counts.total }}</td>
+                                                    <td class="text-right">{{ closed_in_period_counts.critical }}</td>
+                                                    <td class="text-right">{{ closed_in_period_counts.high }}</td>
+                                                    <td class="text-right">{{ closed_in_period_counts.medium }}</td>
+                                                    <td class="text-right">{{ closed_in_period_counts.low }}</td>
+                                                    <td class="text-right">{{ closed_in_period_counts.info }}</td>
+                                                    <td class="text-right">{{ closed_in_period_counts.total }}</td>
                                                 </tr>
                                             </table>
                                             <table
@@ -516,12 +516,12 @@
                                                                 {{ product.product_name }}
                                                             </a>
                                                         </td>
-                                                        <td>{{ product.critical }}</td>
-                                                        <td>{{ product.high }}</td>
-                                                        <td>{{ product.medium }}</td>
-                                                        <td>{{ product.low }}</td>
-                                                        <td>{{ product.info }}</td>
-                                                        <td>{{ product.total }}</td>
+                                                        <td class="text-right">{{ product.critical }}</td>
+                                                        <td class="text-right">{{ product.high }}</td>
+                                                        <td class="text-right">{{ product.medium }}</td>
+                                                        <td class="text-right">{{ product.low }}</td>
+                                                        <td class="text-right">{{ product.info }}</td>
+                                                        <td class="text-right">{{ product.total }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </table>
@@ -543,13 +543,13 @@
                                                 {% for week in opened_per_week %}
                                                     <tr>
                                                         <td>{{ week.grouped_date|date:"m-d-Y" }}</td>
-                                                        <td>{{ week.critical }}</td>
-                                                        <td>{{ week.high }}</td>
-                                                        <td>{{ week.medium }}</td>
-                                                        <td>{{ week.low }}</td>
-                                                        <td>{{ week.info }}</td>
-                                                        <td>{{ week.total }}</td>
-                                                        <td>{{ week.closed }}</td>
+                                                        <td class="text-right">{{ week.critical }}</td>
+                                                        <td class="text-right">{{ week.high }}</td>
+                                                        <td class="text-right">{{ week.medium }}</td>
+                                                        <td class="text-right">{{ week.low }}</td>
+                                                        <td class="text-right">{{ week.info }}</td>
+                                                        <td class="text-right">{{ week.total }}</td>
+                                                        <td class="text-right">{{ week.closed }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </table>
@@ -568,14 +568,14 @@
                                                 </tr>
                                                 {% for month in opened_per_month %}
                                                     <tr>
-                                                        <td>{{ month.grouped_date|date:"m-Y" }}</td>
-                                                        <td>{{ month.critical }}</td>
-                                                        <td>{{ month.high }}</td>
-                                                        <td>{{ month.medium }}</td>
-                                                        <td>{{ month.low }}</td>
-                                                        <td>{{ month.info }}</td>
-                                                        <td>{{ month.total }}</td>
-                                                        <td>{{ month.closed }}</td>
+                                                        <td class>{{ month.grouped_date|date:"m-Y" }}</td>
+                                                        <td class="text-right">{{ month.critical }}</td>
+                                                        <td class="text-right">{{ month.high }}</td>
+                                                        <td class="text-right">{{ month.medium }}</td>
+                                                        <td class="text-right">{{ month.low }}</td>
+                                                        <td class="text-right">{{ month.info }}</td>
+                                                        <td class="text-right">{{ month.total }}</td>
+                                                        <td class="text-right">{{ month.closed }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </table>
@@ -597,12 +597,12 @@
                                                 {% for week in accepted_per_week %}
                                                     <tr>
                                                         <td>{{ week.grouped_date|date:"m-d-Y" }}</td>
-                                                        <td>{{ week.critical }}</td>
-                                                        <td>{{ week.high }}</td>
-                                                        <td>{{ week.medium }}</td>
-                                                        <td>{{ week.low }}</td>
-                                                        <td>{{ week.info }}</td>
-                                                        <td>{{ week.total }}</td>
+                                                        <td class="text-right">{{ week.critical }}</td>
+                                                        <td class="text-right">{{ week.high }}</td>
+                                                        <td class="text-right">{{ week.medium }}</td>
+                                                        <td class="text-right">{{ week.low }}</td>
+                                                        <td class="text-right">{{ week.info }}</td>
+                                                        <td class="text-right">{{ week.total }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </table>
@@ -621,12 +621,12 @@
                                                 {% for month in accepted_per_month %}
                                                     <tr>
                                                         <td>{{ month.grouped_date|date:"m-Y" }}</td>
-                                                        <td>{{ month.critical }}</td>
-                                                        <td>{{ month.high }}</td>
-                                                        <td>{{ month.medium }}</td>
-                                                        <td>{{ month.low }}</td>
-                                                        <td>{{ month.info }}</td>
-                                                        <td>{{ month.total }}</td>
+                                                        <td class="text-right">{{ month.critical }}</td>
+                                                        <td class="text-right">{{ month.high }}</td>
+                                                        <td class="text-right">{{ month.medium }}</td>
+                                                        <td class="text-right">{{ month.low }}</td>
+                                                        <td class="text-right">{{ month.info }}</td>
+                                                        <td class="text-right">{{ month.total }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </table>
@@ -641,19 +641,19 @@
                                             </tr>
                                             <tr>
                                                 <td>{% trans "0 - 30 Days" %}</td>
-                                                <td>{{ age_detail.age_under_30 }}</td>
+                                                <td class="text-right">{{ age_detail.age_under_30 }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{% trans "31 - 60 Days" %}</td>
-                                                <td>{{ age_detail.age_31_60 }}</td>
+                                                <td class="text-right">{{ age_detail.age_31_60 }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{% trans "61 - 90 Days" %}</td>
-                                                <td>{{ age_detail.age_61_90 }}</td>
+                                                <td class="text-right">{{ age_detail.age_61_90 }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{% trans "91+ Days" %}</td>
-                                                <td>{{ age_detail.age_90_plus }}</td>
+                                                <td class="text-right">{{ age_detail.age_90_plus }}</td>
                                             </tr>
                                         </table>
                                     </div>

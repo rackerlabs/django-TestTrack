@@ -612,10 +612,10 @@
                                                 {% endif %}
                                             {% endwith %}
                                         </td>
-                                        <td class="nowrap">
+                                        <td class="nowrap text-right">
                                             {{ finding.epss_score|format_epss }}
                                         </td>
-                                        <td class="nowrap">
+                                        <td class="nowrap text-right">
                                             {{ finding.epss_percentile|format_epss }}
                                         </td>
                                         {% if filter_name == 'Closed' %}
@@ -626,11 +626,11 @@
                                             {{ finding.date }}
                                         {% endif %}
                                         </td>
-                                        <td>
+                                        <td class="text-right">
                                             {{ finding.age }}
                                         </td>
                                         {% if system_settings.enable_finding_sla %}
-                                            <td>
+                                            <td class="text-right">
                                                 {{ finding|finding_sla }}
                                             </td>
                                         {% endif %}

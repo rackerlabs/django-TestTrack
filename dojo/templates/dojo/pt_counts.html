@@ -42,19 +42,19 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
+                    <td class="text-right">
                         {{ overall_in_pt.S0|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ overall_in_pt.S1|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ overall_in_pt.S2|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ overall_in_pt.S3|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ overall_in_pt.Total|default_if_none:0 }}
                     </td>
                 </tr>
@@ -79,19 +79,19 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
+                    <td class="text-right">
                         {{ opened_in_period.S0|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ opened_in_period.S1|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ opened_in_period.S2|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ opened_in_period.S3|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ opened_in_period.Total|default_if_none:0 }}
                     </td>
                 </tr>
@@ -115,19 +115,19 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
+                    <td class="text-right">
                         {{ closed_in_period.S0|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ closed_in_period.S1|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ closed_in_period.S2|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ closed_in_period.S3|default_if_none:0 }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ closed_in_period.Total|default_if_none:0 }}
                     </td>
                 </tr>
@@ -162,25 +162,25 @@
                 {% for to in trending_opened %}
                     <tr>
                         <td>{{ to.start_date.date|date:"M-Y" }}</td>
-                        <td>
+                        <td class="text-right">
                             {{ to.S0|default_if_none:0 }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ to.S1|default_if_none:0 }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ to.S2|default_if_none:0 }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ to.S3|default_if_none:0 }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ to.Total|default_if_none:0 }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ to.to_date_total|default_if_none:0 }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ to.closed|default_if_none:0 }}
                         </td>
                     </tr>
@@ -211,19 +211,19 @@
                         <td>
                             {{ p.name }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ p.critical|default_if_none:0 }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ p.high|default_if_none:0 }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ p.medium|default_if_none:0 }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ p.low|default_if_none:0 }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ p.total|default_if_none:0 }}
                         </td>
                     </tr>
@@ -252,7 +252,7 @@
                 <tbody>
                 {% for finding in all_current_in_pt %}
                     <tr>
-                        <td>{{ forloop.counter }}</td>
+                        <td class="text-right">{{ forloop.counter }}</td>
                         <td><a title="{{ finding.title }}"
                                href="{% url 'view_finding' finding.id %}">{{ finding.title }}</a>
                         </td>
@@ -260,12 +260,12 @@
                         <td>{% if finding.severity == "Critical" or finding.severity == "High" %}
                             <p class="text-danger">
                         {% else %}<p>{% endif %}{{ finding.severity_display }}</p></td>
-                        <td>
+                        <td class="text-right">
                             {{ finding.epss_score|format_epss }}
                             /
                             {{ finding.epss_percentile|format_epss }}
                         </td>
-                        <td>{{ finding.age }}</td>
+                        <td class="text-right">{{ finding.age }}</td>
                         <td><a
                                 href="{% url 'view_product' finding.test.engagement.product.id %}"
                                 title="{{ finding.test.engagement.product }}">{{ finding.test.engagement.product }}</a>

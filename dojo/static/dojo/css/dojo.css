@@ -1855,3 +1855,10 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+.table th, .table td {
+    border-right: 1px solid #ddd;
+}
+.table th:last-child, .table td:last-child {
+    border-right: none; 
+}
