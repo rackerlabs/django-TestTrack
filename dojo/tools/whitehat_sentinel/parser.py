@@ -130,8 +130,6 @@ class WhiteHatSentinelParser:
         Args:
             whitehat_sentinel_vuln_solution:
 
-        Returns:
-
         """
         solution_html = whitehat_sentinel_vuln_solution["solution"]
 

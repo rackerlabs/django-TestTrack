@@ -37,8 +37,6 @@ def get_report_findings(csv_reader) -> [dict]:
     Args:
         csv_reader:
 
-    Returns:
-
     """
     report_findings = []
 
