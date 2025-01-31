@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e  # needed to handle "exit" correctly
+
 umask 0002
 if [ "${GENERATE_TLS_CERTIFICATE}" = true ]; then
   openssl req  \
