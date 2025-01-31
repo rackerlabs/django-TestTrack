@@ -43,9 +43,9 @@ def parse_date_added_from_hit(hit):
     return parse_date(date_added, PTART_DATETIME_FORMAT)
 
 
-def parse_date(date, format):
+def parse_date(date, date_format):
     try:
-        return datetime.strptime(date, format) if date else datetime.now()
+        return datetime.strptime(date, date_format) if date else datetime.now()
     except ValueError:
         return datetime.now()
 

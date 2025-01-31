@@ -13,12 +13,12 @@ class KubeAuditParser:
     def get_description_for_scan_types(self, scan_type):
         return "Import JSON reports of Kubeaudit Scans."
 
-    def severity_mapping(self, input):
-        if input == "warning":
+    def severity_mapping(self, severity_input):
+        if severity_input == "warning":
             severity = "Medium"
-        elif input == "error":
+        elif severity_input == "error":
             severity = "High"
-        elif input == "info":
+        elif severity_input == "info":
             severity = "Info"
         else:
             severity = "Low"

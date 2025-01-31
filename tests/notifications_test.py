@@ -11,9 +11,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 class NotificationTest(BaseTestCase):
 
-    def __init__(self, method_name, type):
+    def __init__(self, method_name, notif_type):
         super().__init__(method_name)
-        self.type = type
+        self.type = notif_type
 
     def enable_notification(self):
         driver = self.driver

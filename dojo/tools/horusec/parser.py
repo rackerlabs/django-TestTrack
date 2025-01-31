@@ -41,7 +41,7 @@ class HorusecParser:
         data = json.load(scan)
         report_date = parse(data.get("createdAt"))
         test = ParserTest(
-            name=self.ID, type=self.ID, version=data.get("version").lstrip("v"),
+            name=self.ID, parser_type=self.ID, version=data.get("version").lstrip("v"),
         )  # remove the v in vX.Y.Z
         test.description = "\n".join(
             [

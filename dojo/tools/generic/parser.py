@@ -30,7 +30,7 @@ class GenericParser:
     def get_tests(self, scan_type, filename):
         # if the file is a CSV just use the old function
         if filename.name.lower().endswith(".csv"):
-            test = ParserTest(name=self.ID, type=self.ID, version=None)
+            test = ParserTest(name=self.ID, parser_type=self.ID, version=None)
             test.findings = GenericCSVParser()._get_findings_csv(filename)
             return [test]
         # we manage it like a JSON file (default)

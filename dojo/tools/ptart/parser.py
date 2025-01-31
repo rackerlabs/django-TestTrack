@@ -27,7 +27,7 @@ class PTARTParser:
 
         test = ParserTest(
             name="Pen Test Report",
-            type="Pen Test",
+            parser_type="Pen Test",
             version="",
         )
 

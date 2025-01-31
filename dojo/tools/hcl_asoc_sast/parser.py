@@ -15,15 +15,15 @@ class HCLASoCSASTParser:
     def get_description_for_scan_types(self, scan_type):
         return "Import XML output of HCL AppScan on Cloud SAST"
 
-    def xmltreehelper(self, input):
-        if input.text is None:
+    def xmltreehelper(self, xml_input):
+        if xml_input.text is None:
             output = None
-        elif "\n" in input.text:
+        elif "\n" in xml_input.text:
             output = ""
-            for i in input:
+            for i in xml_input:
                 output = output + " " + i.text
         else:
-            output = " " + input.text
+            output = " " + xml_input.text
         return output
 
     def get_findings(self, file, test):

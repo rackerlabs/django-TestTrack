@@ -26,14 +26,14 @@ class KubescapeParser:
     def __hyperlink(link: str) -> str:
         return "[" + link + "](" + link + ")"
 
-    def severity_mapper(self, input):
-        if input <= 4:
+    def severity_mapper(self, severity_input):
+        if severity_input <= 4:
             return "Low"
-        if input <= 7:
+        if severity_input <= 7:
             return "Medium"
-        if input <= 9:
+        if severity_input <= 9:
             return "High"
-        if input <= 10:
+        if severity_input <= 10:
             return "Critical"
         return None
 

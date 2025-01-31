@@ -901,10 +901,10 @@ vars().update(EMAIL_CONFIG)
 # https://djangosaml2.readthedocs.io/contents/setup.html#users-attributes-and-account-linking
 
 
-def saml2_attrib_map_format(dict):
+def saml2_attrib_map_format(din):
     dout = {}
-    for i in dict:
-        dout[i] = (dict[i],)
+    for i in din:
+        dout[i] = (din[i],)
     return dout
 
 

@@ -35,7 +35,7 @@ class DeepfenceThreatmapperSecret:
             finding = None
         return finding
 
-    def severity(self, input):
-        if input is None:
+    def severity(self, severity_input):
+        if severity_input is None:
             return "Info"
-        return input.capitalize()
+        return severity_input.capitalize()

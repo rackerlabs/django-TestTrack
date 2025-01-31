@@ -2433,7 +2433,7 @@ class UserProfileView(GenericAPIView):
     @action(
         detail=True, methods=["get"], filter_backends=[], pagination_class=None,
     )
-    def get(self, request, format=None):
+    def get(self, request, _=None):
         user = get_current_user()
         user_contact_info = (
             user.usercontactinfo if hasattr(user, "usercontactinfo") else None
