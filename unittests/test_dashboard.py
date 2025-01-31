@@ -117,9 +117,9 @@ class TestDashboard(DojoTestCase):
         response = self._request("admin")
 
         self.assertEqual(3, response.context["engagement_count"])
-        self.assertEqual(4, response.context["finding_count"])
-        self.assertEqual(2, response.context["mitigated_count"])
-        self.assertEqual(2, response.context["accepted_count"])
+        self.assertEqual(11, response.context["finding_count"])
+        self.assertEqual(3, response.context["mitigated_count"])
+        self.assertEqual(3, response.context["accepted_count"])
 
     def test_counters_as_user(self):
         self._setup_test_counters_findings(product_id=2)
@@ -128,9 +128,9 @@ class TestDashboard(DojoTestCase):
         response = self._request("user1")
 
         self.assertEqual(3, response.context["engagement_count"])
-        self.assertEqual(4, response.context["finding_count"])
-        self.assertEqual(2, response.context["mitigated_count"])
-        self.assertEqual(2, response.context["accepted_count"])
+        self.assertEqual(11, response.context["finding_count"])
+        self.assertEqual(3, response.context["mitigated_count"])
+        self.assertEqual(3, response.context["accepted_count"])
 
     def _setup_test_charts_findings(self, product_id: int):
         when = self.year_ago
