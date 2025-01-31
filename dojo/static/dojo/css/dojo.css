@@ -1850,3 +1850,11 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+#bulk_change_form {
+    padding: 1rem; 
+}
+
+.d-block {
+    display: block;
+}

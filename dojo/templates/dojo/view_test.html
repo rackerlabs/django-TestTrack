@@ -644,7 +644,7 @@
                                 id="bulk_change_form">
                                 {% csrf_token %}
                                 <input type="hidden" name="return_url" value="{{ request.get_full_path }}" />
-                                <label style="display: block" for="severity">
+                                <label class="h5 d-block" for="severity">
                                     Severity
                                 </label>
                                 <select name="severity" id="severity" style="font-size: 80%">
@@ -667,34 +667,27 @@
                                         {% trans "Critical" %}
                                     </option>
                                 </select>
-                                <br />
-                                <br />
-                                <label>{% trans "Date" %}</label>
-                                <br />
+                                <label class="h5 d-block">{% trans "Date" %}</label>
                                 <input id="id_bulk_date"
                                        class="datepicker form-control hasDatepicker"
                                        name="date"
                                        type="date"
                                        alt="Select the date the Findings were discovered"/>
-                                <br />
-                                <label>
+                                <label class="h5">
                                     <b>{% trans "Planned Remediation Date" %}</b>
                                 </label>
-                                <br />
                                 <input id="id_bulk_planned_remediation_date"
                                     class="datepicker form-control hasDatepicker"
                                     name="planned_remediation_date"
                                     type="date"
                                     alt="Select the date the Finding will be remediated"/>
-                                <br />
-                                <label style="display: block">
+                                <label class="h5 d-block">
                                     {% trans "Planned Remediation version" %}
                                 </label>
                                 <input id="id_bulk_planned_remediation_version"
                                     name="planned_remediation_version"
                                     style="font-size: 100%; border: 1px solid #ccc;"/>
-                                <br/>        
-                                <label>
+                                <label class="h5 d-block">
                                     <b>{% trans "Status" %}</b>
                                     <input id="id_bulk_status"
                                         name="status"
@@ -702,69 +695,63 @@
                                         alt="Select to enable"
                                         title="status_checkbox"/>
                                 </label>
-                                <br />
-                                <label style="font-size: 80%; font-weight: normal; display: block">
+                                <label class="d-block" style="font-size: 80%; font-weight: normal">
                                     <input id="id_bulk_active" name="active" type="checkbox" disabled/>
                                     <span>{% trans "Active" %}</span>
                                 </label>
-                                <label style="font-size: 80%; font-weight: normal; display: block">
+                                <label class="d-block" style="font-size: 80%; font-weight: normal">
                                     <input id="id_bulk_verified" name="verified" type="checkbox" disabled/>
                                     <span>{% trans "Verified" %}</span>
                                 </label>
-                                <label style="font-size: 80%; font-weight: normal; display: block">
+                                <label class="d-block" style="font-size: 80%; font-weight: normal">
                                     <input id="id_bulk_false_p" name="false_p" type="checkbox" disabled/>
                                     <span>{% trans "False Positive" %}</span>
                                 </label>
-                                <label style="font-size: 80%; font-weight: normal; display: block">
+                                <label class="d-block" style="font-size: 80%; font-weight: normal">
                                     <input id="id_bulk_out_of_scope"
                                         name="out_of_scope"
                                         type="checkbox"
                                         disabled/>
                                     <span>{% trans "Out of scope" %}</span>
                                 </label>
-                                <label style="font-size: 80%; font-weight: normal; display: block">
+                                <label class="d-block" style="font-size: 80%; font-weight: normal">
                                     <input id="id_bulk_is_mitigated"
                                         name="is_mitigated"
                                         type="checkbox"
                                         disabled/>
                                     <span>{% trans "Mitigated" %}</span>
                                 </label>
-                                <label style="font-size: 80%; font-weight: normal; display: block">
+                                <label class="d-block" style="font-size: 80%; font-weight: normal">
                                     <input id="id_bulk_under_review"
                                         name="under_review"
                                         type="checkbox"
                                         disabled/>
                                     <span>{% trans "Under Review" %}</span>
                                 </label>
-                                <label>
-                                    <b>{% trans "Risk Acceptance" %}</b>
-                                    <input id="id_bulk_risk_acceptance"
-                                        name="risk_acceptance"
-                                        type="checkbox"
-                                        alt="Select to enable"/>
-                                </label>
-                                <br />
-                                <label style="font-size: 80%; font-weight: normal; display: block">
-                                    <input id="id_bulk_risk_accept" name="risk_accept" type="checkbox" disabled/>
+                                {% if test.engagement.product.enable_simple_risk_acceptance %}
+                                <div class="h5">
+                                    {% trans "Risk Acceptance" %}
+                                </div>
+                                <label class="d-block" style="font-size: 80%; font-weight: normal">
+                                    <input id="id_bulk_risk_accept" name="risk_accept" type="checkbox" />
                                     <span>{% trans "Accept" %}</span>
                                 </label>
-                                <label style="font-size: 80%; font-weight: normal; display: block">
+                                <label class="d-block" style="font-size: 80%; font-weight: normal">
                                     <input id="id_bulk_risk_unaccept"
                                         name="risk_unaccept"
-                                        type="checkbox"
-                                        disabled/>
+                                        type="checkbox"/>
                                     <span>{% trans "Unaccept" %}</span>
                                 </label>
+                                {% endif %}
                                 {% if 'is_finding_groups_enabled'|system_setting_enabled %}
-                                    <label>
-                                        <b>{% trans "Group" %}</b>
+                                    <label class="h5">
+                                        {% trans "Group" %}
                                         <input id="id_bulk_finding_group"
                                             name="finding_group"
                                             type="checkbox"
                                             alt="Select to enable"/>
                                     </label>
-                                    <br />
-                                    <label style="font-size: 80%; font-weight: normal; display: block">
+                                    <label class="d-block" style="font-size: 80%; font-weight: normal">
                                         <input id="id_bulk_finding_group_create"
                                             name="finding_group_create"
                                             class="finding_group_option"
@@ -801,7 +788,7 @@
                                             {% endfor %}
                                         </select>
                                     </span>
-                                    <label style="font-size: 80%; font-weight: normal; display: block">
+                                    <label class="d-block" style="font-size: 80%; font-weight: normal">
                                         <input id="id_bulk_finding_group_remove"
                                             name="finding_group_remove"
                                             class="finding_group_option"
@@ -810,7 +797,7 @@
                                         <span>{% trans "Remove from any group" %}</span>
                                     </label>
                                     <span>
-                                        <label style="font-size: 80%; font-weight: normal; display: block">
+                                        <label class="d-block" style="font-size: 80%; font-weight: normal">
                                             <input id="id_bulk_finding_group_by"
                                                 name="finding_group_by"
                                                 class="finding_group_option"
@@ -833,31 +820,37 @@
                                     </span>
                                 {% endif %}
                                 {% if system_settings.enable_jira %}
-                                    <b>{% trans "Push to JIRA" %}</b>
+                                    <div class="h5">{% trans "Push to JIRA" %}
                                     <input id="id_push_tojira"
                                         name="push_to_jira"
                                         type="checkbox"
                                         alt="Select to push to JIRA"
                                         title="Push_To_Jira"/>
-                                    <br />
+                                    </div>
                                 {% endif %}
-                                <label style="display: block">
-                                    {% trans "Notes" %}
-                                </label>
+                                <div class="h5 d-block">
+                                    <label>
+                                        {% trans "Notes" %}
+                                    </label>
+                                </div>
                                 {{ bulk_edit_form.notes }}
-                                <label style="display: block">
-                                    {% trans "Tags" %}
-                                </label>
+                                <div class="h5 d-block">
+                                    <label>
+                                        {% trans "Tags" %}
+                                    </label>
+                                </div>
                                 {% comment %}
                                     Quick hack to make bulk edit work without refactoring the whole bulk edit form
                                 {% endcomment %}
                                 {{ bulk_edit_form.media.css }}
                                 {{ bulk_edit_form.media.js }}
                                 {{ bulk_edit_form.tags }}
-                                <input type="submit"
-                                    class="btn btn-sm btn-secondary"
-                                    value="Submit"
-                                    title="sub-button"/>
+                                <div class="d-block" style="padding-top: 1rem;">
+                                    <input type="submit"
+                                        class="btn btn-sm btn-secondary"
+                                        value="Submit"
+                                        title="sub-button"/>
+                                </div>
                             </form>
                         </li>
                     </ul>
@@ -1855,12 +1848,6 @@
                 $('#bulk_edit_menu #id_bulk_risk_accept').prop('checked', false);
             })
 
-            $('#bulk_edit_menu #id_bulk_risk_acceptance').on('click', function (e) {
-                var checked = this.checked;
-                $('#bulk_edit_menu #id_bulk_risk_accept').prop('disabled', !checked);
-                $('#bulk_edit_menu #id_bulk_risk_unaccept').prop('disabled', !checked);
-            })
-
             $('#bulk_edit_menu #id_bulk_risk_accept').on('click', function (e) {
                 var checked = this.checked;
                 $('#bulk_edit_menu #id_bulk_risk_unaccept').prop('checked', false);
@@ -2135,9 +2122,7 @@
             $( form_element ).submit();
         });
 
-
-
-    </script>
+</script>
     {% include "dojo/filter_js_snippet.html" %}
     {% include "dojo/snippets/selectpicker_in_dropdown.html" %}
 {% endblock %}
