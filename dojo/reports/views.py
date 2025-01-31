@@ -335,7 +335,7 @@ def product_endpoint_report(request, pid):
                    })
 
 
-def generate_report(request, obj, host_view=False):
+def generate_report(request, obj, *, host_view=False):
     user = Dojo_User.objects.get(id=request.user.id)
     product_type = None
     product = None

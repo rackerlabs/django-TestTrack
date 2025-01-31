@@ -50,7 +50,7 @@ class PersistentRemoteUserMiddleware(RemoteUserMiddleware):
 
 
 class RemoteUserBackend(OriginalRemoteUserBackend):
-    def configure_user(self, request, user, created=True):
+    def configure_user(self, request, user, *, created=True):
         changed = False
 
         if settings.AUTH_REMOTEUSER_EMAIL_HEADER and \

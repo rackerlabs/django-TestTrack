@@ -1217,7 +1217,7 @@ class TestDuplicationLogic(DojoTestCase):
         # return saved new finding and reloaded existing finding
         return finding_new, finding_org
 
-    def copy_and_reset_finding_add_endpoints(self, id, static=False, dynamic=True):
+    def copy_and_reset_finding_add_endpoints(self, id, *, static=False, dynamic=True):
         finding_new, finding_org = self.copy_and_reset_finding(id=id)
         # remove file_path and line as we now have endpoints
         finding_new.file_path = None
@@ -1246,7 +1246,7 @@ class TestDuplicationLogic(DojoTestCase):
         # return unsaved new finding and reloaded existing finding
         return new, Engagement.objects.get(id=id)
 
-    def assert_finding(self, finding, not_pk=None, duplicate=False, duplicate_finding_id=None, hash_code=None, not_hash_code=None):
+    def assert_finding(self, finding, not_pk=None, *, duplicate=False, duplicate_finding_id=None, hash_code=None, not_hash_code=None):
         if hash_code:
             self.assertEqual(finding.hash_code, hash_code)
 
@@ -1279,7 +1279,7 @@ class TestDuplicationLogic(DojoTestCase):
         test_new.save()
         return test_new, eng_new
 
-    def enable_dedupe(self, enable=True):
+    def enable_dedupe(self, *, enable=True):
         system_settings = System_Settings.objects.get()
         system_settings.enable_deduplication = enable
         system_settings.save()

@@ -1255,7 +1255,7 @@ def edit_risk_acceptance(request, eid, raid):
 
 
 # will only be called by view_risk_acceptance and edit_risk_acceptance
-def view_edit_risk_acceptance(request, eid, raid, edit_mode=False):
+def view_edit_risk_acceptance(request, eid, raid, *, edit_mode=False):
     risk_acceptance = get_object_or_404(Risk_Acceptance, pk=raid)
     eng = get_object_or_404(Engagement, pk=eid)
 

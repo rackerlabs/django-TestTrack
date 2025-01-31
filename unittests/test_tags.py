@@ -257,7 +257,7 @@ class InheritedTagsTests(DojoAPITestCase):
     def _convert_instance_tags_to_list(self, instance) -> list:
         return [tag.name for tag in instance.tags.all()]
 
-    def _import_and_return_objects(self, test_id=None, reimport=False, tags=None) -> dict:
+    def _import_and_return_objects(self, test_id=None, *, reimport=False, tags=None) -> dict:
         # Import some findings to create all objects
         engagement = self.create_engagement("Inherited Tags Engagement", self.product)
         if reimport:

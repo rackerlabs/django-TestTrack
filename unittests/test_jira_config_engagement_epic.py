@@ -64,7 +64,7 @@ class JIRAConfigEngagementEpicTest(DojoVCRTestCase, JIRAConfigEngagementBase):
             "jira-epic-form-push_to_jira": "on",
         }
 
-    def add_engagement_with_jira_project_and_epic_mapping(self, expected_delta_jira_project_db=0, expect_redirect_to=None, expect_200=False):
+    def add_engagement_with_jira_project_and_epic_mapping(self, expected_delta_jira_project_db=0, expect_redirect_to=None, *, expect_200=False):
         return self.add_engagement_jira_with_data(self.get_new_engagement_with_jira_project_data_and_epic_mapping(), expected_delta_jira_project_db, expect_redirect_to=expect_redirect_to, expect_200=expect_200)
 
     def test_add_engagement_with_jira_project_and_epic_mapping(self):

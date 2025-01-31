@@ -121,7 +121,7 @@ class System_Settings_Manager(models.Manager):
             return System_Settings()
         return from_db
 
-    def get(self, no_cache=False, *args, **kwargs):
+    def get(self, no_cache=False, *args, **kwargs):  # noqa: FBT002 - this is bit hard to fix nice have this universally fixed
         if no_cache:
             # logger.debug('no_cache specified or cached value found, loading system settings from db')
             return self.get_from_db(*args, **kwargs)

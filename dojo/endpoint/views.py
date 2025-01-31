@@ -38,7 +38,7 @@ from dojo.utils import (
 logger = logging.getLogger(__name__)
 
 
-def process_endpoints_view(request, host_view=False, vulnerable=False):
+def process_endpoints_view(request, *, host_view=False, vulnerable=False):
 
     if vulnerable:
         endpoints = Endpoint.objects.filter(
@@ -116,7 +116,7 @@ def vulnerable_endpoint_hosts(request):
     return process_endpoints_view(request, host_view=True, vulnerable=True)
 
 
-def process_endpoint_view(request, eid, host_view=False):
+def process_endpoint_view(request, eid, *, host_view=False):
     endpoint = get_object_or_404(Endpoint, id=eid)
 
     if host_view:

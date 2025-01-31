@@ -34,7 +34,7 @@ def on_exception_html_source_logger(func):
     return wrapper
 
 
-def set_suite_settings(suite, jira=False, github=False, block_execution=False):
+def set_suite_settings(suite, *, jira=False, github=False, block_execution=False):
     if jira:
         suite.addTest(BaseTestCase("enable_jira"))
     else:
@@ -289,7 +289,7 @@ class BaseTestCase(unittest.TestCase):
         elems = self.driver.find_elements(By.ID, id)
         return len(elems) > 0
 
-    def change_system_setting(self, id, enable=True):
+    def change_system_setting(self, id, *, enable=True):
         logger.info("changing system setting " + id + " enable: " + str(enable))
         driver = self.driver
         driver.get(self.base_url + "system_settings")
@@ -330,7 +330,7 @@ class BaseTestCase(unittest.TestCase):
     def enable_github(self):
         return self.enable_system_setting("id_enable_github")
 
-    def set_block_execution(self, block_execution=True):
+    def set_block_execution(self, *, block_execution=True):
         # we set the admin user (ourselves) to have block_execution checked
         # this will force dedupe to happen synchronously, among other things like notifications, rules, ...
         logger.info(f"setting block execution to: {block_execution}")

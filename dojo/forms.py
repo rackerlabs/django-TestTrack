@@ -155,7 +155,7 @@ class MonthYearWidget(Widget):
     month_field = "%s_month"
     year_field = "%s_year"
 
-    def __init__(self, attrs=None, years=None, required=True):
+    def __init__(self, attrs=None, years=None, *, required=True):
         # years is an optional list/tuple of years to use in the
         # "year" select box.
         self.attrs = attrs or {}

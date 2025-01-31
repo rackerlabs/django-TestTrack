@@ -388,7 +388,7 @@ class BaseClass:
             # print(vars(schema_checker))
             schema_checker.check(self.schema, obj)
 
-        def check_schema_response(self, method, status_code, response, detail=False):
+        def check_schema_response(self, method, status_code, response, *, detail=False):
             detail_path = "{id}/" if detail else ""
             endpoints_schema = self.schema["paths"][format_url(f"/{self.endpoint_path}/{detail_path}")]
             schema = endpoints_schema[method]["responses"][status_code]["content"]["application/json"]["schema"]

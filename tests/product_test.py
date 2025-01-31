@@ -536,7 +536,7 @@ class ProductTest(BaseTestCase):
         driver.get(self.base_url + "metrics?date=5&view=dashboard")
 
 
-def add_product_tests_to_suite(suite, jira=False, github=False, block_execution=False):
+def add_product_tests_to_suite(suite, *, jira=False, github=False, block_execution=False):
     # Add each test and the suite to be run
     # success and failure is output by the test
     suite.addTest(BaseTestCase("test_login"))

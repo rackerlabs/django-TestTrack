@@ -27,6 +27,7 @@ class TestUserValidators(DojoTestCase):
         self,
         minimum_password_length=0,
         maximum_password_length=50,
+        *,
         number_character_required=False,
         special_character_required=False,
         lowercase_character_required=False,

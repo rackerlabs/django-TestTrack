@@ -364,7 +364,7 @@ def get_tags_label_from_model(model):
     return "Tags (Unknown)"
 
 
-def get_finding_filterset_fields(metrics=False, similar=False, filter_string_matching=False):
+def get_finding_filterset_fields(*, metrics=False, similar=False, filter_string_matching=False):
     fields = []
 
     if similar:

@@ -712,6 +712,7 @@ def findings_this_period(findings, period_type, stuff, o_stuff, a_stuff):
 
 def add_breadcrumb(parent=None,
                    title=None,
+                   *,
                    top_level=True,
                    url=None,
                    request=None,
@@ -1351,7 +1352,7 @@ def get_page_items(request, items, page_size, prefix=""):
     return get_page_items_and_count(request, items, page_size, prefix=prefix, do_count=False)
 
 
-def get_page_items_and_count(request, items, page_size, prefix="", do_count=True):
+def get_page_items_and_count(request, items, page_size, prefix="", *, do_count=True):
     page_param = prefix + "page"
     page_size_param = prefix + "page_size"
 
@@ -1748,7 +1749,7 @@ def add_language(product, language, files=1, code=1):
 
 
 # Apply finding template data by matching CWE + Title or CWE
-def apply_cwe_to_template(finding, override=False):
+def apply_cwe_to_template(finding, *, override=False):
     if System_Settings.objects.get().enable_template_match or override:
         # Attempt to match on CWE and Title First
         template = Finding_Template.objects.filter(
@@ -1899,7 +1900,7 @@ def sla_compute_and_notify(*args, **kwargs):
     import dojo.jira_link.helper as jira_helper
 
     class NotificationEntry:
-        def __init__(self, finding=None, jira_issue=None, do_jira_sla_comment=False):
+        def __init__(self, finding=None, jira_issue=None, *, do_jira_sla_comment=False):
             self.finding = finding
             self.jira_issue = jira_issue
             self.do_jira_sla_comment = do_jira_sla_comment
@@ -2315,7 +2316,7 @@ def prod_name(obj):
 
 # Returns image locations by default (i.e. uploaded_files/09577eb1-6ccb-430b-bc82-0742d4c97a09.png)
 # if return_objects=True, return the FileUPload object instead of just the file location
-def get_file_images(obj, return_objects=False):
+def get_file_images(obj, *, return_objects=False):
     logger.debug("getting images for %s:%s", type(obj), obj)
     files = None
     if not obj:

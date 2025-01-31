@@ -144,7 +144,7 @@ def get_parameter_froms_args_kwargs(args, kwargs, parameter):
     return model_or_id
 
 
-def dojo_ratelimit(key="ip", rate=None, method=UNSAFE, block=False):
+def dojo_ratelimit(key="ip", rate=None, method=UNSAFE, *, block=False):
     def decorator(fn):
         @wraps(fn)
         def _wrapped(request, *args, **kw):

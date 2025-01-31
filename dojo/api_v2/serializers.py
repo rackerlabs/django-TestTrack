@@ -2414,7 +2414,7 @@ class ImportScanSerializer(CommonImportScanSerializer):
             # Raise an explicit drf exception here
             raise ValidationError(str(e))
 
-    def save(self, push_to_jira=False):
+    def save(self, *, push_to_jira=False):
         # Go through the validate method
         data = self.validated_data
         # Extract the data from the form
@@ -2556,7 +2556,7 @@ class ReImportScanSerializer(TaggitSerializer, CommonImportScanSerializer):
         except ValueError as ve:
             raise Exception(ve)
 
-    def save(self, push_to_jira=False):
+    def save(self, *, push_to_jira=False):
         # Go through the validate method
         data = self.validated_data
         # Extract the data from the form
