@@ -38,7 +38,7 @@ class Command(BaseCommand):
         mass_model_updater(
             Finding,
             findings,
-            lambda f: create_vulnerability_id(f),
+            create_vulnerability_id,
             fields=None,
             page_size=100,
             log_prefix="creating vulnerability ids: ",
@@ -49,7 +49,7 @@ class Command(BaseCommand):
         mass_model_updater(
             Finding_Template,
             finding_templates,
-            lambda f: create_vulnerability_id_template(f),
+            create_vulnerability_id_template,
             fields=None,
             page_size=100,
             log_prefix="creating vulnerability ids: ",
