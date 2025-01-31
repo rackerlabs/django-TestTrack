@@ -148,6 +148,19 @@ jobs:
                 break
                fi
              done
+             ADMIN_PASS=$(kubectl get secret/defectdojo -o json | jq -r '.data.DD_ADMIN_PASSWORD' | base64 -d)
+             echo "Simple API check"
+             CR=$(kubectl run  curl --quiet=true --image=curlimages/curl:7.73.0 \
+               --overrides='{ "apiVersion": "v1" }' \
+               --restart=Never -i --rm -- -s -m 20 --header "Host: $DD_HOSTNAME" http://`kubectl get service defectdojo-django -o json \
+               |  jq -r '.spec.clusterIP'`/api/v2/api-token-auth/ --data-raw "username=admin&password=$ADMIN_PASS" -o /dev/null -w "%{http_code}\n")
+             echo $CR
+             if [[ $CR -ne 200 ]]; then
+              echo "ERROR: login is not possible; got HTTP code $CR"
+              exit 1
+             else
+              echo "Result received"
+             fi
              echo "Final Check of components"
              errors=`kubectl get pods | grep Error | awk '{print  $1}'`
              if [[ ! -z  $errors ]]; then
