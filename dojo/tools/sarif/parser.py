@@ -126,10 +126,8 @@ def get_result_cwes_properties(result):
 
 def get_artifacts(run):
     artifacts = {}
-    custom_index = 0  # hack because some tool doesn't generate this attribute
-    for tree_artifact in run.get("artifacts", []):
+    for custom_index, tree_artifact in enumerate(run.get("artifacts", [])):
         artifacts[tree_artifact.get("index", custom_index)] = tree_artifact
-        custom_index += 1
     return artifacts
 
 
@@ -229,9 +227,8 @@ def get_codeFlowsDescription(codeFlows):
                 continue
 
             description = f"**{_('Code flow')}:**\n"
-            line = 1
 
-            for location in threadFlow.get("locations", []):
+            for line, location in enumerate(threadFlow.get("locations", [])):
                 physicalLocation = location.get("location", {}).get("physicalLocation", {})
                 region = physicalLocation.get("region", {})
                 uri = physicalLocation.get("artifactLocation").get("uri")
@@ -249,7 +246,7 @@ def get_codeFlowsDescription(codeFlows):
                 if "snippet" in region:
                     snippet = f"\t-\t{region.get('snippet').get('text')}"
 
-                description += f"{line}. {uri}{start_line}{start_column}{snippet}\n"
+                description += f"{line + 1}. {uri}{start_line}{start_column}{snippet}\n"
 
                 if "message" in location.get("location", {}):
                     message_field = location.get("location", {}).get("message", {})
@@ -259,8 +256,6 @@ def get_codeFlowsDescription(codeFlows):
                         message = message_field.get("text", "")
 
                     description += f"\t{message}\n"
-
-                line += 1
 
     return description
 

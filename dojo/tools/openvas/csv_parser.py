@@ -262,10 +262,8 @@ class OpenVASCSVParser:
 
     def read_column_names(self, row):
         column_names = {}
-        index = 0
-        for column in row:
+        for index, column in enumerate(row):
             column_names[index] = column
-            index += 1
         return column_names
 
     def get_findings(self, filename, test):
@@ -276,21 +274,17 @@ class OpenVASCSVParser:
         if isinstance(content, bytes):
             content = content.decode("utf-8")
         reader = csv.reader(io.StringIO(content), delimiter=",", quotechar='"')
-        row_number = 0
-        for row in reader:
+        for row_number, row in enumerate(reader):
             finding = Finding(test=test)
             finding.unsaved_vulnerability_ids = []
             finding.unsaved_endpoints = [Endpoint()]
             if row_number == 0:
                 column_names = self.read_column_names(row)
-                row_number += 1
                 continue
-            column_number = 0
-            for column in row:
+            for column_number, column in enumerate(row):
                 chain.process_column(
                     column_names[column_number], column, finding,
                 )
-                column_number += 1
             if finding is not None and row_number > 0:
                 if finding.title is None:
                     finding.title = ""
@@ -309,5 +303,4 @@ class OpenVASCSVParser:
                 ).hexdigest()
                 if key not in dupes:
                     dupes[key] = finding
-            row_number += 1
         return list(dupes.values())

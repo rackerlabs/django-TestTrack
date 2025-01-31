@@ -516,11 +516,9 @@ def prepare_duplicates_for_delete(test=None, engagement=None):
 
     # remove the link to the original from the duplicates inside the cluster so they can be safely deleted by the django framework
     total = len(originals)
-    i = 0
     # logger.debug('originals: %s', [original.id for original in originals])
-    for original in originals:
-        i += 1
-        logger.debug("%d/%d: preparing duplicate cluster for deletion of original: %d", i, total, original.id)
+    for i, original in enumerate(originals):
+        logger.debug("%d/%d: preparing duplicate cluster for deletion of original: %d", i + 1, total, original.id)
         cluster_inside = original.original_finding.all()
         if engagement:
             cluster_inside = cluster_inside.filter(test__engagement=engagement)

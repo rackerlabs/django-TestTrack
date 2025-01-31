@@ -86,10 +86,8 @@ class SKFParser:
         return date_column_strategy
 
     def read_column_names(self, column_names, row):
-        index = 0
-        for column in row:
+        for index, column in enumerate(row):
             column_names[index] = column
-            index += 1
 
     def get_findings(self, filename, test):
         content = filename.read()
@@ -99,26 +97,22 @@ class SKFParser:
         column_names = {}
         chain = self.create_chain()
 
-        row_number = 0
         reader = csv.reader(
             io.StringIO(content), delimiter=",", quotechar='"', escapechar="\\",
         )
         dupes = {}
-        for row in reader:
+        for row_number, row in enumerate(reader):
             finding = Finding(test=test)
             finding.severity = "Info"
 
             if row_number == 0:
                 self.read_column_names(column_names, row)
-                row_number += 1
                 continue
 
-            column_number = 0
-            for column in row:
+            for column_number, column in enumerate(row):
                 chain.process_column(
                     column_names[column_number], column, finding,
                 )
-                column_number += 1
 
             if finding is not None:
                 key = hashlib.sha256(
@@ -133,7 +127,5 @@ class SKFParser:
 
                 if key not in dupes:
                     dupes[key] = finding
-
-            row_number += 1
 
         return list(dupes.values())

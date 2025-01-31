@@ -880,9 +880,7 @@ class CSVExportView(View):
                 fields.append(finding.test.engagement.product.name)
 
                 endpoint_value = ""
-                num_endpoints = 0
                 for endpoint in finding.endpoints.all():
-                    num_endpoints += 1
                     endpoint_value += f"{endpoint}; "
                 endpoint_value = endpoint_value.removesuffix("; ")
                 if len(endpoint_value) > EXCEL_CHAR_LIMIT:
@@ -890,9 +888,7 @@ class CSVExportView(View):
                 fields.append(endpoint_value)
 
                 vulnerability_ids_value = ""
-                num_vulnerability_ids = 0
-                for vulnerability_id in finding.vulnerability_ids:
-                    num_vulnerability_ids += 1
+                for num_vulnerability_ids, vulnerability_id in enumerate(finding.vulnerability_ids):
                     if num_vulnerability_ids > 5:
                         vulnerability_ids_value += "..."
                         break
@@ -903,9 +899,7 @@ class CSVExportView(View):
                 fields.append(vulnerability_ids_value)
                 # Tags
                 tags_value = ""
-                num_tags = 0
-                for tag in finding.tags.all():
-                    num_tags += 1
+                for num_tags, tag in enumerate(finding.tags.all()):
                     if num_tags > 5:
                         tags_value += "..."
                         break
@@ -1029,9 +1023,7 @@ class ExcelExportView(View):
                 col_num += 1
 
                 endpoint_value = ""
-                num_endpoints = 0
                 for endpoint in finding.endpoints.all():
-                    num_endpoints += 1
                     endpoint_value += f"{endpoint}; \n"
                 endpoint_value = endpoint_value.removesuffix("; \n")
                 if len(endpoint_value) > EXCEL_CHAR_LIMIT:
@@ -1040,9 +1032,7 @@ class ExcelExportView(View):
                 col_num += 1
 
                 vulnerability_ids_value = ""
-                num_vulnerability_ids = 0
-                for vulnerability_id in finding.vulnerability_ids:
-                    num_vulnerability_ids += 1
+                for num_vulnerability_ids, vulnerability_id in enumerate(finding.vulnerability_ids):
                     if num_vulnerability_ids > 5:
                         vulnerability_ids_value += "..."
                         break
