@@ -316,8 +316,8 @@ class NewJiraView(View):
 
             try:
                 jira = jira_helper.get_jira_connection_raw(jira_server, jira_username, jira_password)
-            except Exception as e:
-                logger.exception(e)  # already logged in jira_helper
+            except Exception:
+                logger.exception("Unable to authenticate. Please check credentials.")  # already logged in jira_helper
                 messages.add_message(
                     request,
                     messages.ERROR,
@@ -337,24 +337,26 @@ class NewJiraView(View):
                         open_key = open_key or int(node["id"])
                     if node["to"]["statusCategory"]["name"] == "Done":
                         close_key = close_key or int(node["id"])
-            except Exception as e:
-                logger.exception(e)  # already logged in jira_helper
+            except Exception:
+                msg = "Unable to find Open/Close ID's (invalid issue key specified?). They will need to be found manually"
+                logger.exception(msg)  # already logged in jira_helper
                 messages.add_message(
                     request,
                     messages.ERROR,
-                    "Unable to find Open/Close ID's (invalid issue key specified?). They will need to be found manually",
+                    msg,
                     extra_tags="alert-danger")
                 fallback_form = self.get_fallback_form_class()(request.POST, instance=JIRA_Instance())
                 return render(request, self.get_fallback_template(), {"jform": fallback_form})
             # Get the epic id name
             try:
                 epic_name = get_custom_field(jira, "Epic Name")
-            except Exception as e:
-                logger.exception(e)  # already logged in jira_helper
+            except Exception:
+                msg = "Unable to find Epic Name. It will need to be found manually"
+                logger.exception(msg)  # already logged in jira_helper
                 messages.add_message(
                     request,
                     messages.ERROR,
-                    "Unable to find Epic Name. It will need to be found manually",
+                    msg,
                     extra_tags="alert-danger")
                 fallback_form = self.get_fallback_form_class()(request.POST, instance=JIRA_Instance())
                 return render(request, self.get_fallback_template(), {"jform": fallback_form})

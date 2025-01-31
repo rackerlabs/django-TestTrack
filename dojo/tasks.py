@@ -175,9 +175,8 @@ def async_sla_compute_and_notify_task(*args, **kwargs):
         system_settings = System_Settings.objects.get()
         if system_settings.enable_finding_sla:
             sla_compute_and_notify(*args, **kwargs)
-    except Exception as e:
-        logger.exception(e)
-        logger.error(f"An unexpected error was thrown calling the SLA code: {e}")
+    except Exception:
+        logger.exception("An unexpected error was thrown calling the SLA code")
 
 
 @app.task

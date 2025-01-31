@@ -502,7 +502,7 @@ def import_endpoint_meta(request, pid):
             try:
                 endpoint_meta_import(file, product, create_endpoints, create_tags, create_dojo_meta, origin="UI", request=request)
             except Exception as e:
-                logger.exception(e)
+                logger.exception("An exception error occurred during the report import")
                 add_error_message_to_response(f"An exception error occurred during the report import:{e}")
             return HttpResponseRedirect(reverse("endpoint") + "?product=" + pid)
 

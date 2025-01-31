@@ -36,7 +36,7 @@ def new_tool_config(request):
                                      extra_tags="alert-success")
                 return HttpResponseRedirect(reverse("tool_config"))
             except Exception as e:
-                logger.exception(e)
+                logger.exception("Unable to connect to API")
                 messages.add_message(request,
                                      messages.ERROR,
                                      str(e),

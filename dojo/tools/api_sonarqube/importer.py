@@ -203,7 +203,7 @@ class SonarQubeApiImporter:
                 items.append(find)
 
         except Exception as e:
-            logger.exception(e)
+            logger.exception("SonarQube API import issue")
             create_notification(
                 event="sonarqube_failed",
                 title="SonarQube API import issue",
@@ -326,7 +326,7 @@ class SonarQubeApiImporter:
             return items
 
         except Exception as e:
-            logger.exception(e)
+            logger.exception("SonarQube API import issue")
             create_notification(
                 event="sonarqube_failed",
                 title="SonarQube API import issue",

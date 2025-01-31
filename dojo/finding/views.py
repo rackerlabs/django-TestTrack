@@ -3291,8 +3291,8 @@ def unlink_jira(request, fid):
             )
 
             return JsonResponse({"result": "OK"})
-        except Exception as e:
-            logger.exception(e)
+        except Exception:
+            logger.exception("Link to JIRA could not be deleted")
             messages.add_message(
                 request,
                 messages.ERROR,

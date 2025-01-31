@@ -77,7 +77,7 @@ select = [
    "PLE",
    "PLR01", "PLR0203", "PLR0206", "PLR0915", "PLR1716", "PLR172", "PLR1733", "PLR1736",
    "PLW0120", "PLW0129", "PLW013", "PLW017", "PLW02", "PLW04", "PLW07", "PLW1", "PLW2", "PLW3",
-   "TRY003", "TRY004", "TRY2",
+   "TRY003", "TRY004", "TRY2", "TRY401",
    "FLY",
    "NPY",
    "FAST",
