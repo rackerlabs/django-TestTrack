@@ -272,7 +272,7 @@ body #header form#api_selector .input input#input_apiKey {
 }
 
 .breadcrumb a.active {
-    color: #777 !important;
+    color: #546474 !important;
 }
 
 .badge.badge-count {
@@ -1353,7 +1353,7 @@ div.custom-search-form {
 }
 
 .panel-default > .panel-heading {
-    color: white;
+    color: #252525;
     font-size: 16px;
     background-color: rgba(32, 166, 216, 0.75);
     border-color: #A1C0D7;
