@@ -667,12 +667,12 @@ class EngagementViewSet(
                     {"info": "Jira Epic create query sent"},
                     status=status.HTTP_200_OK,
                 )
-            return response
         except ValidationError:
             return Response(
                 {"error": "Bad Request!"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        return response
 
 
 # @extend_schema_view(**schema_with_prefetch())

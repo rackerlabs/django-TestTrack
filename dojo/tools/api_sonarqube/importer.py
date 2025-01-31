@@ -323,8 +323,6 @@ class SonarQubeApiImporter:
                 )
                 items.append(find)
 
-            return items
-
         except Exception as e:
             logger.exception(e)
             create_notification(
@@ -335,6 +333,8 @@ class SonarQubeApiImporter:
                 source="SonarQube API",
                 obj=test.engagement.product,
             )
+
+        return items
 
     @staticmethod
     def clean_rule_description_html(raw_html):

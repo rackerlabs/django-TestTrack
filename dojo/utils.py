@@ -882,11 +882,11 @@ def get_punchcard_data(objs, start_date, weeks, view="Finding"):
             punch.append(punch[2])
             punch[2] = (sqrt(punch[2] / pi)) / ratio
 
-        return punchcard, ticks
-
     except Exception:
         logger.exception("Not showing punchcard graph due to exception gathering data")
         return None, None
+
+    return punchcard, ticks
 
 
 def get_week_data(week_start_date, tick, day_counts):

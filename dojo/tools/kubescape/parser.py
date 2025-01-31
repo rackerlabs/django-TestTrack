@@ -42,9 +42,10 @@ class KubescapeParser:
             parts = resource_id.split("/")
             resource_type = parts[-2]
             resource_name = parts[-1]
-            return resource_type, resource_name
         except IndexError:
             return None, None
+
+        return resource_type, resource_name
 
     def get_findings(self, filename, test):
         findings = []

@@ -406,7 +406,6 @@ def get_jira_connection_raw(jira_server, jira_username, jira_password):
 
         logger.debug("logged in to JIRA %s successfully", jira_server)
 
-        return jira
     except JIRAError as e:
         logger.exception(e)
 
@@ -427,6 +426,8 @@ def get_jira_connection_raw(jira_server, jira_username, jira_password):
 
         add_error_message_to_response("Unable to authenticate to JIRA. Please check the URL, username, password, captcha challenge, Network connection. Details in alert on top right. " + str(error_message))
         raise
+
+    return jira
 
 
 # Gets a connection to a Jira server based on the finding
@@ -1171,10 +1172,10 @@ def is_jira_project_valid(jira_project):
     try:
         jira = get_jira_connection(jira_project)
         get_issuetype_fields(jira, jira_project.project_key, jira_project.jira_instance.default_issue_type)
-        return True
     except JIRAError:
         logger.debug("invalid JIRA Project Config, can't retrieve metadata for '%s'", jira_project)
         return False
+    return True
 
 
 def jira_attachment(finding, jira, issue, file, jira_filename=None):
@@ -1195,11 +1196,11 @@ def jira_attachment(finding, jira, issue, file, jira_filename=None):
                 # read and upload a file
                 with open(file, "rb") as f:
                     jira.add_attachment(issue=issue, attachment=f)
-            return True
         except JIRAError as e:
             logger.exception(e)
             log_jira_alert("Attachment: " + e.text, finding)
             return False
+        return True
     return None
 
 
@@ -1249,11 +1250,11 @@ def close_epic(eng, push_to_jira, **kwargs):
                 if r.status_code != 204:
                     logger.warning(f"JIRA close epic failed with error: {r.text}")
                     return False
-                return True
             except JIRAError as e:
                 logger.exception(e)
                 log_jira_generic_alert("Jira Engagement/Epic Close Error", str(e))
                 return False
+            return True
         return None
     add_error_message_to_response("Push to JIRA for Epic skipped because enable_engagement_epic_mapping is not checked for this engagement")
     return False
@@ -1291,15 +1292,15 @@ def update_epic(engagement, **kwargs):
                 "priority": {"name": epic_priority},
             }
             issue.update(**jira_issue_update_kwargs)
-            return True
         except JIRAError as e:
             logger.exception(e)
             log_jira_generic_alert("Jira Engagement/Epic Update Error", str(e))
             return False
-    else:
-        add_error_message_to_response("Push to JIRA for Epic skipped because enable_engagement_epic_mapping is not checked for this engagement")
 
-        return False
+        return True
+
+    add_error_message_to_response("Push to JIRA for Epic skipped because enable_engagement_epic_mapping is not checked for this engagement")
+    return False
 
 
 @dojo_model_to_id
@@ -1343,7 +1344,6 @@ def add_epic(engagement, **kwargs):
                 engagement=engagement,
                 jira_project=jira_project)
             j_issue.save()
-            return True
         except JIRAError as e:
             # should we try to parse the errors as JIRA is very strange in how it responds.
             # for example a non existent project_key leads to "project key is required" which sounds like something is missing
@@ -1360,9 +1360,11 @@ def add_epic(engagement, **kwargs):
             log_jira_generic_alert("Jira Engagement/Epic Creation Error",
                                    message + error)
             return False
-    else:
-        add_error_message_to_response("Push to JIRA for Epic skipped because enable_engagement_epic_mapping is not checked for this engagement")
-        return False
+
+        return True
+
+    add_error_message_to_response("Push to JIRA for Epic skipped because enable_engagement_epic_mapping is not checked for this engagement")
+    return False
 
 
 def jira_get_issue(jira_project, issue_key):
@@ -1400,10 +1402,10 @@ def add_comment(obj, note, force_push=False, **kwargs):
                 jira.add_comment(
                     j_issue.jira_id,
                     f"({note.author.get_full_name() or note.author.username}): {note.entry}")
-                return True
             except JIRAError as e:
                 log_jira_generic_alert("Jira Add Comment Error", str(e))
                 return False
+            return True
         return None
     return None
 
@@ -1422,10 +1424,10 @@ def add_simple_jira_comment(jira_instance, jira_issue, comment):
         jira.add_comment(
             jira_issue.jira_id, comment,
         )
-        return True
     except Exception as e:
         log_jira_generic_alert("Jira Add Comment Error", str(e))
         return False
+    return True
 
 
 def jira_already_linked(finding, jira_issue_key, jira_id) -> Finding | None:

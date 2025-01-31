@@ -3085,9 +3085,9 @@ class Finding(models.Model):
         try:
             # Attempt to access the github issue if it exists. If not, an exception will be caught
             _ = self.github_issue
-            return True
         except GITHUB_Issue.DoesNotExist:
             return False
+        return True
 
     def github_conf(self):
         try:

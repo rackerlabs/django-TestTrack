@@ -23,6 +23,6 @@ def get_banner_conf(attribute):
                     attributes=allowed_attributes,
                     css_sanitizer=CSSSanitizer(allowed_css_properties=["color", "font-weight"])))
             return value
-        return False
     except Exception:
         return False
+    return False
