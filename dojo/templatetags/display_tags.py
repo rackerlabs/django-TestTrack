@@ -1032,3 +1032,8 @@ def import_history(finding, autoescape=True):
         list_of_status_changes += "<b>" + status_change.created.strftime("%b %d, %Y, %H:%M:%S") + "</b>: " + status_change.get_action_display() + "<br/>"
 
     return mark_safe(html % (list_of_status_changes))
+
+
+@register.filter
+def mask_secret(secret, display_chars=6):
+    return "%s%s" % (secret[:display_chars], "*" * (len(secret) - display_chars))

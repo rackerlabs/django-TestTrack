@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load navigation_tags %}
+{% load authorization_tags %}
+{% load display_tags %}
+{% block content %}
+    {{ block.super }}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading tight">
+                    <h3 class="has-filters">
+                        Linear Instances
+                        <div class="dropdown pull-right">
+                            {% if "dojo.add_linear_instance"|has_configuration_permission:request %}
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
+                                    data-toggle="dropdown" aria-expanded="true">
+                                <span class="fa-solid fa-screwdriver-wrench"></span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu"
+                                aria-labelledby="dropdownMenu1">
+                                <li role="presentation">
+                                    <a href="{% url 'add_linear' %}">
+                                        <i class="fa-solid fa-plus"></i> Add Linear Instance
+                                    </a>
+                                </li>
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </h3>
+                </div>
+
+            </div>
+            {% if linear_instances %}
+
+                <div class="clearfix">
+                    {% include "dojo/paging_snippet.html" with page=linear_instances page_size=True %}
+                </div>
+                <div class="panel panel-default table-responsive">
+                    <table id="products"
+                           class="tablesorter-bootstrap table table-condensed table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Team ID</th>
+                            <th>API Key</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for linear_instance in linear_instances %}
+                            <tr>
+                                <td>
+                                    {% if "dojo.change_linear_instance"|has_configuration_permission:request %}
+                                    <a href="{% url 'edit_linear' linear_instance.id %}"><b>{{ linear_instance.instance_name }}</b></a>
+                                    {% else %}
+                                    {{ linear_instance.instance_name }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ linear_instance.team_id }}</td>
+                                <td>
+                                        {{ linear_instance.api_key|mask_secret }}
+                                </td>
+                                <td>
+                                    {% if "dojo.change_linear_instance"|has_configuration_permission:request %}
+                                    <a href="{% url 'edit_linear' linear_instance.id %}" class="btn btn-sm btn-warning">
+                                        <i class="fa-solid fa-file"></i>
+                                        Edit
+                                    </a>
+                                    {% endif %}
+                                    {% if "dojo.delete_linear_instance"|has_configuration_permission:request %}
+                                    <a href="{% url 'delete_linear' linear_instance.id %}" class="btn btn-sm btn-danger">
+                                        <i class="fa-solid fa-trash" style="color:white"></i>
+                                        Delete
+                                    </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clearfix">
+                    {% include "dojo/paging_snippet.html" with page=linear_instances page_size=True %}
+                </div>
+            {% else %}
+                <p class="text-center">No Linear instances found.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+{% block postscript %}
+    {{ block.super }}
+    {% include "dojo/filter_js_snippet.html" %}
+{% endblock %}

@@ -18,6 +18,7 @@ from django.db.models.functions import Length
 from django.db.models.query import Prefetch
 from django.http import Http404, HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.template import Context, Template
 from django.template.defaultfilters import pluralize
 from django.urls import reverse
 from django.utils import formats, timezone
@@ -65,6 +66,7 @@ from dojo.forms import (
     FindingTemplateForm,
     GITHUBFindingForm,
     JIRAFindingForm,
+    LinearFindingForm,
     MergeFindings,
     NoteForm,
     PromoteFindingForm,
@@ -86,6 +88,8 @@ from dojo.models import (
     Finding_Template,
     GITHUB_Issue,
     GITHUB_PKey,
+    Linear_Instance,
+    Linear_Issue,
     Note_Type,
     NoteHistory,
     Notes,
@@ -1212,6 +1216,181 @@ class DeleteFinding(View):
             return redirect_to_return_url_or_else(request, reverse("view_test", args=(finding.test.id,)))
         raise PermissionDenied
 
+def linear_api_create_issue(post_body):
+    import requests
+    lid = int(post_body.get("linear"))
+    linear_instance = get_object_or_404(Linear_Instance, pk=lid)
+
+    url = linear_instance.LINEAR_API_URL
+
+    headers = {
+        "Authorization": linear_instance.api_key,
+        "Content-Type": "application/json"
+    }
+
+    query = """
+    mutation CreateIssue($input: IssueCreateInput!) {
+        issueCreate(input: $input) {
+            success
+            issue {
+                id
+                identifier
+                title
+                url
+            }
+        }
+    }
+    """
+
+    variables = {
+        "input": {
+            "teamId": linear_instance.team_id,
+            "title": post_body.get("title"),
+            "description": post_body.get("description")
+        }
+    }
+    # add any additional configuration that was specified (any falsey configs, e.g.
+    # [], {}, null, etc. won't be applied even though they can be stored as valid JSON
+    if linear_instance.addl_json_input:
+        for key, val in linear_instance.addl_json_input.items():
+            variables["input"][key] = val
+
+    payload = {
+        "query": query,
+        "variables": variables
+    }
+
+    return requests.post(url, json=payload, headers=headers)
+
+
+def linear_create_formatted_description(finding):
+    tmpl_desc = Template("""
+## Description
+
+{{ description }}
+
+## Affected Systems
+
+{{ repo }}
+- {{ path }}
+
+{{ mitigation }}
+    """.strip())
+
+    repo = "[%s](%s)" % (
+        finding.test.engagement.product.name,
+        finding.test.engagement.source_code_management_uri
+    )
+    path = ""
+    if finding.file_path:
+        path = "[%s%s](%s)" % (
+            finding.file_path,
+            ":"+str(finding.line) if finding.line else "",
+            finding.get_file_path_with_raw_link()
+        )
+
+    mitigation = ""
+    if finding.mitigation:
+        mitigation = ("""
+## Mitigation
+```
+%s
+```
+""".strip() % finding.mitigation
+        )
+
+    return tmpl_desc.render(
+        Context({
+            "description": finding.description,
+            "repo": repo,
+            "path": path,
+            "mitigation": mitigation
+        })
+    )
+
+# display a form to push a finding to Linear and create a new issue
+@user_is_authorized(Finding, Permissions.Finding_Edit, "fid")
+def create_linear_issue(request, fid):
+    finding = get_object_or_404(Finding, id=fid)
+    if request.method == "POST":
+        form = LinearFindingForm(request.POST)
+        if form.is_valid():
+            response = linear_api_create_issue(request.POST)
+            # success creating issue
+            if response.status_code == 200:
+                resp_obj = response.json()
+                # 200 responses can represent an error in GraphQL, so we need to look
+                # in the response body
+                if "errors" in resp_obj:
+                    error_msgs = [
+                        e.get("extensions", {}).get("userPresentableMessage", "Unknown Error")
+                        for e in resp_obj.get("errors", [])
+                    ]
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        "Error creating Linear issue: {}".format(", ".join(error_msgs)),
+                        extra_tags="alert-danger",
+                    )
+                # successfully created the issue --> update the UI
+                else:
+                    issue_url = resp_obj.get("data", {}).get("issueCreate", {}).get(
+                        "issue", {}).get("url")
+                    # keep track of linear issues
+                    issue, cr = Linear_Issue.objects.get_or_create(url=issue_url)
+                    # associate new linear issue with finding
+                    issue.findings.add(finding)
+                    # update UI
+                    messages.add_message(
+                        request,
+                        messages.SUCCESS,
+                        mark_safe(
+                            "Linear issue created: <a href='{}'>{}</a>".format(
+                                issue_url,
+                                resp_obj.get("data", {}).get("issueCreate", {}).get(
+                                    "issue", {}).get("identifier", "")
+                            )
+                        ),
+                        extra_tags="alert-success",
+                    )
+            # failure to create issue
+            else:
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    "Error creating Linear issue: {}".format(response.text),
+                    extra_tags="alert-danger",
+                )
+            return HttpResponseRedirect(
+                reverse("create_linear_issue", args=(finding.id,)),
+            )
+
+    # non-POST
+    else:
+        # build initial form with values, user can edit them if needed
+        form = LinearFindingForm(
+            initial = {
+                "title": finding.title,
+                "description": linear_create_formatted_description(finding)
+            }
+        )
+
+    product_tab = Product_Tab(
+        finding.test.engagement.product, title="Create Linear Issue", tab="findings",
+    )
+
+    return render(
+        request,
+        "dojo/create_linear_issue.html",
+        {
+            "finding": finding,
+            "product_tab": product_tab,
+            "active_tab": "findings",
+            "user": request.user,
+            "form": form,
+            "linear_issues": finding.linear_issues.all()
+        },
+    )
 
 @user_is_authorized(Finding, Permissions.Finding_Edit, "fid")
 def close_finding(request, fid):
