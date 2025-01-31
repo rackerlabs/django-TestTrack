@@ -140,7 +140,7 @@ Create chart name and version as used by the chart label.
   command:
   - sh
   - -c
-  - while ! /app/manage.py migrate --check; do echo "Database is not migrated to the latest state yet"; sleep 5; done;
+  - while ! /app/manage.py migrate --check; do echo "Database is not migrated to the latest state yet"; sleep 5; done; echo "Database is migrated to the latest state";
   image: '{{ template "django.uwsgi.repository" . }}:{{ .Values.tag }}'
   imagePullPolicy: {{ .Values.imagePullPolicy }}
   {{- if .Values.securityContext.enabled }}
