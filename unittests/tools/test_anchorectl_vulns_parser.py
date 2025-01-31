@@ -16,7 +16,8 @@ class TestAnchoreCTLVulnsParser(DojoTestCase):
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
             singleFinding = findings[0]
-            self.assertEqual(singleFinding.title, "CVE-2011-3389 - libgnutls30-3.5.8-5+deb9u4(dpkg)")
+            self.assertEqual(singleFinding.title, "CVE-2011-3389 - libgnutls30-3.5.8-5+deb9u4 (dpkg)")
+
             self.assertEqual(singleFinding.severity, "Medium")
             self.assertEqual(singleFinding.description, "**Image hash**: None\n\n**Package**: libgnutls30-3.5.8-5+deb9u4\n\n**Package path**: None\n\n**Package type**: dpkg\n\n**Feed**: vulnerabilities/debian:9\n\n**CPE**: None\n\n**Description**: That test description\n\n")
 
