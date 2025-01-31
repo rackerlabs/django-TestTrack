@@ -1,7 +1,12 @@
 #!/bin/sh
 
-. /secret-file-loader.sh
+set -e  # needed to handle "exit" correctly
 
+. /secret-file-loader.sh
+. /reach_database.sh
+
+wait_for_database_to_be_reachable
+echo
 
 cd /app || exit
 
