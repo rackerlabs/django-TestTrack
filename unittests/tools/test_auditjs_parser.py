@@ -58,10 +58,10 @@ class TestAuditJSParser(DojoTestCase):
             self.assertEqual(400, findings[4].cwe)
 
     def test_auditjs_parser_empty_with_error(self):
-        with self.assertRaises(ValueError) as context:
-            with open(get_unit_tests_scans_path("auditjs") / "empty_with_error.json", encoding="utf-8") as testfile:
-                parser = AuditJSParser()
-                parser.get_findings(testfile, Test())
+        with self.assertRaises(ValueError) as context, \
+          open(get_unit_tests_scans_path("auditjs") / "empty_with_error.json", encoding="utf-8") as testfile:
+            parser = AuditJSParser()
+            parser.get_findings(testfile, Test())
 
         self.assertIn(
             "Invalid JSON format. Are you sure you used --json option ?", str(context.exception),

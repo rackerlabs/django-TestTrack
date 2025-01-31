@@ -36,10 +36,10 @@ class TestKubeHunterParser(TestCase):
             self.assertEqual(8, len(findings))
 
     def test_kubehunter_parser_empty_with_error(self):
-        with self.assertRaises(ValueError) as context:
-            with open(get_unit_tests_scans_path("kubehunter") / "empty.json", encoding="utf-8") as testfile:
-                parser = KubeHunterParser()
-                parser.get_findings(testfile, Test())
+        with self.assertRaises(ValueError) as context, \
+           open(get_unit_tests_scans_path("kubehunter") / "empty.json", encoding="utf-8") as testfile:
+            parser = KubeHunterParser()
+            parser.get_findings(testfile, Test())
 
         self.assertEqual(
             "Expecting value: line 1 column 1 (char 0)", str(context.exception),

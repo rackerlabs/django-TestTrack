@@ -55,11 +55,10 @@ class TestBurpGraphQLParser(DojoTestCase):
             self.assertEqual(0, len(findings))
 
     def test_burp_null_title(self):
-        with open(get_unit_tests_scans_path("burp_graphql") / "null_title.json", encoding="utf-8") as test_file:
-
-            with self.assertRaises(ValueError):
-                parser = BurpGraphQLParser()
-                parser.get_findings(test_file, Test())
+        with open(get_unit_tests_scans_path("burp_graphql") / "null_title.json", encoding="utf-8") as test_file, \
+          self.assertRaises(ValueError):
+            parser = BurpGraphQLParser()
+            parser.get_findings(test_file, Test())
 
     def test_burp_null_request_segments(self):
         with open(get_unit_tests_scans_path("burp_graphql") / "null_request_segments.json", encoding="utf-8") as test_file:

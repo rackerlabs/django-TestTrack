@@ -6,10 +6,10 @@ from unittests.dojo_test_case import DojoTestCase, get_unit_tests_scans_path
 class TestGovulncheckParser(DojoTestCase):
 
     def test_parse_empty(self):
-        with self.assertRaises(ValueError) as exp:
-            with open(get_unit_tests_scans_path("govulncheck") / "empty.json", encoding="utf-8") as testfile:
-                parser = GovulncheckParser()
-                parser.get_findings(testfile, Test())
+        with self.assertRaises(ValueError) as exp, \
+          open(get_unit_tests_scans_path("govulncheck") / "empty.json", encoding="utf-8") as testfile:
+            parser = GovulncheckParser()
+            parser.get_findings(testfile, Test())
         self.assertIn(
             "Invalid JSON format", str(exp.exception),
         )

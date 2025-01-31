@@ -27,10 +27,10 @@ class TestAnchoreEnterpriseParser(DojoTestCase):
             self.assertEqual("CVE-2015-2992", finding.unsaved_vulnerability_ids[0])
 
     def test_anchore_policy_check_parser_invalid_format(self):
-        with open(get_unit_tests_scans_path("anchore_enterprise") / "invalid_checks_format.json", encoding="utf-8") as testfile:
-            with self.assertRaises(Exception):
-                parser = AnchoreEnterpriseParser()
-                parser.get_findings(testfile, Test())
+        with open(get_unit_tests_scans_path("anchore_enterprise") / "invalid_checks_format.json", encoding="utf-8") as testfile, \
+          self.assertRaises(Exception):
+            parser = AnchoreEnterpriseParser()
+            parser.get_findings(testfile, Test())
 
     def test_anchore_policy_check_extract_vulnerability_id(self):
         vulnerability_id = extract_vulnerability_id("CVE-2019-14540+openapi-generator-cli-4.0.0.jar:jackson-databind")

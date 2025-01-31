@@ -63,14 +63,14 @@ class TestYarnAuditParser(DojoTestCase):
             self.assertEqual(findings[1].unsaved_vulnerability_ids[0], "CVE-2021-3807")
 
     def test_yarn_audit_parser_empty_with_error(self):
-        with self.assertRaises(ValueError) as context:
-            with open(get_unit_tests_scans_path("yarn_audit") / "empty_with_error.json", encoding="utf-8") as testfile:
-                parser = YarnAuditParser()
-                parser.get_findings(testfile, self.get_test())
-                self.assertIn(
-                    "yarn audit report contains errors:", str(context.exception),
-                )
-                self.assertIn("ECONNREFUSED", str(context.exception))
+        with self.assertRaises(ValueError) as context, \
+          open(get_unit_tests_scans_path("yarn_audit") / "empty_with_error.json", encoding="utf-8") as testfile:
+            parser = YarnAuditParser()
+            parser.get_findings(testfile, self.get_test())
+            self.assertIn(
+                "yarn audit report contains errors:", str(context.exception),
+            )
+            self.assertIn("ECONNREFUSED", str(context.exception))
 
     def test_yarn_audit_parser_issue_6495(self):
         with open(get_unit_tests_scans_path("yarn_audit") / "issue_6495.json", encoding="utf-8") as testfile:
