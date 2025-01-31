@@ -1719,7 +1719,7 @@ class FindingSerializer(TaggitSerializer, serializers.ModelSerializer):
     )
     push_to_jira = serializers.BooleanField(default=False)
     age = serializers.IntegerField(read_only=True)
-    sla_days_remaining = serializers.IntegerField(read_only=True)
+    sla_days_remaining = serializers.IntegerField(read_only=True, allow_null=True)
     finding_meta = FindingMetaSerializer(read_only=True, many=True)
     related_fields = serializers.SerializerMethodField(allow_null=True)
     # for backwards compatibility
