@@ -224,7 +224,6 @@ class DsopParser:
                     severity = "Critical"
                 else:
                     severity = "Info"
-                severity = severity
                 mitigation = "To be investigated"
                 description = "Gate: {} (Trigger: {}): {}".format(
                     row[headers["gate"]],
