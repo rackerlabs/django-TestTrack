@@ -91,7 +91,7 @@ class YarnAuditParser:
             cvss = "**cvss:** " + str(tree.get("advisories").get(element).get("cvss"))
             found_by = "**found_by:** " + str(tree.get("advisories").get(element).get("found_by"))
             deleted = "**deleted:** " + str(tree.get("advisories").get(element).get("deleted"))
-            id = "**id:** " + str(tree.get("advisories").get(element).get("id"))
+            elem_id = "**id:** " + str(tree.get("advisories").get(element).get("id"))
             references = "**references:** " + str(tree.get("advisories").get(element).get("references"))
             created = "**created:** " + str(tree.get("advisories").get(element).get("created"))
             reported_by = "**reported_by:** " + str(tree.get("advisories").get(element).get("reported_by"))
@@ -109,7 +109,7 @@ class YarnAuditParser:
             description += cvss + "\n"
             description += found_by + "\n"
             description += deleted + "\n"
-            description += id + "\n"
+            description += elem_id + "\n"
             description += created + "\n"
             description += reported_by + "\n"
             description += title + "\n"

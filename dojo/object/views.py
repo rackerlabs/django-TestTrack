@@ -57,14 +57,14 @@ def view_objects(request, pid):
 
 @user_is_authorized(Product, Permissions.Product_Tracking_Files_Edit, "pid")
 def edit_object(request, pid, ttid):
-    object = Objects_Product.objects.get(pk=ttid)
+    object_prod = Objects_Product.objects.get(pk=ttid)
     product = get_object_or_404(Product, id=pid)
-    if object.product != product:
-        msg = f"Product {pid} does not fit to product of Object {object.product.id}"
+    if object_prod.product != product:
+        msg = f"Product {pid} does not fit to product of Object {object_prod.product.id}"
         raise BadRequest(msg)
 
     if request.method == "POST":
-        tform = ObjectSettingsForm(request.POST, instance=object)
+        tform = ObjectSettingsForm(request.POST, instance=object_prod)
         if tform.is_valid():
             tform.save()
 
@@ -74,7 +74,7 @@ def edit_object(request, pid, ttid):
                                  extra_tags="alert-success")
             return HttpResponseRedirect(reverse("view_objects", args=(pid,)))
     else:
-        tform = ObjectSettingsForm(instance=object)
+        tform = ObjectSettingsForm(instance=object_prod)
 
     product_tab = Product_Tab(product, title="Edit Tracked Files", tab="settings")
     return render(request,
@@ -87,21 +87,21 @@ def edit_object(request, pid, ttid):
 
 @user_is_authorized(Product, Permissions.Product_Tracking_Files_Delete, "pid")
 def delete_object(request, pid, ttid):
-    object = Objects_Product.objects.get(pk=ttid)
+    object_prod = Objects_Product.objects.get(pk=ttid)
     product = get_object_or_404(Product, id=pid)
-    if object.product != product:
-        msg = f"Product {pid} does not fit to product of Object {object.product.id}"
+    if object_prod.product != product:
+        msg = f"Product {pid} does not fit to product of Object {object_prod.product.id}"
         raise BadRequest(msg)
 
     if request.method == "POST":
-        tform = ObjectSettingsForm(request.POST, instance=object)
-        object.delete()
+        tform = ObjectSettingsForm(request.POST, instance=object_prod)
+        object_prod.delete()
         messages.add_message(request,
                              messages.SUCCESS,
                              "Tracked Product Files Deleted.",
                              extra_tags="alert-success")
         return HttpResponseRedirect(reverse("view_objects", args=(pid,)))
-    tform = DeleteObjectsSettingsForm(instance=object)
+    tform = DeleteObjectsSettingsForm(instance=object_prod)
 
     product_tab = Product_Tab(product, title="Delete Product Tool Configuration", tab="settings")
     return render(request,

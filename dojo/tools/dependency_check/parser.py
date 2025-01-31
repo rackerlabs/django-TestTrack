@@ -60,8 +60,8 @@ class DependencyCheckParser:
             # analyzing identifier from the more generic to
             package_node = identifiers_node.find(".//" + namespace + "package")
             if package_node:
-                id = package_node.findtext(f"{namespace}id")
-                purl = PackageURL.from_string(id)
+                pck_id = package_node.findtext(f"{namespace}id")
+                purl = PackageURL.from_string(pck_id)
                 purl_parts = purl.to_dict()
                 component_name = (
                     purl_parts["namespace"] + ":"
@@ -96,8 +96,8 @@ class DependencyCheckParser:
                 ".//" + namespace + 'identifier[@type="cpe"]',
             )
             if cpe_node:
-                id = cpe_node.findtext(f"{namespace}name")
-                cpe = CPE(id)
+                cpe_id = cpe_node.findtext(f"{namespace}name")
+                cpe = CPE(cpe_id)
                 component_name = (
                     cpe.get_vendor()[0] + ":"
                     if len(cpe.get_vendor()) > 0

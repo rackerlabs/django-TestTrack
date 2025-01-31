@@ -58,8 +58,8 @@ class BlackduckComponentRiskParser:
         for component_id, component in components.items():
             source = {}
             # Find the sources.csv data for this component
-            for id, src in sources.items():
-                if id in component_id:
+            for source_id, src in sources.items():
+                if source_id in component_id:
                     source = src
             if component.get("Component policy status") == "In Violation":
                 # We have us a license risk:
@@ -243,7 +243,7 @@ class BlackduckComponentRiskParser:
         :param vulns: Dictionary {component_version_identifier: [vulns]}
         :return:
         """
-        map = {
+        severity_map = {
             "HIGH": "High",
             "MEDIUM": "Medium",
             "LOW": "Low",
@@ -253,7 +253,7 @@ class BlackduckComponentRiskParser:
         }
         sev = "None"
         try:
-            sev = map[component.get("License Risk")]
+            sev = severity_map[component.get("License Risk")]
         except KeyError:
             sev = "None"
         return sev
@@ -266,7 +266,7 @@ class BlackduckComponentRiskParser:
         :param vulns: Dictionary {component_version_identifier: [vulns]}
         :return:
         """
-        map = {
+        severity_map = {
             "HIGH": "High",
             "MEDIUM": "Medium",
             "LOW": "Low",
@@ -278,7 +278,7 @@ class BlackduckComponentRiskParser:
         for vuln in vulns:
             if float(vuln["Base score"]) > max_severity:
                 max_severity = float(vuln["Base score"])
-                sev = map[vuln["Security Risk"]]
+                sev = severity_map[vuln["Security Risk"]]
         return sev
 
     def security_mitigation(self, vulns):

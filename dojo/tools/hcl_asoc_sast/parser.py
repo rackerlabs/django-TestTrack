@@ -95,8 +95,8 @@ class HCLASoCSASTParser:
                             fix = item.iter()
                             for fitem in fix:
                                 if fitem.tag == "types":
-                                    type = fitem.iter()
-                                    for titem in type:
+                                    ftype = fitem.iter()
+                                    for titem in ftype:
                                         if titem.tag == "name":
                                             issuetypename = self.xmltreehelper(titem)
                                 if fitem.tag == "remediation":

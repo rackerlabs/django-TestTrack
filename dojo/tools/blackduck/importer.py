@@ -48,16 +48,16 @@ class BlackduckImporter(Importer):
         files = {}
         security_issues = {}
 
-        with zipfile.ZipFile(str(report)) as zip:
-            for full_file_name in zip.namelist():
+        with zipfile.ZipFile(str(report)) as zipf:
+            for full_file_name in zipf.namelist():
                 file_name = full_file_name.split("/")[-1]
                 # Backwards compatibility, newer versions of Blackduck have a source file rather
                 # than a "files" file.
                 if "source" in file_name or "files" in file_name:
-                    with io.TextIOWrapper(zip.open(full_file_name), encoding="utf-8") as f:
+                    with io.TextIOWrapper(zipf.open(full_file_name), encoding="utf-8") as f:
                         files = self.__partition_by_key(f)
                 elif "security" in file_name:
-                    with io.TextIOWrapper(zip.open(full_file_name), encoding="utf-8") as f:
+                    with io.TextIOWrapper(zipf.open(full_file_name), encoding="utf-8") as f:
                         security_issues = self.__partition_by_key(f)
 
         project_ids = set(files.keys()) & set(security_issues.keys())

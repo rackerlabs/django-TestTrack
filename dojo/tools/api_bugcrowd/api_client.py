@@ -51,10 +51,10 @@ class BugcrowdAPI:
         else:
             params_encoded = urlencode(params_default)
 
-        next = f"{self.bugcrowd_api_url}/submissions?{params_encoded}"
-        while next != "":
+        next_page = f"{self.bugcrowd_api_url}/submissions?{params_encoded}"
+        while next_page != "":
             response = self.session.get(
-                url=next,
+                url=next_page,
                 timeout=settings.REQUESTS_TIMEOUT,
             )
             response.raise_for_status()
@@ -65,15 +65,15 @@ class BugcrowdAPI:
 
                 # When we hit the end of the submissions, break out
                 if len(data["data"]) == 0:
-                    next = ""
+                    next_page = ""
                     break
 
                 # Otherwise, keep updating next link
-                next = "{}{}".format(
+                next_page = "{}{}".format(
                     self.bugcrowd_api_url, data["links"]["next"],
                 )
             else:
-                next = "over"
+                next_page = "over"
 
     def test_connection(self):
         # Request programs

@@ -125,8 +125,8 @@ def get_rule_violation_model(
         dependency_trees, rule_violation_unresolved["pkg"],
     )
     project_names = []
-    for id in project_ids:
-        project_names.append(get_name_id_for_package(packages, id))
+    for proj_id in project_ids:
+        project_names.append(get_name_id_for_package(packages, proj_id))
     package = find_package_by_id(packages, rule_violation_unresolved["pkg"])
     license_tmp = rule_violation_unresolved.get("license", "unset")
     if "license_source" not in rule_violation_unresolved:
@@ -148,12 +148,11 @@ def find_package_by_id(packages, pkg_id):
 
 
 def find_license_id(licenses, license_id):
-    id = ""
     for lic in licenses:
         if lic["_id"] == license_id:
-            id = lic["id"]
+            lic_id = lic["id"]
             break
-    return id
+    return lic_id
 
 
 def get_item(model, test):

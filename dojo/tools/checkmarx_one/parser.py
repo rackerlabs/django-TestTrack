@@ -199,7 +199,7 @@ class CheckmarxOneParser:
     ) -> list[Finding]:
         findings = []
         for result in results:
-            id = result.get("identifiers")[0].get("value")
+            result_id = result.get("identifiers")[0].get("value")
             cwe = None
             if "vulnerabilityDetails" in result:
                 cwe = result.get("vulnerabilites").get("cweId")
@@ -208,14 +208,14 @@ class CheckmarxOneParser:
             locations_startLine = result.get("location").get("start_line")
             locations_endLine = result.get("location").get("end_line")
             finding = Finding(
-                unique_id_from_tool=id,
+                unique_id_from_tool=result_id,
                 file_path=locations_uri,
                 line=locations_startLine,
-                title=id + "_" + locations_uri,
+                title=result_id + "_" + locations_uri,
                 test=test,
                 cwe=cwe,
                 severity=severity,
-                description="**id**: " + str(id) + "\n"
+                description="**id**: " + str(result_id) + "\n"
                 + "**uri**: " + locations_uri + "\n"
                 + "**startLine**: " + str(locations_startLine) + "\n"
                 + "**endLine**: " + str(locations_endLine) + "\n",

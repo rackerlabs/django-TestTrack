@@ -941,8 +941,8 @@ class DojoMeta(models.Model):
                self.finding_id]
         ids_count = 0
 
-        for id in ids:
-            if id is not None:
+        for obj_id in ids:
+            if obj_id is not None:
                 ids_count += 1
 
         if ids_count == 0:

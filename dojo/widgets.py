@@ -15,7 +15,7 @@ class TableCheckboxWidget(forms.widgets.Widget):
 
     def value_from_datadict(self, data, files, name):
         selected_ids = data.getlist(name)
-        return [int(id) for id in selected_ids]
+        return [int(idn) for idn in selected_ids]
 
     def render(self, name, value, attrs=None, renderer=None):
         page_number = self.page_number

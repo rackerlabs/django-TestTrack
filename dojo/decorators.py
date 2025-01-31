@@ -66,9 +66,8 @@ def dojo_model_to_id(_func=None, *, parameter=0):
             if model_or_id:
                 if isinstance(model_or_id, models.Model) and we_want_async(*args, func=func, **kwargs):
                     logger.debug("converting model_or_id to id: %s", model_or_id)
-                    id = model_or_id.id
                     args = list(args)
-                    args[parameter] = id
+                    args[parameter] = model_or_id.id
 
             return func(*args, **kwargs)
 
