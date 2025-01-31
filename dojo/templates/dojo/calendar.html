@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
     {{ block.super }}
@@ -75,7 +76,15 @@
                             },
                         {%  endfor %}
                     {% endif %}
-                ]
+                ],
+                viewRender: function(view, element) {
+                // Updating aria-label attributes calendar switches after the view is rendered
+                $('.fc-prev-button').attr('aria-label', '{% trans "Previous month" %}');
+                $('.fc-next-button').attr('aria-label', '{% trans "Next month" %}');
+                $('.fc-month-button').attr('aria-label', '{% trans "Month preview" %}');
+                $('.fc-basicWeek-button').attr('aria-label', '{% trans "Week preview" %}');
+                $('.fc-basicDay-button').attr('aria-label', '{% trans "Day preview" %}');
+            }
             });
         });
     </script>

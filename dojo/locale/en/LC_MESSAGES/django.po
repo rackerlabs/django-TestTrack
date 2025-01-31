@@ -4964,3 +4964,23 @@ msgstr ""
 #: dojo/utils.py
 msgid "Home"
 msgstr ""
+
+#: dojo/templates/dojo/calendar.html
+msgid "Previous month"
+msgstr ""
+
+#: dojo/templates/dojo/calendar.html
+msgid "Next month"
+msgstr ""
+
+#: dojo/templates/dojo/calendar.html
+msgid "Month preview"
+msgstr ""
+
+#: dojo/templates/dojo/calendar.html
+msgid "Week preview"
+msgstr ""
+
+#: dojo/templates/dojo/calendar.html
+msgid "Day preview"
+msgstr ""
