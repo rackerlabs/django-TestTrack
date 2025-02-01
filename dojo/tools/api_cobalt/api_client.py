@@ -1,6 +1,8 @@
 import requests
 from django.conf import settings
 
+from dojo.utils import first_elem
+
 
 class CobaltAPI:
 
@@ -90,7 +92,7 @@ class CobaltAPI:
             orgs = filter(
                 lambda org: org["resource"]["token"] == self.org_token, data,
             )
-            org = list(orgs)[0]
+            org = first_elem(orgs)
             org_name = org["resource"]["name"]
             return f'You have access to the "{org_name}" organization'
         msg = (

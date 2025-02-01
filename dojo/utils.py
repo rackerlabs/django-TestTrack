@@ -175,7 +175,7 @@ def match_finding_to_existing_findings(finding, product=None, engagement=None, t
 
     deduplicationLogger.debug(
         "Matching finding %i:%s to existing findings in %s %s using %s as deduplication algorithm.",
-        finding.id, finding.title, custom_filter_type, list(custom_filter.values())[0], deduplication_algorithm,
+        finding.id, finding.title, custom_filter_type, first_elem(custom_filter.values()), deduplication_algorithm,
     )
 
     if deduplication_algorithm == "hash_code":
@@ -2712,3 +2712,9 @@ def generate_file_response_from_file_path(
     response["Content-Disposition"] = f'attachment; filename="{full_file_name}"'
     response["Content-Length"] = file_size
     return response
+
+
+def first_elem(x):
+    # This function is workaround for using of `list(...)[0]`.
+    # RUF015 recommends to use `next(iter(x))` but it is harder for reading in regular code
+    return next(iter(x))

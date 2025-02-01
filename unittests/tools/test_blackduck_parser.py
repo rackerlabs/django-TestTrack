@@ -22,7 +22,6 @@ class TestBlackduckHubParser(DojoTestCase):
         parser = BlackduckParser()
         findings = parser.get_findings(testfile, Test())
         self.assertEqual(24, len(findings))
-        findings = list(findings)
         self.assertEqual(1, len(findings[10].unsaved_vulnerability_ids))
         self.assertEqual("CVE-2007-3386", findings[10].unsaved_vulnerability_ids[0])
         self.assertEqual(findings[4].component_name, "Apache Tomcat")
@@ -34,7 +33,6 @@ class TestBlackduckHubParser(DojoTestCase):
         testfile = get_unit_tests_scans_path("blackduck") / "many_vulns_new_format.csv"
         parser = BlackduckParser()
         findings = parser.get_findings(testfile, Test())
-        findings = list(findings)
         self.assertEqual(9, len(findings))
         self.assertEqual(findings[0].component_name, "kryo")
         self.assertEqual(findings[2].component_name, "jackson-databind")
