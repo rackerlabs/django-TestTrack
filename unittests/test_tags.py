@@ -58,6 +58,12 @@ class TagTests(DojoAPITestCase):
 
         response = self.get_finding_api_filter_tags("tag4")
         self.assertEqual(response["count"], 0)
+        # Test the tags__and filter for a case with no matches
+        response = self.get_finding_api_filter_tags("tag2,tag3", parameter="tags__and")
+        self.assertEqual(response["count"], 0)
+        # Test the tags__and filter for a case with one exact match
+        response = self.get_finding_api_filter_tags("tag1,tag2", parameter="tags__and")
+        self.assertEqual(response["count"], 1)
 
     def test_finding_post_tags(self):
         # create finding
