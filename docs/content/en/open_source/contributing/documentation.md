@@ -1,5 +1,5 @@
 ---
-title: "Documentation"
+title: "Amend Documentation"
 description: "How to amend the documentation"
 draft: false
 weight: 2

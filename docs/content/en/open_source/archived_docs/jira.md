@@ -3,6 +3,7 @@ title: "JIRA integration"
 description: "Bidirectional integration of DefectDojo findings with Jira issues."
 draft: false
 weight: 4
+exclude_search: true
 ---
 
 DefectDojo\'s JIRA integration is bidirectional. You may push findings

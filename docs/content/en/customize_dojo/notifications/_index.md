@@ -14,4 +14,5 @@ seo:
   canonical: "" # custom canonical URL (optional)
   robots: "" # custom robot tags (optional)
 pro-feature: true
+exclude_search: true
 ---

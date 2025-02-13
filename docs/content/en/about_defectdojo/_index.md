@@ -14,4 +14,5 @@ cascade:
 - type: "docs"
   _target:
     path: "/**"
+exclude_search: true
 ---

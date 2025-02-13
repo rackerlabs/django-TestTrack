@@ -3,6 +3,7 @@ title: "Google Sheets synchronisation"
 description: "Export finding details to Google Sheets and upload changes from Google Sheets."
 draft: false
 weight: 8
+exclude_search: true
 ---
 
 **Please note - the Google Sheets feature has been deprecated as of DefectDojo version 2.21.0 - these documents are for reference only.**

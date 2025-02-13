@@ -97,9 +97,9 @@ Part of a security team’s responsibility is to collaborate with developers to 
 
 Any Appsec team member understands that issue mitigation can’t be prioritized exclusively by developer teams, so Risk Acceptances help you log those sensitive decisions when they are made.
 
-### Monitor current vulnerabilities using CWEs and EPSS scores
+### Monitor current vulnerabilities using CVEs and EPSS scores (Pro Feature)
 
-Sometimes, the exploitability and threat posed by a known vulnerability can change based on new data. To keep your work up to date, DefectDojo has partnered with First.org to maintain a database of the latest EPSS scores related to Findings. Any Findings in DefectDojo will be kept up to date automatically according to their EPSS, which is directly based on the CWE of the Finding.
+Sometimes, the exploitability and threat posed by a known vulnerability can change based on new data. To keep your work up to date, DefectDojo Pro has partnered with First.org to maintain a database of the latest EPSS scores related to Findings. Any Findings in DefectDojo Pro will be kept up to date automatically according to their EPSS, which is directly based on the CVE of the Finding.
 
 If a Finding’s EPSS score changes (i.e. the related Finding becomes more exploitable or less exploitable), the Severity of the Finding will adjust accordingly.
 

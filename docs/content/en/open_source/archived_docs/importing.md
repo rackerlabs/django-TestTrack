@@ -3,6 +3,7 @@ title: "Importing"
 description: "How DefectDojo imports and reimports security tool reports."
 draft: false
 weight: 1
+exclude_search: true
 ---
 
 ## Import

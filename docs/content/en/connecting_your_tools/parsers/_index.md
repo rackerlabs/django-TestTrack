@@ -5,4 +5,5 @@ draft: false
 weight: 5
 sidebar:
   collapsed: true
+exclude_search: true
 ---

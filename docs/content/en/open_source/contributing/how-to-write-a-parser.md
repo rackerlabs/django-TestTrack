@@ -1,5 +1,5 @@
 ---
-title: "Parsers"
+title: "Contribute to Parsers"
 description: "How to contribute to parsers"
 draft: false
 weight: 1
@@ -364,5 +364,5 @@ Please add a new .md file in [`docs/content/en/integrations/parsers`] with the d
 * A link to the relevant unit tests folder so that users can quickly navigate there from Documentation.
 * A link to the scanner itself - (e.g. GitHub or vendor link)
 
-Here is an example of a completed Parser documentation page: https://defectdojo.github.io/django-DefectDojo/integrations/parsers/file/awssecurityhub/
+Here is an example of a completed Parser documentation page: [https://github.com/DefectDojo/django-DefectDojo/blob/master/docs/content/en/connecting_your_tools/parsers/file/acunetix.md](https://github.com/DefectDojo/django-DefectDojo/blob/master/docs/content/en/connecting_your_tools/parsers/file/acunetix.md)
 

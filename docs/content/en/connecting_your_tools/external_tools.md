@@ -26,6 +26,8 @@ Optional: Add the directory containing the extracted binary to your system's $PA
 
 **Note that Macintosh users may be blocked from running DefectDojo-CLI or Universal Importer as they are apps from an unidentified developer.  See [Apple Support](https://support.apple.com/en-ca/guide/mac-help/mh40616/mac) for instructions on how to override the block from Apple.**  
 
+**Windows Users: If you receive the "Couldn't download - virus detected" error, disabling Smartscreen may work. Otherwise, use a different browser to download the tool from the Cloud portal.**
+
 ## Configuration
 
 Universal Importer & DefectDojo-CLI can be configured using flags, environment variables, or a configuration file. The most important configuration is the API token, which must be set as an environment variable:
@@ -50,6 +52,56 @@ in the user dropdown in the top-right corner:
 
 
 Note: On Windows, use `set` instead of `export`.
+
+### Windows: Using PowerShell
+1. Open PowerShell (Windows Key, then search for "PowerShell").
+2. Set the environment variables:
+   - **Temporary:**
+     ```powershell
+     $env:DD_IMPORTER_DOJO_API_TOKEN = "[VALUE_FROM_DEFECTDOJO_API]"
+     $env:DD_IMPORTER_DEFECTDOJO_URL=”[e.g. http://localhost:8080/defectdojo]”
+     ```
+   - **Permanent:**
+     ```powershell
+     [Environment]::SetEnvironmentVariable("DD_IMPORTER_DOJO_API_TOKEN", "[VALUE_FROM_DEFECTDOJO_API]", "Machine")
+     ```
+3. Restart your PowerShell session.
+4. Verify the setting:
+   ```powershell
+   echo $env:DD_IMPORTER_DOJO_API_TOKEN
+   echo $env:DD_IMPORTER_DEFECTDOJO_URL
+   ```
+
+### Windows: Using Command Prompt (Administrative Accounts)
+1. Open Command Prompt (Windows Key, then search for "Command Prompt").
+2. Set the environment variables:
+   - **Temporary:**
+     ```cmd
+     set DD_IMPORTER_DOJO_API_TOKEN = "[VALUE_FROM_DEFECTDOJO_API]"
+     set DD_IMPORTER_DEFECTDOJO_URL=”[e.g. http://localhost:8080/defectdojo]”
+     ```
+   - **Permanent:**
+     ```cmd
+     setx DD_IMPORTER_DOJO_API_TOKEN = "[VALUE_FROM_DEFECTDOJO_API]"
+     setx DD_IMPORTER_DEFECTDOJO_URL=”[e.g. http://localhost:8080/defectdojo]”
+     ```
+
+### Using Windows Settings (Non-Administrative Accounts)
+1. Press `Win + I` to open the system settings dialog.
+2. In the search box, type "environment".
+3. Choose "Edit Environment variables for your account".
+4. Under "User variables for [username]", click the "New…" button.
+5. Set the variable:
+   - **Variable name:** `DD_IMPORTER_DOJO_API_TOKEN`
+   - **Variable value:** `[VALUE_FROM_DEFECTDOJO_API]`
+6. Click "OK".
+7. Repeat steps 4 through 6 for the DD_IMPORTER_DEFECTDOJO_URL variable
+8. Restart any open command windows.
+9. Verify the settings:
+   ```cmd
+   echo %DD_IMPORTER_DOJO_API_TOKEN%
+   echo %DD_IMPORTER_DEFECTDOJO_URL%
+   ```
 
 ## DefectDojo-CLI
 

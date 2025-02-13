@@ -1,5 +1,5 @@
 ---
-title: "Installation"
+title: "Installation (Open-Source)"
 description: "DefectDojo supports various installation options."
 draft: false
 weight: 2

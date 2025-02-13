@@ -1,5 +1,5 @@
 ---
-title: "Configuration"
+title: "Configuration (Open Source)"
 description: "DefectDojo is highly configurable."
 draft: false
 weight: 3

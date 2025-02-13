@@ -6,4 +6,5 @@ weight: 4
 type: docs
 sidebar:
     collapsed: false
+exclude_search: true
 ---
