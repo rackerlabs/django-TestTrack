@@ -27,6 +27,9 @@ class ZapParser:
         return "ZAP XML report format."
 
     def get_findings(self, file, test):
+        if not file.name.endswith(".xml"):
+            msg = "Internal error: Wrong file format, please use xml."
+            raise ValueError(msg)
         tree = ET.parse(file)
         items = []
         for node in tree.findall("site"):
