@@ -60,7 +60,8 @@ class ImportReimportMixin:
         self.zap_sample2_filename = get_unit_tests_scans_path("zap") / "2_zap_sample_0_and_new_endpoint.xml"
         self.zap_sample3_filename = get_unit_tests_scans_path("zap") / "3_zap_sampl_0_and_different_severities.xml"
 
-        self.anchore_file_name = get_unit_tests_scans_path("anchore_engine") / "one_vuln_many_files.json"
+        # self.anchore_file_name = get_unit_tests_scans_path("anchore_engine") / "one_vuln_many_files.json"
+        self.anchore_file_name = get_unit_tests_scans_path("anchore_engine") / "many_vulns.json"
         self.scan_type_anchore = "Anchore Engine Scan"
 
         self.acunetix_file_name = get_unit_tests_scans_path("acunetix") / "one_finding.xml"

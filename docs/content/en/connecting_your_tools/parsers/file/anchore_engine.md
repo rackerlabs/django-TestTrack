@@ -14,25 +14,35 @@ All properties are strings and are required by the parser.
 ~~~
 
 {
-    "imageDigest": "sha256:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "vulnerabilities": [
-        {
-            "feed": "example-feed",
-            "feed_group": "example-feed-group",
-            "fix": "1.2.4",
-            "package": "example-package",
-            "package_cpe": "cpe:2.3:a:*:example:1.2.3:*:*:*:*:*:*:*",
-            "package_name": "example-package-name",
-            "package_path": "path/to/package",
-            "package_type": "dpkg",
-            "package_version": "1.2.3",
-            "severity": "Medium",
-            "url": "https://example.com/cve/CVE-2011-3389",
-            "vuln": "CVE-2011-3389"
+    "metadata":{
+        "registry":"docker.io",
+        "repository":"myimage",
+        "tag":"new",
+        "imageDigest":
+        "sha256:100ec0d69914788c491567bccaea0ab9aa50f0ddd00584db7afb264718c010d6",
+        "timestamp":"2025-01-13T10:09:59.971Z"
         },
-      ...
-    ],
-    "vulnerability_type": "os"
+    "securityEvaluation":[
+        {
+            "vulnerabilityId":"CVE-2024-50379",
+            "cves":"CVE-2024-50379",
+            "severity":"Critical",
+            "detectedAt":"2025-01-10T15:09:00Z",
+            "packageType":"Java",
+            "path":"/aci/base/lib/tomcat-annotations-api-9.0.97.jar",
+            "package":"tomcat-annotations-api-9.0.97",
+            "fixAvailable":"10.1.34,11.0.2,9.0.98",
+            "fixObservedAt":"2025-01-10T15:09:00Z",
+            "link":"https://nvd.nist.gov/vuln/detail/CVE-2024-50379",
+            "nvdCvssBaseScore":9.8
+        },
+        {
+            "vulnerabilityId":"CVE-2024-56337",
+            ...
+            ...
+            "nvdCvssBaseScore":9.8}
+        ...
+    ]
 }
 ~~~
 
