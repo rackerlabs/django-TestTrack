@@ -524,6 +524,13 @@
                                                         </a>
                                                     </li>
                                                 {% endif %}
+                                                {% if system_settings.enable_linear and "dojo.view_linear_instance"|has_configuration_permission:request %}
+                                                    <li>
+                                                        <a href="{% url 'linear' %}">
+                                                            {% trans "Linear" %}
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
                                                 {% if "dojo.change_bannerconf"|has_configuration_permission:request %}
                                                     <li>
                                                         <a href="{% url 'configure_banner' %}">

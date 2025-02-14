@@ -87,6 +87,7 @@ from dojo.github_issue_link.urls import urlpatterns as github_urls
 from dojo.group.urls import urlpatterns as group_urls
 from dojo.home.urls import urlpatterns as home_urls
 from dojo.jira_link.urls import urlpatterns as jira_urls
+from dojo.linear.urls import urlpatterns as linear_urls
 from dojo.metrics.urls import urlpatterns as metrics_urls
 from dojo.note_type.urls import urlpatterns as note_type_urls
 from dojo.notes.urls import urlpatterns as notes_urls
@@ -196,6 +197,7 @@ ur += test_urls
 ur += user_urls
 ur += group_urls
 ur += jira_urls
+ur += linear_urls
 ur += github_urls
 ur += tool_type_urls
 ur += tool_config_urls
