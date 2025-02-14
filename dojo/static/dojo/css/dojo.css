@@ -1837,6 +1837,14 @@ small {
     min-width:200px;
 }
 
+#toggleBox {
+    background-color: transparent!important;
+    border: none!important;
+    font-weight: bold!important;
+    position: absolute!important;
+    left: 0!important;
+}
+
 .EasyMDEContainer .table {
     width: unset!important;
 }

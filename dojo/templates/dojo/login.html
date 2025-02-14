@@ -20,9 +20,11 @@
             <div class="form-group">
 
                 {% if SHOW_LOGIN_FORM or 'force_login_form' in request.GET %}
-                    <div class="col-sm-offset-1 col-sm-2" id="toggleBox" onclick="togglePassVisibility()">
-                        <i class="fa-solid fa-eye"></i>
-                        <span><b>{% trans "Show Password" %}</b></span>
+                    <div class="col-sm-offset-1 col-sm-2">
+                        <button class="btn" id="toggleBox" onclick="togglePassVisibility()" type="button">
+                            <i class="fa-solid fa-eye"></i>
+                            {% trans "Show Password" %}
+                        </button>
                     </div>
                 {% endif %}
 
