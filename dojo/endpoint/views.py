@@ -431,12 +431,12 @@ def endpoint_status_bulk_update(request, fid):
                     finding__id=fid)
                 for status in status_list:
                     if status in enable:
-                        endpoint_status.__setattr__(status, True)
+                        endpoint_status.__setattr__(status, True)  # noqa: PLC2801
                         if status == "mitigated":
                             endpoint_status.mitigated_by = request.user
                             endpoint_status.mitigated_time = timezone.now()
                     else:
-                        endpoint_status.__setattr__(status, False)
+                        endpoint_status.__setattr__(status, False)  # noqa: PLC2801
                 endpoint_status.last_modified = timezone.now()
                 endpoint_status.save()
             messages.add_message(request,

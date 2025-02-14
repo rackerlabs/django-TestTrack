@@ -184,21 +184,21 @@ def decode_impact_path(path):
     if match:
         impact_path.sha = (match[1][:64]) if len(match[1]) > 64 else match[1]
 
-    if fullname.__contains__(".jar"):
+    if ".jar" in fullname:
         match = re.match(r"(.*)-", fullname, re.IGNORECASE)
         if match:
             impact_path.name = match[1]
         match = re.match(r".*-(.*).jar", fullname, re.IGNORECASE)
         if match:
             impact_path.version = match[1]
-    elif fullname.__contains__(":"):
+    elif ":" in fullname:
         match = re.match(r"(.*):", fullname, re.IGNORECASE)
         if match:
             impact_path.name = match[1]
         match = re.match(r".*:(.*)", fullname, re.IGNORECASE)
         if match:
             impact_path.version = match[1]
-    elif fullname.__contains__(".js"):
+    elif ".js" in fullname:
         match = re.match(r"(.*)-", fullname, re.IGNORECASE)
         if match:
             impact_path.name = match[1]
