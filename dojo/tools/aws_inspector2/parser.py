@@ -188,7 +188,7 @@ class AWSInspector2Parser:
             resource_type = resource_info.get("type", None)
             resource_id = resource_info.get("id", "N/A")
             resource_details = resource_info.get("details", {})
-            endpoint_host = f"{resource_type} - {resource_id}"
+            endpoint_host = f"{resource_type}_{resource_id}".replace(":", "_").replace("/", "_")
             if resource_type == "AWS_EC2_INSTANCE":
                 aws_account = raw_finding.get("awsAccountId")
                 resource_region = resource_info.get("region", "N/A")

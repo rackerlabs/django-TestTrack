@@ -54,7 +54,7 @@ class Inspector:
         hosts = []
         for resource in finding.get("Resources", []):
             component_name = resource.get("Type")
-            hosts.append(Endpoint(host=f"{component_name} {resource.get('Id')}"))
+            hosts.append(Endpoint(host=f"{component_name}_{resource.get('Id')}".replace(":", "_").replace("/", "_")))
             if component_name == "AwsEcrContainerImage":
                 details = resource.get("Details", {}).get("AwsEcrContainerImage")
                 arn = resource.get("Id")

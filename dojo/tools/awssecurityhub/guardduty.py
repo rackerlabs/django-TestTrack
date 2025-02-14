@@ -43,7 +43,7 @@ class GuardDuty:
         for resource in finding.get("Resources", []):
             component_name = resource.get("Type")
             if component_name in ("AwsEcrContainerImage", "AwsEc2Instance"):
-                hosts.append(Endpoint(host=f"{component_name} {resource.get('Id')}"))
+                hosts.append(Endpoint(host=f"{component_name}_{resource.get('Id')}".replace(":", "_").replace("/", "_")))
             if component_name == "AwsEcrContainerImage":
                 details = resource.get("Details", {}).get("AwsEcrContainerImage")
                 arn = resource.get("Id")
