@@ -12,7 +12,7 @@ class TestIntSightsParser(DojoTestCase):
 
             self.assertEqual(1, len(findings))
 
-            finding = list(findings)[0]
+            finding = findings[0]
 
             self.assertEqual(
                 "5c80dbf83b4a3900078b6be6",
@@ -32,7 +32,7 @@ class TestIntSightsParser(DojoTestCase):
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
 
-            finding = list(findings)[0]
+            finding = findings[0]
 
             self.assertEqual(
                 "mn7xy83finmmth4ja363rci9",

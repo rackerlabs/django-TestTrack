@@ -16,7 +16,7 @@ class TestMendParser(DojoTestCase):
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
-            finding = list(findings)[0]
+            finding = findings[0]
             self.assertEqual(1, len(finding.unsaved_vulnerability_ids))
             self.assertEqual("CVE-2019-9658", finding.unsaved_vulnerability_ids[0])
             self.assertEqual("CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N", finding.cvssv3)
@@ -41,7 +41,7 @@ class TestMendParser(DojoTestCase):
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
-            finding = list(findings)[0]
+            finding = findings[0]
             self.assertEqual("**Locations Found**: D:\\MendRepo\\test-product\\test-project\\test-project-subcomponent\\path\\to\\the\\Java\\commons-codec-1.6_donotuse.jar", finding.steps_to_reproduce)
             self.assertEqual("WS-2019-0379 | commons-codec-1.6.jar", finding.title)
 
@@ -56,7 +56,7 @@ class TestMendParser(DojoTestCase):
             parser = MendParser()
             findings = parser.get_findings(testfile, Test())
             self.assertEqual(1, len(findings))
-            finding = list(findings)[0]
+            finding = findings[0]
             self.assertEqual(1, len(finding.unsaved_vulnerability_ids))
             self.assertEqual("CVE-2024-51744", finding.unsaved_vulnerability_ids[0])
             self.assertEqual("CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N", finding.cvssv3)

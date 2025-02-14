@@ -2,6 +2,7 @@ import hashlib
 import json
 
 from dojo.models import Finding
+from dojo.utils import first_elem
 
 
 class TruffleHogParser:
@@ -112,7 +113,7 @@ class TruffleHogParser:
             source = {}
             source_data = {}
             if metadata:
-                source = list(metadata.keys())[0]
+                source = first_elem(metadata.keys())
                 source_data = metadata.get(source)
 
             file = source_data.get("file", "")

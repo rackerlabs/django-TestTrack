@@ -9,6 +9,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from dojo.models import Finding
+from dojo.utils import first_elem
 
 
 class VeracodeScaParser:
@@ -159,7 +160,7 @@ class VeracodeScaParser:
             issueId = row.get("Issue ID", None)
             if not issueId:
                 # Workaround for possible encoding issue
-                issueId = list(row.values())[0]
+                issueId = first_elem(row.values())
             library = row.get("Library", None)
             if row.get("Package manager") == "MAVEN" and row.get(
                 "Coordinate 2",

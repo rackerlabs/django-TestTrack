@@ -1,6 +1,7 @@
 import logging
 
 from dojo.tools.sonarqube.soprasteria_helper import SonarQubeSoprasteriaHelper
+from dojo.utils import first_elem
 
 logger = logging.getLogger(__name__)
 
@@ -23,13 +24,13 @@ class SonarQubeSoprasteriaHTML:
             rulesDic = {}
             for rule in rules_table:
                 rule_properties = list(rule.iter("td"))
-                rule_name = list(rule_properties[0].iter("a"))[0].text.strip()
-                rule_details = list(rule_properties[1].iter("details"))[0]
+                rule_name = first_elem(rule_properties[0].iter("a")).text.strip()
+                rule_details = first_elem(rule_properties[1].iter("details"))
                 rulesDic[rule_name] = rule_details
 
             for vuln in vulnerabilities_table:
                 vuln_properties = list(vuln.iter("td"))
-                rule_key = list(vuln_properties[0].iter("a"))[0].text
+                rule_key = first_elem(vuln_properties[0].iter("a")).text
                 vuln_rule_name = rule_key and rule_key.strip()
                 vuln_severity = SonarQubeSoprasteriaHelper().convert_sonar_severity(
                     vuln_properties[1].text and vuln_properties[1].text.strip(),

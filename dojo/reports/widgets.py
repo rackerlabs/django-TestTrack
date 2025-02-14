@@ -19,7 +19,7 @@ from dojo.filters import (
 )
 from dojo.forms import CustomReportOptionsForm
 from dojo.models import Endpoint, Finding
-from dojo.utils import get_page_items, get_system_setting, get_words_for_field
+from dojo.utils import first_elem, get_page_items, get_system_setting, get_words_for_field
 
 """
 Widgets are content sections that can be included on reports.  The report builder will allow any number of widgets
@@ -371,10 +371,12 @@ def report_widget_factory(json_data=None, request=None, user=None, *, finding_no
     widgets = json.loads(json_data)
 
     for idx, widget in enumerate(widgets):
-        if list(widget.keys())[0] == "page-break":
-            selected_widgets[list(widget.keys())[0] + "-" + str(idx)] = PageBreak()
+        first_widget_keys = first_elem(widget.keys())
 
-        if list(widget.keys())[0] == "endpoint-list":
+        if first_widget_keys == "page-break":
+            selected_widgets[first_widget_keys + "-" + str(idx)] = PageBreak()
+
+        if first_widget_keys == "endpoint-list":
             endpoints = Endpoint.objects.filter(finding__active=True,
                                                 finding__false_p=False,
                                                 finding__duplicate=False,
@@ -386,7 +388,7 @@ def report_widget_factory(json_data=None, request=None, user=None, *, finding_no
             endpoints = endpoints.distinct()
 
             d = QueryDict(mutable=True)
-            for item in widget.get(list(widget.keys())[0]):
+            for item in widget.get(first_widget_keys):
                 if item["name"] in d:
                     d.appendlist(item["name"], item["value"])
                 else:
@@ -400,12 +402,12 @@ def report_widget_factory(json_data=None, request=None, user=None, *, finding_no
             endpoints = EndpointList(request=request, endpoints=endpoints, finding_notes=finding_notes,
                                      finding_images=finding_images, host=host, user_id=user_id)
 
-            selected_widgets[list(widget.keys())[0] + "-" + str(idx)] = endpoints
+            selected_widgets[first_widget_keys + "-" + str(idx)] = endpoints
 
-        if list(widget.keys())[0] == "finding-list":
+        if first_widget_keys == "finding-list":
             findings = Finding.objects.all()
             d = QueryDict(mutable=True)
-            for item in widget.get(list(widget.keys())[0]):
+            for item in widget.get(first_widget_keys):
                 if item["name"] in d:
                     d.appendlist(item["name"], item["value"])
                 else:
@@ -414,47 +416,47 @@ def report_widget_factory(json_data=None, request=None, user=None, *, finding_no
             filter_class = ReportFindingFilterWithoutObjectLookups if filter_string_matching else ReportFindingFilter
             findings = filter_class(d, queryset=findings)
             user_id = user.id if user is not None else None
-            selected_widgets[list(widget.keys())[0] + "-" + str(idx)] = FindingList(request=request, findings=findings,
+            selected_widgets[first_widget_keys + "-" + str(idx)] = FindingList(request=request, findings=findings,
                                                                               finding_notes=finding_notes,
                                                                               finding_images=finding_images,
                                                                               host=host, user_id=user_id)
 
-        if list(widget.keys())[0] == "custom-content":
+        if first_widget_keys == "custom-content":
             wysiwyg_content = WYSIWYGContent(request=request)
             wysiwyg_content.heading = \
-                next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "heading"), None)["value"]
+                next((item for item in widget.get(first_widget_keys) if item["name"] == "heading"), None)["value"]
             wysiwyg_content.content = \
-                next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "hidden_content"), None)["value"]
+                next((item for item in widget.get(first_widget_keys) if item["name"] == "hidden_content"), None)["value"]
             wysiwyg_content.page_break_after = \
-                next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "page_break_after"),
+                next((item for item in widget.get(first_widget_keys) if item["name"] == "page_break_after"),
                      {"value": False})["value"]
-            selected_widgets[list(widget.keys())[0] + "-" + str(idx)] = wysiwyg_content
-        if list(widget.keys())[0] == "report-options":
+            selected_widgets[first_widget_keys + "-" + str(idx)] = wysiwyg_content
+        if first_widget_keys == "report-options":
             options = ReportOptions(request=request)
             options.include_finding_notes = \
-                next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "include_finding_notes"), None)[
+                next((item for item in widget.get(first_widget_keys) if item["name"] == "include_finding_notes"), None)[
                     "value"]
             options.include_finding_images = \
-                next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "include_finding_images"), None)[
+                next((item for item in widget.get(first_widget_keys) if item["name"] == "include_finding_images"), None)[
                     "value"]
             options.report_type = \
-                next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "report_type"), None)["value"]
+                next((item for item in widget.get(first_widget_keys) if item["name"] == "report_type"), None)["value"]
             options.report_name = \
-                next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "report_name"), None)["value"]
-            selected_widgets[list(widget.keys())[0]] = options
-        if list(widget.keys())[0] == "table-of-contents":
+                next((item for item in widget.get(first_widget_keys) if item["name"] == "report_name"), None)["value"]
+            selected_widgets[first_widget_keys] = options
+        if first_widget_keys == "table-of-contents":
             toc = TableOfContents(request=request)
-            toc.heading = next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "heading"), None)[
+            toc.heading = next((item for item in widget.get(first_widget_keys) if item["name"] == "heading"), None)[
                 "value"]
-            selected_widgets[list(widget.keys())[0]] = toc
-        if list(widget.keys())[0] == "cover-page":
+            selected_widgets[first_widget_keys] = toc
+        if first_widget_keys == "cover-page":
             cover_page = CoverPage(request=request)
-            cover_page.heading = next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "heading"), None)[
+            cover_page.heading = next((item for item in widget.get(first_widget_keys) if item["name"] == "heading"), None)[
                 "value"]
             cover_page.sub_heading = \
-                next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "sub_heading"), None)["value"]
+                next((item for item in widget.get(first_widget_keys) if item["name"] == "sub_heading"), None)["value"]
             cover_page.meta_info = \
-                next((item for item in widget.get(list(widget.keys())[0]) if item["name"] == "meta_info"), None)["value"]
-            selected_widgets[list(widget.keys())[0]] = cover_page
+                next((item for item in widget.get(first_widget_keys) if item["name"] == "meta_info"), None)["value"]
+            selected_widgets[first_widget_keys] = cover_page
 
     return selected_widgets

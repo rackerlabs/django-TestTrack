@@ -4,6 +4,7 @@ import re
 from lxml import etree, html
 
 from dojo.models import Endpoint, Finding
+from dojo.utils import first_elem
 
 logger = logging.getLogger(__name__)
 
@@ -117,7 +118,7 @@ class BurpEnterpriseParser:
                         if stripped_text is not None:
                             value += stripped_text + "\n"
                     elif stripped_text.isspace():
-                        value = list(elem.itertext())[0]
+                        value = first_elem(elem.itertext())
                     elif elem.tag == "div" or elem.tag == "span":
                         value = elem.text_content().strip().replace("\n", "") + "\n"
                     else:

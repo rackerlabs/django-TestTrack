@@ -13,6 +13,8 @@ from product_test import ProductTest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
+from dojo.utils import first_elem
+
 dir_path = Path(os.path.realpath(__file__)).parent
 
 logger = logging.getLogger(__name__)
@@ -171,7 +173,7 @@ class ScannerTest(BaseTestCase):
                     found_matches[index] = matches[0]
 
             if len(found_matches) == 1:
-                index = list(found_matches.keys())[0]
+                index = first_elem(found_matches.keys())
                 scan_map[test] = options_text[index]
             elif len(found_matches) > 1:
                 index = list(found_matches.values()).index(temp_test)

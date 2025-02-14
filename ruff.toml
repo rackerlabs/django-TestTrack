@@ -92,7 +92,6 @@ ignore = [
     "SIM102",
     "SIM115",
     "RUF012",
-    "RUF015",
     "D205",
     "FIX002",  # TODOs need some love but we will probably not get of them
     "D211",  # `one-blank-line-before-class` (D203) and `no-blank-line-before-class` (D211) are incompatible.
