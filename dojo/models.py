@@ -2171,7 +2171,7 @@ class Test(models.Model):
                 deduplicationLogger.debug(f"using DEDUPLICATION_ALGORITHM_PER_PARSER for scan_type: {self.scan_type}")
                 deduplicationAlgorithm = settings.DEDUPLICATION_ALGORITHM_PER_PARSER[self.scan_type]
         else:
-            deduplicationLogger.debug("Section DEDUPLICATION_ALGORITHM_PER_PARSER not found in settings.dist.py")
+            deduplicationLogger.debug("Section DEDUPLICATION_ALGORITHM_PER_PARSER not found in settings_dist.py")
 
         deduplicationLogger.debug(f"DEDUPLICATION_ALGORITHM_PER_PARSER is: {deduplicationAlgorithm}")
         return deduplicationAlgorithm
@@ -2190,7 +2190,7 @@ class Test(models.Model):
             else:
                 deduplicationLogger.warning(f"test_type name {self.test_type.name} and scan_type {self.scan_type} not found in HASHCODE_FIELDS_PER_SCANNER")
         else:
-            deduplicationLogger.debug("Section HASHCODE_FIELDS_PER_SCANNER not found in settings.dist.py")
+            deduplicationLogger.debug("Section HASHCODE_FIELDS_PER_SCANNER not found in settings_dist.py")
 
         deduplicationLogger.debug(f"HASHCODE_FIELDS_PER_SCANNER is: {hashCodeFields}")
         return hashCodeFields
@@ -2207,7 +2207,7 @@ class Test(models.Model):
                 deduplicationLogger.debug(f"using HASHCODE_ALLOWS_NULL_CWE for scan_type: {self.scan_type}")
                 hashCodeAllowsNullCwe = settings.HASHCODE_ALLOWS_NULL_CWE[self.scan_type]
         else:
-            deduplicationLogger.debug("Section HASHCODE_ALLOWS_NULL_CWE not found in settings.dist.py")
+            deduplicationLogger.debug("Section HASHCODE_ALLOWS_NULL_CWE not found in settings_dist.py")
 
         deduplicationLogger.debug(f"HASHCODE_ALLOWS_NULL_CWE is: {hashCodeAllowsNullCwe}")
         return hashCodeAllowsNullCwe

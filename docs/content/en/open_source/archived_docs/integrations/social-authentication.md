@@ -390,7 +390,7 @@ NOTE: *DD_SAML2_ATTRIBUTES_MAP* in k8s can be referenced as extraConfig (e.g. `D
 
 NOTE: *DD_SITE_URL* might also need to be set depending on the choices you make with the metadata.xml provider. (File versus URL).
 
-4.  Checkout the SAML section in dojo/`dojo/settings/settings.dist.py` and verfiy if it fits your requirement. If you need help, take a look at the [plugin
+4.  Checkout the SAML section in dojo/`dojo/settings/settings_dist.py` and verfiy if it fits your requirement. If you need help, take a look at the [plugin
 documentation](https://djangosaml2.readthedocs.io/contents/setup.html#configuration).
 
 5.  Restart DefectDojo, and you should now see a **Login with SAML** button (default setting of DD_SAML2_LOGIN_BUTTON_TEXT) on the login page.

@@ -45,7 +45,7 @@ Moderators: Labels currently accepted for PRs:
 - maintenance (a.k.a chores)
 - dependencies
 - New Migration (when the PR introduces a DB migration)
-- settings_changes (when the PR introduces changes or new settings in settings.dist.py)
+- settings_changes (when the PR introduces changes or new settings in settings_dist.py)
 
 # Contributors: Git Tips
 ## Rebase on dev branch

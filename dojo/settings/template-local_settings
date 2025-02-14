@@ -1,5 +1,5 @@
 # local_settings.py
-# this file will be included by settings.py *after* loading settings.dist.py
+# this file will be included by settings.py *after* loading settings_dist.py
 
 # this example configures the django debug toolbar and sets some loglevels to DEBUG
 
@@ -7,7 +7,7 @@ from django.urls import re_path
 from django.conf.urls import include
 
 # UPDATE: Adding debug_toolbar to to INSTALLED_APPS here prevents the nginx container from generating the correct static files
-#         So add debug_toolbar to INSTALLED_APPS in settings.dist.py and rebuild to get started with the debug_toolbar.
+#         So add debug_toolbar to INSTALLED_APPS in settings_dist.py and rebuild to get started with the debug_toolbar.
 #         Thje middleware and other config can remain in this file (local_settings.py) to avoid chance of conflicts on upgrades.
 INSTALLED_APPS += (
 #    'debug_toolbar',

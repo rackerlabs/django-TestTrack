@@ -8,7 +8,7 @@ categories:
   - title: '💣 Breaking changes'
     labels:
       - 'Breaking Changes'
-  - title: '🚩 Changes to `settings.dist.py` / `local_settings.py`'
+  - title: '🚩 Changes to `settings_dist.py` / `local_settings.py`'
     labels:
       - 'settings_changes'
   - title: '🚩 Database migration'

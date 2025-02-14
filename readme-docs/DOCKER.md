@@ -147,14 +147,14 @@ docker exec -it django-defectdojo-uwsgi-1 ./manage.py changepassword admin
 ```
 
 # Logging
-For docker compose release mode the log level is INFO. In the other modes the log level is DEBUG. Logging is configured in `settings.dist.py` and can be tuned using a `local_settings.py`, see [template for local_settings.py](dojo/settings/template-local_settings). For example the deduplication logger can be set to DEBUG in a local_settings.py file:
+For docker compose release mode the log level is INFO. In the other modes the log level is DEBUG. Logging is configured in `settings_dist.py` and can be tuned using a `local_settings.py`, see [template for local_settings.py](dojo/settings/template-local_settings). For example the deduplication logger can be set to DEBUG in a local_settings.py file:
 
 
 ```
 LOGGING['loggers']['dojo.specific-loggers.deduplication']['level'] = 'DEBUG'
 ```
 
-Or you can modify `settings.dist.py` directly, but this adds the risk of having conflicts when `settings.dist.py` gets updated upstream.
+Or you can modify `settings_dist.py` directly, but this adds the risk of having conflicts when `settings_dist.py` gets updated upstream.
 
 ```
           'dojo.specific-loggers.deduplication': {
