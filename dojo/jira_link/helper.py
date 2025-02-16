@@ -781,7 +781,7 @@ def prepare_jira_issue_fields(
 def add_jira_issue(obj, *args, **kwargs):
     def failure_to_add_message(message: str, exception: Exception, _: Any) -> bool:
         if exception:
-            logger.exception(exception)
+            logger.error(exception)
         logger.error(message)
         log_jira_alert(message, obj)
         return False
@@ -943,7 +943,7 @@ def update_jira_issue_for_finding_group(finding_group, *args, **kwargs):
 def update_jira_issue(obj, *args, **kwargs):
     def failure_to_update_message(message: str, exception: Exception, obj: Any) -> bool:
         if exception:
-            logger.exception(exception)
+            logger.error(exception)
         logger.error(message)
         log_jira_alert(message, obj)
         return False
