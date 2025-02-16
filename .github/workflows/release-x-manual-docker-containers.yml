@@ -3,7 +3,7 @@ name: "release-X: Release docker containers"
 env:
   GIT_USERNAME: "DefectDojo release bot"
   GIT_EMAIL: "dojo-release-bot@users.noreply.github.com"
-  workflow_name: 'release docker containers' # needed in cache key, which doesn't support comma's
+
 on:
   workflow_dispatch:
     inputs:
@@ -29,7 +29,6 @@ jobs:
       matrix:
           docker-image: [django, nginx]
           os: [alpine, debian]
-          platform: [amd64]
     steps:
       - name: Login to DockerHub
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0

@@ -1,23 +1,38 @@
 name: "Build Docker Images For Testing"
 
 on:
+  # inspired by https://github.com/orgs/community/discussions/26801 we take the runs-on as parameter so we can run arm64 on native hardwarde
   workflow_dispatch:
+    inputs:
+        runner:
+          type: string
+          default: "ubuntu-latest"
   workflow_call:
+    inputs:
+        runner:
+          type: string
+          default: "ubuntu-latest"
 
 jobs:
   build:
-    # build with docker so we can use layer caching
     name: Build Docker Images
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner }}
     strategy:
       matrix:
+        # integration tests are only build (and run) on debian x64
         docker-image: [django, nginx, integration-tests]
         os: [alpine, debian]
+        runner: ["${{ inputs.runner }}"]
         exclude:
-          - docker-image: integration-tests
-            os: alpine
+            - docker-image: integration-tests
+              os: alpine
+            - docker-image: integration-tests
+              runner: ubuntu-24.04-arm
 
     steps:
+      - name: Show Platform
+        run: echo Runner value for this run = ${{ inputs.runner }}
+
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -29,28 +44,25 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@f7ce87c1d6bead3e36075b2ce75da1f6cc28aaca # v3.9.0
-        with:
-          buildkitd-flags: --debug
-          driver-opts: image=moby/buildkit:master # needed to get the fix for https://github.com/moby/buildkit/issues/2426
-          
+
       - name: Build
         id: docker_build
         uses: docker/build-push-action@ca877d9245402d1537745e0e356eab47c3520991 # v6.13.0
-        timeout-minutes: 10
+        timeout-minutes: 15
         env:
           DOCKER_BUILD_CHECKS_ANNOTATIONS: false
         with:
           context: .
           push: false
-          tags: defectdojo/defectdojo-${{ matrix.docker-image }}:${{ matrix.os }}
+          tags: defectdojo/defectdojo-${{ matrix.docker-image }}:${{ matrix.os }},${{ env.IMAGE_REPOSITORY }}/defectdojo-${{ matrix.docker-image }}:${{ matrix.os }}
           file: Dockerfile.${{ matrix.docker-image }}-${{ matrix.os }}
-          outputs: type=docker,dest=${{ matrix.docker-image }}-${{ matrix.os }}_img
+          outputs: type=docker,dest=${{ matrix.docker-image }}-${{ matrix.os }}-${{ inputs.runner }}_img
 
       # export docker images to be used in next jobs below
       - name: Upload image ${{ matrix.docker-image }} as artifact
-        timeout-minutes: 10
+        timeout-minutes: 15
         uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         with:
-          name: built-docker-image-${{ matrix.docker-image }}-${{ matrix.os }}
-          path: ${{ matrix.docker-image }}-${{ matrix.os }}_img
+          name: built-docker-image-${{ matrix.docker-image }}-${{ matrix.os }}-${{ inputs.runner }}
+          path: ${{ matrix.docker-image }}-${{ matrix.os }}-${{ inputs.runner }}_img
           retention-days: 1

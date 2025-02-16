@@ -2,11 +2,15 @@ name: Rest Framework Unit Tests
 
 on:
   workflow_call:
+    inputs:
+        runner:
+          type: string
+          default: "ubuntu-latest"
 
 jobs:
   unit_tests:
     name: Rest Framework Unit Tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner }}
 
     strategy:
       matrix:
@@ -29,8 +33,8 @@ jobs:
       - name: Load docker images
         timeout-minutes: 10
         run: |-
-             docker load -i built-docker-image/nginx-${{ matrix.os }}_img
-             docker load -i built-docker-image/django-${{ matrix.os }}_img
+             docker load -i built-docker-image/nginx-${{ matrix.os }}-${{ inputs.runner }}_img
+             docker load -i built-docker-image/django-${{ matrix.os }}-${{ inputs.runner }}_img
              docker images
 
       # run tests with docker compose
@@ -43,7 +47,7 @@ jobs:
 
       # no celery or initializer needed for unit tests
       - name: Unit tests
-        timeout-minutes: 10
+        timeout-minutes: 15
         run: docker compose up --no-deps --exit-code-from uwsgi uwsgi
         env:
           DJANGO_VERSION: ${{ matrix.os }}
