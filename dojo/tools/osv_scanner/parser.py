@@ -37,6 +37,7 @@ class OSVScannerParser:
                     vulnerabilitydetails = vulnerability.get("details", "")
                     vulnerabilitypackagepurl = ""
                     cwe = None
+                    mitigation = None
                     # Make sure we have an affected section to work with
                     if (affected := vulnerability.get("affected")) is not None:
                         if len(affected) > 0:
@@ -46,9 +47,15 @@ class OSVScannerParser:
                             # Extract the CWE
                             if (cwe := affected[0].get("database_specific", {}).get("cwes", None)) is not None:
                                 cwe = cwe[0]["cweId"]
+                            # Extract fixed version
+                            ranges = affected[0].get("ranges", [])
+                            for range_item in ranges:
+                                for event in range_item.get("events", []):
+                                    if "fixed" in event:
+                                        mitigation = f"Upgrade to version: {event['fixed']}"
                     # Create some references
                     reference = ""
-                    for ref in vulnerability.get("references"):
+                    for ref in vulnerability.get("references", []):
                         reference += ref.get("url") + "\n"
                     # Define the description
                     description = vulnerabilitysummary + "\n"
@@ -56,6 +63,7 @@ class OSVScannerParser:
                     description += "**package_ecosystem**: " + package_ecosystem + "\n"
                     description += "**vulnerabilitydetails**: " + vulnerabilitydetails + "\n"
                     description += "**vulnerabilitypackagepurl**: " + vulnerabilitypackagepurl + "\n"
+
                     sev = vulnerability.get("database_specific", {}).get("severity", "")
                     finding = Finding(
                         title=vulnerabilityid + "_" + package_name,
@@ -70,6 +78,8 @@ class OSVScannerParser:
                         file_path=source_path,
                         references=reference,
                     )
+                    if mitigation:
+                        finding.mitigation = mitigation
                     if vulnerabilityid != "":
                         finding.unsaved_vulnerability_ids = []
                         finding.unsaved_vulnerability_ids.append(vulnerabilityid)
