@@ -29,6 +29,7 @@ services:
       DD_CELERY_BROKER_PORT: "-1"
       DD_CELERY_BROKER_PATH: '/dojo.celerydb.sqlite'
       DD_CELERY_BROKER_PARAMS: ''
+      DD_JIRA_EXTRA_ISSUE_TYPES: 'Vulnerability' # Shouldn't trigger a migration error
   celerybeat:
     image: busybox:1.37.0-musl
     entrypoint: ['echo', 'skipping', 'celery beat']
