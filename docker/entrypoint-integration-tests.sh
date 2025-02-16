@@ -251,7 +251,7 @@ else
     else
         fail "$test"
     fi
-    
+
     test="False Positive History tests"
     echo "Running: $test"
     if python3 tests/false_positive_history_test.py ; then
