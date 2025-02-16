@@ -122,29 +122,29 @@
 <div class="col-md-12">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><span class="fa-solid fa-chart-pie" aria-hidden="true"></span>{% trans "Metrics" %}</h3>
+      <h3 class="panel-title"><span class="fa-solid fa-chart-pie mr-2" aria-hidden="true"></span>{% trans "Metrics" %}</h3>
     </div>
     <table class="table table-condensed">
       <tbody>
         <tr>
           <td class="col-sm-2 bg-vuln-critical vuln-count text-center">
-              <a href="{% url 'product_open_findings' prod.id %}?severity=Critical" style="color:#FFFFFF;text-decoration:none">{{ critical }}<span class="hidden-xs"><br>
+              <a aria-label="{{ critical }} critical findings" href="{% url 'product_open_findings' prod.id %}?severity=Critical" style="color:#FFFFFF;text-decoration:none">{{ critical }}<span class="hidden-xs"><br>
               <small>{% trans "CRITICAL" %}</small></span></a>
           </td>
           <td class="col-sm-2 bg-vuln-high vuln-count text-center">
-              <a href="{% url 'product_open_findings' prod.id %}?severity=High" style="color:#FFFFFF;text-decoration:none">{{ high }}<span class="hidden-xs"><br>
+              <a aria-label="{{ high }} high severity findings" href="{% url 'product_open_findings' prod.id %}?severity=High" style="color:#FFFFFF;text-decoration:none">{{ high }}<span class="hidden-xs"><br>
               <small>{% trans "HIGH" %}</small></span></a>
           </td>
           <td class="col-sm-2 bg-vuln-medium vuln-count text-center">
-              <a href="{% url 'product_open_findings' prod.id %}?severity=Medium" style="color:#FFFFFF;text-decoration:none">{{ medium }}<span class="hidden-xs"><br>
+              <a aria-label="{{ medium }} medium severity findings" href="{% url 'product_open_findings' prod.id %}?severity=Medium" style="color:#FFFFFF;text-decoration:none">{{ medium }}<span class="hidden-xs"><br>
               <small>{% trans "MEDIUM" %}</small></span></a>
           </td>
           <td class="col-sm-2 bg-vuln-low vuln-count text-center">
-              <a href="{% url 'product_open_findings' prod.id %}?severity=Low" style="color:#FFFFFF;text-decoration:none">{{ low }}<span class="hidden-xs"><br>
+              <a aria-label="{{ low }} low severity findings" href="{% url 'product_open_findings' prod.id %}?severity=Low" style="color:#FFFFFF;text-decoration:none">{{ low }}<span class="hidden-xs"><br>
               <small>{% trans "LOW" %}</small></span></a>
           </td>
           <td class="col-sm-2 bg-vuln-info vuln-count text-center">
-              <a href="{% url 'product_open_findings' prod.id %}?severity=Info" style="color:#FFFFFF;text-decoration:none">{{ info }}<span class="hidden-xs"><br>
+              <a aria-label="{{ informational }} informational severity findings" href="{% url 'product_open_findings' prod.id %}?severity=Info" style="color:#FFFFFF;text-decoration:none">{{ info }}<span class="hidden-xs"><br>
               <small>{% trans "INFORMATIONAL" %}</small></span></a>
           </td>
           <td class="col-sm-2 bg-muted vuln-count text-center">

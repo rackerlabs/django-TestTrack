@@ -58,40 +58,163 @@
                 <div class="panel-heading">{% trans "Open Bug Count by Month" %}</div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div id="opened_per_month" class="graph"></div>
+                    <div aria-describedby="opened-per-month-description" aria-labelledby="opened-per-month-title"
+                        id="opened_per_month" class="graph" role="img" tabindex="0"></div>
+                    <div class="sr-only">
+                        <h3 id="opened-per-month-title">{% trans "Open Bug Count by Month" %}</h3>
+                        <p id="opened-per-month-description">{% trans "This graph represents the number of open bugs per month
+                            categorized by severity. The x-axis represents months, and the y-axis represents the number of open
+                            bugs. The table below provides the same data in text format." %}</p>
+                        <table id="opened-per-month-table" aria-labelledby="opened-per-month-title" tabindex="0">
+                            <caption>{% trans "Open bug count breakdown" %}</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">{% trans "Month" %}</th>
+                                    <th scope="col">{% trans "Critical" %}</th>
+                                    <th scope="col">{% trans "High" %}</th>
+                                    <th scope="col">{% trans "Medium" %}</th>
+                                    <th scope="col">{% trans "Low" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for month in opened_per_month %}
+                                <tr>
+                                    <td>{{ month.grouped_date|date:"F Y" }}</td>
+                                    <td>{{ month.critical }}</td>
+                                    <td>{{ month.high }}</td>
+                                    <td>{{ month.medium }}</td>
+                                    <td>{{ month.low }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->
         </div>
+
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">{% trans "Risk Accepted Bug Count by Month" %}</div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div id="accepted_per_month" class="graph"></div>
+                    <div aria-describedby="accepted-per-month-description" aria-labelledby="accepted-per-month-title"
+                        class="graph" id="accepted_per_month" role="img" tabindex="0"></div>
+                    <div class="sr-only">
+                        <h3 id="accepted-per-month-title">{% trans "Risk Accepted Bug Count by Month" %}</h3>
+                        <p id="accepted-per-month-description">{% trans "This graph represents the number of risk accepted bugs
+                            per month, categorized by severity. The x-axis represents months and the y-axis represents the
+                            number of accepted bugs. The table below provides the same data in text format." %}</p>
+                        <table id="accepted-per-month-table" aria-labelledby="accepted-per-month-title" tabindex="0">
+                            <caption>{% trans "Risk accepted bug count breakdown" %}</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">{% trans "Month" %}</th>
+                                    <th scope="col">{% trans "Critical" %}</th>
+                                    <th scope="col">{% trans "High" %}</th>
+                                    <th scope="col">{% trans "Medium" %}</th>
+                                    <th scope="col">{% trans "Low" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for month in accepted_per_month %}
+                                <tr>
+                                    <td>{{ month.grouped_date|date:"F Y" }}</td>
+                                    <td>{{ month.critical }}</td>
+                                    <td>{{ month.high }}</td>
+                                    <td>{{ month.medium }}</td>
+                                    <td>{{ month.low }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->
         </div>
+
         <div class="col-md-12 section-start">
             <div class="panel panel-default">
                 <div class="panel-heading">{% trans "Open Bug Count by Week" %}</div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div id="opened_per_week" class="graph"></div>
+                    <div aria-describedby="opened-per-week-description" aria-labelledby="opened-per-week-title" class="graph"
+                        id="opened_per_week" role="img" tabindex="0"></div>
+                </div>
+                <div class="sr-only">
+                    <h3 id="opened-per-week-title">{% trans "Open Bug Count by Week" %}</h3>
+                    <p id="opened-per-week-description">{% trans "This graph represents the number of open bugs per week
+                        categorized by severity. The x-axis represents weeks and the y-axis represents the number of open bugs.
+                        The table below provides the same data in text format." %}</p>
+                    <table id="opened-per-week-table" aria-labelledby="opened-per-week-title" tabindex="0">
+                        <caption>{% trans "Open Bug Count Breakdown by Week" %}</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">{% trans "Week" %}</th>
+                                <th scope="col">{% trans "Critical" %}</th>
+                                <th scope="col">{% trans "High" %}</th>
+                                <th scope="col">{% trans "Medium" %}</th>
+                                <th scope="col">{% trans "Low" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for week in opened_per_week %}
+                            <tr>
+                                <td>{{ week.grouped_date|date:"W Y" }}</td>
+                                <td>{{ week.critical }}</td>
+                                <td>{{ week.high }}</td>
+                                <td>{{ week.medium }}</td>
+                                <td>{{ week.low }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->
         </div>
+
         <div class="col-md-12 section-start">
             <div class="panel panel-default">
                 <div class="panel-heading">{% trans "Risk Accepted Bug Count by Week" %}</div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div id="accepted_per_week" class="graph"></div>
+                    <div aria-describedby="accepted-per-week-description" aria-labelledby="accepted-per-week-title"
+                        class="graph" id="accepted_per_week" role="img" tabindex="0"></div>
+                    <div class="sr-only">
+                        <h3 id="accepted-per-week-title">{% trans "Risk accepted bug count by week" %}</h3>
+                        <p id="accepted-per-week-description">{% trans "This graph represents the number of risk accepted bugs
+                            per week categorized by severity. The x-axis represents weeks and the y-axis represents the number
+                            of accepted bugs. The table below provides the same data in text format." %}</p>
+                        <table id="accepted-per-week-table" aria-labelledby="accepted-per-week-title" tabindex="0">
+                            <caption>{% trans "Risk accepted bug count breakdown by week" %}</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">{% trans "Week" %}</th>
+                                    <th scope="col">{% trans "Critical" %}</th>
+                                    <th scope="col">{% trans "High" %}</th>
+                                    <th scope="col">{% trans "Medium" %}</th>
+                                    <th scope="col">{% trans "Low" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for week in accepted_per_week %}
+                                <tr>
+                                    <td>{{ week.grouped_date|date:"W Y" }}</td>
+                                    <td>{{ week.critical }}</td>
+                                    <td>{{ week.high }}</td>
+                                    <td>{{ week.medium }}</td>
+                                    <td>{{ week.low }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -102,49 +225,123 @@
         {% if top_ten_products %}
             <div class="col-md-12 section-start">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{% blocktrans with length=top_ten_products|length %}Top {{ length }} Products By Bug Severity{% endblocktrans %}</div>
+                    <div class="panel-heading">{% blocktrans with length=top_ten_products|length %}Top {{ length }} Products By Bug
+                        Severity{% endblocktrans %}</div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <div id="top-ten" class="graph"></div>
+                        <div aria-labelledby="top-ten-title" aria-describedby="top-ten-description" class="graph" id="top-ten" role="img" tabindex="0"></div>
+                    </div>
+                    <div class="sr-only">
+                        <h3 id="top-ten-title">{% trans "Top Products By Bug Severity" %}</h3>
+                        <p id="top-ten-description">
+                            {% blocktrans %}
+                            This bar chart represents the number of bugs categorized by severity for the top {{ length }} products.
+                            The x-axiscrepresents different products, and the y-axis represents the count of bugs for each severity. 
+                            The following table represents the same data in text format.
+                            {% endblocktrans %}
+                        </p>
+                        <table id="top-ten-table" aria-labelledby="top-ten-title" tabindex="0">
+                            <caption>{% trans "Bug count by severity for top products" %}</caption>
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Product" %}</th>
+                                    <th>{% trans "Critical" %}</th>
+                                    <th>{% trans "High" %}</th>
+                                    <th>{% trans "Medium" %}</th>
+                                    <th>{% trans "Low" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in top_ten_products %}
+                                <tr>
+                                    <td scope="row">{{ product.name }}</td>
+                                    <td scope="row">{{ product.critical|default_if_none:0 }}</td>
+                                    <td scope="row">{{ product.high|default_if_none:0 }}</td>
+                                    <td scope="row">{{ product.medium|default_if_none:0 }}</td>
+                                    <td scope="row">{{ product.low|default_if_none:0 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                     <!-- /.panel-body -->
                 </div>
                 <!-- /.panel -->
             </div>
         {% endif %}
+
         <div class="col-md-4 section-start">
             <div class="panel panel-default">
                 <div class="panel-heading">{% trans "Total Findings In Period By Severity" %}</div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div id="opened_in_period" class="graph"></div>
+                    <div aria-labelledby="severity-pie-title" aria-describedby="opened-in-period-description" class="graph" id="opened_in_period" role="img"
+                        tabindex="0"></div>
+                </div>
+                <div class="sr-only">
+                    <h3 id="severity-pie-title">{% trans "Total findings in period by severity" %}</h3>
+                    <p id="severity-pie-description">{% blocktrans with critical=in_period_counts.critical|default_if_none:0 high=in_period_counts.high|default_if_none:0 medium=in_period_counts.medium|default_if_none:0 low=in_period_counts.low|default_if_none:0 %}
+                        This pie chart represents the total number of findings categorized by severity. The following 
+                        findings are included: {{ critical }} critical, {{ high }} high, {{ medium }}
+                        medium, and {{ low }} low severity findings.
+                        {% endblocktrans %}
+                    </p>
                 </div>
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->
         </div>
+
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">{% trans "Total Findings Risk Accepted In Period By Severity" %}</div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div id="total_accepted_in_period" class="graph"></div>
+                    <div aria-labelledby="total-accepted-severity-pie-title" aria-describedby="total-accepted-in-period-description" class="graph" id="total_accepted_in_period"
+                        role="img" tabindex="0">
+                    </div>
+                    <div class="sr-only">
+                        <h3 id="total-accepted-severity-pie-title">{% trans "Total risk accepted findings in period by severity"
+                            %}</h3>
+                        <p id="total-accepted-in-period-description">
+                            {% blocktrans with critical=accepted_in_period_counts.critical|default_if_none:0 high=accepted_in_period_counts.high|default_if_none:0 medium=accepted_in_period_counts.medium|default_if_none:0 low=accepted_in_period_counts.low|default_if_none:0 %}
+                            This pie chart represents the total number of risk-accepted findings categorized by severity. The
+                            following findings are included: {{ critical }} critical, {{ high }} high, {{ medium }} medium 
+                            and {{ low }} low severity findings.
+                            {%endblocktrans %}
+                        </p>
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->
         </div>
+
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">{% trans "Total Findings Closed In Period By Severity" %}</div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div id="total_closed_in_period" class="graph"></div>
+                    <div
+                    aria-labelledby="total-accepted-severity-pie-title" aria-describedby="total-closed-in-period-description" class="graph" id="total_closed_in_period"
+                        role="img" tabindex="0">
+                    </div>
+                    <div class="sr-only">
+                        <h3 id="total-accepted-severity-pie-title">{% trans "Total closed in period by severity" %}</h3>
+                        <p id="total-accepted-in-period-description">
+                            {% blocktrans with critical=closed_in_period_counts.critical|default_if_none:0 high=closed_in_period_counts.high|default_if_none:0 medium=closed_in_period_counts.medium|default_if_none:0 low=closed_in_period_counts.low|default_if_none:0 %}
+                            This pie chart represents the total number of closed findings categorized by severity. The following
+                            findings are included: {{ critical }} critical, {{ high }} high {{ medium }} medium 
+                            and {{ low }} low severity findings.
+                            {% endblocktrans %}
+                        </p>
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->
         </div>
+
         {% if punchcard %}
             <div class="col-lg-12 section-start">
                 <div class="panel panel-default">
@@ -152,9 +349,48 @@
                         {% trans "Weekly activity, displayed by day, of findings reported.*" %}
                     </div>
                     <div class="panel-body">
-                        <div class="graph-500" id="punchcard"></div>
+                        <div
+                        aria-labelledby="punchcard-title" aria-describedby="punchcard-description" class="graph-500" id="punchcard" role="img" tabindex="0">
+                        </div>
+                        <div class="sr-only">
+                            <h3 id="punchcard-title">{% trans "Weekly Activity of Findings Reported" %}</h3>
+                            <p id="punchcard-description">
+                                {% trans "This chart represents the weekly activity of findings reported, categorized by day of the
+                                week. The x-axis represents the days of the week, while the y-axis represents the corresponding week 
+                                number. The size of each data point indicates the number of findings reported on that particular day.
+                                The table below provides the same data in text format." %}
+                            </p>
+                            <table class="sr-only" id="punchcard-table" aria-labelledby="punchcard-table-caption" tabindex="0">
+                                <caption id="punchcard-table-caption">Weekly findings activity Breakdown</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Week</th>
+                                        <th scope="col">Monday</th>
+                                        <th scope="col">Tuesday</th>
+                                        <th scope="col">Wednesday</th>
+                                        <th scope="col">Thursday</th>
+                                        <th scope="col">Friday</th>
+                                        <th scope="col">Saturday</th>
+                                        <th scope="col">Sunday</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for week, values in punchcard.items %}
+                                    <tr>
+                                        <td scope="row">{{ week }}</td>
+                                        <td scope="row">{{ values.Sunday|default:"0" }}</td>
+                                        <td scope="row">{{ values.Monday|default:"0" }}</td>
+                                        <td scope="row">{{ values.Tuesday|default:"0" }}</td>
+                                        <td scope="row">{{ values.Wednesday|default:"0" }}</td>
+                                        <td scope="row">{{ values.Thursday|default:"0" }}</td>
+                                        <td scope="row">{{ values.Friday|default:"0" }}</td>
+                                        <td scope="row">{{ values.Saturday|default:"0" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                         <p class="text-center text-muted small"><br/>{% trans "Week begins on date displayed." %}</p>
-
                         <p>
                             <br/>
                             <span class="text-muted small">{% trans "* Weeks are only displayed if findings are available." %}</span>
@@ -169,20 +405,20 @@
 {% block postscript %}
     {{ block.super }}
     <!-- Flot Charts JavaScript -->
-    <script src="{% static "flot/excanvas.min.js" %}"></script>
-    <script src="{% static "flot/jquery.flot.js" %}"></script>
-    <script src="{% static "flot/jquery.flot.pie.js" %}"></script>
-    <script src="{% static "flot/jquery.flot.time.js" %}"></script>
-    <script src="{% static "jquery.flot.tooltip/js/jquery.flot.tooltip.min.js" %}"></script>
-    <script src="{% static "flot/jquery.flot.stack.js" %}"></script>
-    <script src="{% static "flot/jquery.flot.resize.js" %}"></script>
+    <script src="{% static 'flot/excanvas.min.js' %}"></script>
+    <script src="{% static 'flot/jquery.flot.js' %}"></script>
+    <script src="{% static 'flot/jquery.flot.pie.js' %}"></script>
+    <script src="{% static 'flot/jquery.flot.time.js' %}"></script>
+    <script src="{% static 'jquery.flot.tooltip/js/jquery.flot.tooltip.min.js' %}"></script>
+    <script src="{% static 'flot/jquery.flot.stack.js' %}"></script>
+    <script src="{% static 'flot/jquery.flot.resize.js' %}"></script>
     {% if punchcard %}
-        <script src="{% static "JUMFlot/javascripts/JUMFlot.min.js" %}"></script>
-        <script src="{% static "JUMFlot/javascripts/jquery.flot.mouse.js" %}"></script>
-        <script src="{% static "JUMFlot/javascripts/jquery.flot.bubbles.js" %}"></script>
+        <script src="{% static 'JUMFlot/javascripts/JUMFlot.min.js' %}"></script>
+        <script src="{% static 'JUMFlot/javascripts/jquery.flot.mouse.js' %}"></script>
+        <script src="{% static 'JUMFlot/javascripts/jquery.flot.bubbles.js' %}"></script>
     {% endif %}
     {% block metrics %}
-        <script src="{% static "dojo/js/metrics.js" %}"></script>
+        <script src="{% static 'dojo/js/metrics.js' %}"></script>
     {% endblock metrics %}
     <script>
         $(function () {
@@ -289,7 +525,10 @@
 
             {%  if punchcard %}
 
-                punchcard("#punchcard", {{ punchcard|safe }}, {{ ticks|safe }});
+                let punchcardData = {{ punchcard|safe }};
+                let ticksData = {{ ticks|safe }}
+                punchcard("#punchcard", punchcardData, ticksData);
+                updatePunchcardTable(punchcardData, ticksData);
 
             {%  endif %}
 

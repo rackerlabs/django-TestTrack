@@ -33,9 +33,6 @@
                     </ul>
                 </div>
               </h3>
-
-
-
             </div>
         </div>
         <div id="the-filters" class="is-filters panel-body collapse">
@@ -47,22 +44,38 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-12">
-                                <i class="fa-solid fa-crosshairs fa-2x"></i>
+                                <i class="fa-solid fa-crosshairs fa-2x" aria-hidden="true"></i>
 
                                 <div class="pull-right inline-block text-right">
                                     <span class=" fa-2x">{{ verified_objs }}</span>
-                                    <span><a
-                                            href="{% url 'product_verified_findings' prod.id %}?test__engagement__product={{ prod.id }}"
-                                            title="Findings that are open/active and verified">Verified
-                                        {{ view }}{{ verified_objs|pluralize }} <i
-                                                class="fa-solid fa-circle-right"></i></a>
+                                    <span>
+                                        <a href="{% url 'product_verified_findings' prod.id %}?test__engagement__product={{ prod.id }}"
+                                            title="Findings that are open/active and verified">
+                                        Verified {{ view }}{{ verified_objs|pluralize}} <i class="fa-solid fa-circle-right" aria-hidden="true"></i></a>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <h3 id="verified-objects-title" class="sr-only">Verified {{ view }}{{ view|pluralize }} overview</h3>
                     <div class="panel-body">
-                        <div id="verified_objs" class="graph"></div>
+                        <div id="verified_objs"
+                             class="graph" 
+                             role="img"
+                             aria-labelledby="verified-objects-title"
+                             aria-describedby="verified-objects-description"
+                             tabindex="0"
+                             >
+                        </div>
+                        <p id="verified-objects-description" class="sr-only">
+                            This graph displays the number of verified {{ view|lower }}{{ view|pluralize }} by severity.
+                            There are {{ verified_objs }} verified findings since {{ start_date|date:"D., M. d, Y" }}:
+                            {{ verified_objs_by_severity.Critical }} critical,
+                            {{ verified_objs_by_severity.High }} high,
+                            {{ verified_objs_by_severity.Medium }} medium,
+                            {{ verified_objs_by_severity.Low }} low and
+                            {{ verified_objs_by_severity.Info }} informational.
+                        </p>                                               
                     </div>
                     <div class="panel-footer">
                         <i title="Since {{ start_date }}."
@@ -76,53 +89,89 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-12">
-                                <i class="fa-solid fa-bug fa-2x"></i>
+                                <i class="fa-solid fa-bug fa-2x" aria-hidden="true"></i>
 
                                 <div class="pull-right inline-block text-right">
                                     <span class=" fa-2x">{{ open_objs }}</span>
-                                    <span><a href="{% url 'product_open_findings' prod.id %}?test__engagement__product={{ prod.id }}"
-                                        title="Findings that are open/active, but not (yet) verified">Open
-                                        {{ view }}{{ open_objs|pluralize }} <i
-                                                class="fa-solid fa-circle-right"></i></a>
+                                    <span>
+                                        <a href="{% url 'product_open_findings' prod.id %}?test__engagement__product={{ prod.id }}"
+                                            title="Findings that are open/active, but not (yet) verified">
+                                            Open {{ view }}{{ open_objs|pluralize }}
+                                            <i class="fa-solid fa-circle-right" aria-hidden="true"></i>
+                                        </a>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <h3 id="open-objects-title" class="sr-only">Open {{ view }}{{ view|pluralize }} overview</h3>
                     <div class="panel-body">
-                        <div id="open_objs" class="graph"></div>
+                        <div 
+                        aria-labelledby="open-objects-title"
+                        aria-describedby="open-objects-description"
+                        id="open_objs"
+                        class="graph"
+                        role="img"
+                        tabindex="0"
+                        ></div>
+                        <p id="open-objects-description" class="sr-only">
+                            This graph displays the number of open {{ view|lower }}{{ view|pluralize }} by severity.
+                            There are {{ open_objs }} open findings since {{ start_date|date:"D., M. d, Y" }}:
+                            {{ open_objs_by_severity.Critical }} critical,
+                            {{ open_objs_by_severity.High }} high,
+                            {{ open_objs_by_severity.Medium }} medium,
+                            {{ open_objs_by_severity.Low }} low, and
+                            {{ open_objs_by_severity.Info }} informational.
+                        </p>   
                     </div>
                     <div class="panel-footer">
                         <i title="Opened since {{ start_date }}"
-                           class="text-info fa-solid fa-circle-info"></i>
+                           class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Opened since {{ start_date|date:"D., M. d, Y" }}</small>
                     </div>
                 </div>
             </div>
+
             <div class="col-md-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-12">
-                                <i class="fa-solid fa-check fa-2x"></i>
-
+                                <i class="fa-solid fa-check fa-2x" aria-hidden="true"></i>
                                 <div class="pull-right text-right">
                                     <span class="fa-2x">{{ accepted_objs }}</span>
                                     <span><a
                                             href="{% url 'accepted_findings' %}?test__engagement__product={{ prod.id }}"
                                             title="Findings that have been accepted in a risk acceptance.">Risk Accepted
-                                    {{ view }}s <i class="fa-solid fa-circle-right"></i></a>
+                                    {{ view }}s <i class="fa-solid fa-circle-right" aria-hidden="true"></i></a>
                                 </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <h3 id="accepted-objects-title" class="sr-only">Risk Accepted {{ view|lower }}{{ view|pluralize }} overview</h3>
                     <div class="panel-body">
-                        <div id="accepted_objs" class="graph"></div>
+                        <div 
+                        aria-describedby="accepted-objects-description"
+                        aria-labelledby="accepted-objects-title"
+                        class="graph"
+                        id="accepted_objs"
+                        role="img"
+                        tabindex="0"
+                       ></div>
+                       <p id="accepted-objects-description" class="sr-only">
+                        This graph displays the number of risk accepted {{ view|lower }}{{ view|pluralize }} by severity.
+                        There are {{ accepted_objs }} risk accepted {{view|lower}}{{ view|pluralize }} since {{ start_date|date:"D., M. d, Y" }}:
+                        {{ accepted_objs_by_severity.Critical }} critical,
+                        {{ accepted_objs_by_severity.High }} high,
+                        {{ accepted_objs_by_severity.Medium }} medium,
+                        {{ accepted_objs_by_severity.Low }} low, and
+                        {{ accepted_objs_by_severity.Info }} informational.
+                    </p>  
                     </div>
                     <div class="panel-footer">
                         <i title="Accepted since {{ start_date }}"
-                           class="text-info fa-solid fa-circle-info"></i>
+                           class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Risk Accepted since {{ start_date|date:"D., M. d, Y" }}</small>
                     </div>
                 </div>
@@ -132,25 +181,42 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-12">
-                                <i class="fa-solid fa-fire-extinguisher fa-2x"></i>
+                                <i class="fa-solid fa-fire-extinguisher fa-2x" aria-hidden="true"></i>
 
                                 <div class="text-right pull-right">
                                     <span class="fa-2x">{{ closed_objs }}</span>
                                     <span><a href="{% url 'closed_findings' %}?test__engagement__product={{ prod.id }}"
                                              title="Findings that are closed and mitigated.">Closed
                                         {{ view }}{{ closed_objs|pluralize }} <i
-                                                class="fa-solid fa-circle-right"></i></a>
+                                                class="fa-solid fa-circle-right" aria-hidden="true"></i></a>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <h3 id="closed-objects-title" class="sr-only">Closed {{ view|lower }}{{ view|pluralize }} overview</h3>
                     <div class="panel-body">
-                        <div id="closed_objs" class="graph"></div>
+                        <div
+                        aria-describedby="closed-objects-description"
+                        aria-labelledby="closed-objects-title"
+                        class="graph" 
+                        id="closed_objs"
+                        role="img"
+                        tabindex="0"
+                        ></div>
+                        <p id="closed-objects-description" class="sr-only">
+                            This graph displays the number of closed {{ view|lower }}{{ view|pluralize }} by severity.
+                            There are {{ closed_objs }} closed {{ view|lower }}{{ view|pluralize }} since {{ start_date|date:"D., M. d, Y" }}:
+                            {{ closed_objs_by_severity.Critical }} critical,
+                            {{ closed_objs_by_severity.High }} high,
+                            {{ closed_objs_by_severity.Medium }} medium,
+                            {{ closed_objs_by_severity.Low }} low, and
+                            {{ closed_objs_by_severity.Info }} informational.
+                        </p>   
                     </div>
                     <div class="panel-footer">
                         <i title="Closed since {{ start_date }}"
-                           class="text-info fa-solid fa-circle-info"></i>
+                           class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Closed since {{ start_date|date:"D., M. d, Y" }}</small>
                     </div>
                 </div>
@@ -160,25 +226,41 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-12">
-                                <i class="fa-solid fa-fire-extinguisher fa-2x"></i>
-
+                                <i class="fa-solid fa-fire-extinguisher fa-2x" aria-hidden="true"></i>
                                 <div class="text-right pull-right">
                                     <span class="fa-2x">{{ false_positive_objs }}</span>
                                     <span><a href="{% url 'product_false_positive_findings' prod.id %}?test__engagement__product={{ prod.id }}"
                                              title="Findings that are marked as false postive.">False-postive
                                         {{ view }}{{ false_positive_objs|pluralize }} <i
-                                                class="fa-solid fa-circle-right"></i></a>
+                                                class="fa-solid fa-circle-right" aria-hidden="true"></i></a>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <h3 id="false-positive-objects-title" class="sr-only">False positive {{ view }}{{ view|pluralize }} overview</h3>
                     <div class="panel-body">
-                        <div id="false_positive_objs" class="graph"></div>
+                        <div
+                        aria-describedby="false-positive-objects-description"
+                        aria-labelledby="false-positive-objects-title"
+                        class="graph"
+                        id="false_positive_objs"
+                        role="img"
+                        tabindex="0">
+                    </div>
+                    <p id="false-positive-objects-description" class="sr-only">
+                        This graph displays the number of false positive {{ view|lower }}{{ view|pluralize }} by severity.
+                        There are {{ false_positive_objs }} false positive {{ view|lower }}{{ view|pluralize }} since {{ start_date|date:"D., M. d, Y" }}:
+                        {{ false_positive_objs_by_severity.Critical }} critical,
+                        {{ false_positive_objs_by_severity.High }} high,
+                        {{ false_positive_objs_by_severity.Medium }} medium,
+                        {{ false_positive_objs_by_severity.Low }} low, and
+                        {{ false_positive_objs_by_severity.Info }} informational.
+                    </p>   
                     </div>
                     <div class="panel-footer">
                         <i title="Flagged since {{ start_date }}"
-                           class="text-info fa-solid fa-circle-info"></i>
+                           class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Flagged since {{ start_date|date:"D., M. d, Y" }}</small>
                     </div>
                 </div>
@@ -188,26 +270,42 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-12">
-                                <i class="fa-solid fa-fire-extinguisher fa-2x"></i>
-
+                                <i class="fa-solid fa-fire-extinguisher fa-2x" aria-hidden="true"></i>
                                 <div class="pull-right inline-block text-right">
                                     <span class=" fa-2x">{{ out_of_scope_objs }}</span>
                                     <span><a
                                             href="{% url 'product_out_of_scope_findings' prod.id %}?test__engagement__product={{ prod.id }}"
                                             title="Findings that are marked as out of scope.">Out Of Scope
                                         {{ view }}{{ out_of_scope_objs|pluralize }} <i
-                                                class="fa-solid fa-circle-right"></i></a>
+                                                class="fa-solid fa-circle-right" aria-hidden="true"></i></a>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <h3 id="out-of-scope-objects-title" class="sr-only">Out of Scope {{ view }}{{ view|pluralize }} overview</h3>
                     <div class="panel-body">
-                        <div id="out_of_scope_objs" class="graph"></div>
+                        <div
+                        aria-describedby="out-of-scope-objects-description"
+                        aria-labelledby="out-of-scope-objects-title"
+                        class="graph"
+                        id="out_of_scope_objs"
+                        role="img"
+                        tabindex="0">
+                    </div>
+                    <p id="out-of-scope-objects-description" class="sr-only">
+                        This graph displays the number of out of scope {{ view|lower }}{{ view|pluralize }} by severity.
+                        There are {{ out_of_scope_objs }} out of scope {{ view|lower }}{{ view|pluralize }} since {{ start_date|date:"D., M. d, Y" }}:
+                        {{ out_of_scope_objs_by_severity.Critical }} Critical,
+                        {{ out_of_scope_objs_by_severity.High }} high,
+                        {{ out_of_scope_objs_by_severity.Medium }} medium,
+                        {{ out_of_scope_objs_by_severity.Low }} low, and
+                        {{ out_of_scope_objs_by_severity.Info }} informational.
+                    </p>   
                     </div>
                     <div class="panel-footer">
                         <i title="Since {{ start_date }}."
-                           class="text-info fa-solid fa-circle-info"></i>
+                           class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Since {{ start_date|date:"D., M. d, Y" }}.</small>
                     </div>
                 </div>
@@ -217,25 +315,42 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-12">
-                                <i class="fa-solid fa-bullseye fa-2x"></i>
+                                <i class="fa-solid fa-bullseye fa-2x" aria-hidden="true"></i>
 
                                 <div class="text-right pull-right">
                                     <span class="fa-2x">{{ all_objs }}</span>
                                     <span><a href="{% url 'product_all_findings' prod.id %}?test__engagement__product={{ prod.id }}"
                                             title="All findings.">Total
                                         {{ view }}{{ all_objs|pluralize }} <i
-                                                class="fa-solid fa-circle-right"></i></a>
+                                                class="fa-solid fa-circle-right" aria-hidden="true"></i></a>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <h3 id="all-objects-title" class="sr-only">Total {{ view }}{{ view|pluralize }} overview</h3>
                     <div class="panel-body">
-                        <div id="all_objs" class="graph"></div>
+                        <div
+                        aria-describedby="all-objects-description"
+                        aria-labelledby="all-objects-title"
+                        class="graph"
+                        id="all_objs"
+                        role="img"
+                        tabindex="0">
+                    </div>
+                    <p id="all-objects-description" class="sr-only">
+                        This graph displays the number of all {{ view|lower }}{{ view|pluralize }} by severity.
+                        There are {{ all_objs }} {{ view|lower }}{{ view|pluralize }} since {{ start_date|date:"D., M. d, Y" }}:
+                        {{ all_objs_by_severity.Critical }} Critical,
+                        {{ all_objs_by_severity.High }} High,
+                        {{ all_objs_by_severity.Medium }} Medium,
+                        {{ all_objs_by_severity.Low }} Low, and
+                        {{ all_objs_by_severity.Info }} Informational.
+                    </p> 
                     </div>
                     <div class="panel-footer">
                         <i title="Since {{ start_date }}"
-                           class="text-info fa-solid fa-circle-info"></i>
+                           class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Since {{ start_date|date:"D., M. d, Y" }}</small>
                     </div>
                 </div>
@@ -245,25 +360,41 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-12">
-                                <i class="fa-solid fa-bug fa-2x"></i>
+                                <i class="fa-solid fa-bug fa-2x" aria-hidden="true"></i>
 
                                 <div class="pull-right inline-block text-right">
                                     <span class=" fa-2x">{{ inactive_objs }}</span>
                                     <span><a href="{% url 'product_inactive_findings' prod.id %}?test__engagement__product={{ prod.id }}"
-                                             title="Findings that are not active but not mitigated for some reason">Inactive
-                                        {{ view }}{{ inactive_objs|pluralize }} <i
-                                                class="fa-solid fa-circle-right"></i></a>
+                                            title="Findings that are not active but not mitigated for some reason">Inactive
+                                            {{ view }}{{ view|pluralize }} <i class="fa-solid fa-circle-right"  aria-hidden="true"></i></a>
                                     </span>
                                 </div>
-                            </div>
+                                </div>
                         </div>
                     </div>
+                    <h3 id="inactive-objects-title" class="sr-only">Inactive {{ view }}{{ view|pluralize }} overview</h3>
                     <div class="panel-body">
-                        <div id="inactive_objs" class="graph"></div>
+                        <div
+                        aria-describedby="inactive-objects-description"
+                        aria-labelledby="inactive-objects-title"
+                        class="graph" 
+                        id="inactive_objs"
+                        role="img"
+                        tabindex="0"
+                        ></div>
+                        <p id="inactive-objects-description" class="sr-only">
+                            This graph displays the number of inactive {{ view|lower }}{{ view|pluralize }} by severity.
+                            There are following inactive {{ view|lower }}{{ view|pluralize }} since {{ start_date|date:"D., M. d, Y" }}:
+                            {{ inactive_objs_by_severity.Critical }} Critical,
+                            {{ inactive_objs_by_severity.High }} High,
+                            {{ inactive_objs_by_severity.Medium }} Medium,
+                            {{ inactive_objs_by_severity.Low }} Low, and
+                            {{ inactive_objs_by_severity.Info }} Informational.
+                        </p> 
                     </div>
                     <div class="panel-footer">
                         <i title="Ingested since {{ start_date }}"
-                           class="text-info fa-solid fa-circle-info"></i>
+                           class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Ingested since {{ start_date|date:"D., M. d, Y" }}</small>
                     </div>
                 </div>
@@ -294,99 +425,303 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Open Day to Day by Severity
-                        <i title="Days are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                        <i title="Days are only displayed if findings are available." class="text-info fa-solid fa-circle-info"
+                            aria-hidden="true"></i>
                     </div>
                     <div class="panel-body text-center">
                         <div id="id_open_findings_burndown_loader" class="graph-loader">
                             <p><i class="fas fa-spinner fa-spin fa-2x"></i></p>
                             <p>Loading Finding Burndown Metrics...</p>
                         </div>
-                        <div id="open_findings_burndown" class="graph"></div>
+                        <h3 id="open-findings-title" class="sr-only">
+                            Open findings burndown overview
+                        </h3>
+                        <div aria-describedby="open-findings-description" aria-labelledby="open-findings-title"
+                            class="graph" id="open_findings_burndown" role="img" tabindex="0"></div>
+                        <div id="open-findings-description" class="sr-only">
+                            <p>
+                                This burndown chart represents the number of open findings over time, categorized by severity.
+                                The x-axis represents days, while the y-axis represents the number of findings.
+                                Each severity level is color-coded: critical (red), high (orange), medium (yellow),
+                                low (green), and informational (blue).
+                            </p>
+                        </div>
+                        <table id="open-findings-table" class="sr-only" tabindex="0" aria-labelledby="open-findings-table-caption">
+                            <caption id="open-findings-table-caption">Open findings burndown overview</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Critical</th>
+                                    <th scope="col">High</th>
+                                    <th scope="col">Medium</th>
+                                    <th scope="col">Low</th>
+                                    <th scope="col">Informational</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="panel-footer">
-                        <i class="text-info fa-solid fa-circle-info"></i>
+                        <i class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Days are only displayed if findings are available.</small>
                     </div>
                 </div>
             </div>
+            
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Open, Closed, and Risk Accepted Week to Week
-                        <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                        <i title="Weeks are only displayed if findings are available." class="text-info fa-solid fa-circle-info"
+                            aria-hidden="true"></i>
                     </div>
                     <div class="panel-body">
-                        <div id="open_close_weekly" class="graph"></div>
+                        <h3 id="open-closed-weekly-title" class="sr-only">Open, Closed, and Risk Accepted Findings Week to Week Overview</h3>
+                        <div aria-describedby="open-closed-weekly-description" aria-labelledby="open-closed-weekly-title"
+                            class="graph" id="open_close_weekly" role="img" tabindex="0">
+                        </div>
+                        <div id="open-closed-weekly-description" class="sr-only">
+                            <p>
+                                This chart shows the weekly count of open, closed, and risk-accepted findings.
+                                The x-axis represents the weeks, while the y-axis represents the number of findings.
+                                Opened findings are shown in red. Closed findings are shown in orange.
+                                Risk accepted findings are shown in purple. The table below provides the same data in text format.
+                            </p>
+                        </div>
+                        <table id="open-closed-weekly-table" aria-labelledby="open-closed-weekly-table-caption" class="sr-only"
+                            tabindex="0">
+                            <caption id="open-closed-weekly-table-caption">Weekly findings breakdown</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Week</th>
+                                    <th scope="col">Open Findings</th>
+                                    <th scope="col">Closed Findings</th>
+                                    <th scope="col">Risk Accepted Findings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for week, values in open_close_weekly.items %}
+                                <tr>
+                                    <td>{{ values.week|safe }}</td>
+                                    <td>{{ values.open }}</td>
+                                    <td>{{ values.closed }}</td>
+                                    <td>{{ values.accepted }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+            
                     </div>
                     <div class="panel-footer">
                         <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                            class="text-info fa-solid fa-circle-info"></i>
                         <small>Weeks are only displayed if findings are available.</small>
                     </div>
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Week to Week by Severity
-                        <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                        <i title="Weeks are only displayed if findings are available." class="text-info fa-solid fa-circle-info"
+                            aria-hidden="true"></i>
                     </div>
                     <div class="panel-body">
-                        <div id="severity_weekly" class="graph"></div>
+                        <h3 id="severity-weekly-title" class="sr-only">Weekly Findings by Severity Overview</h3>
+                        <div aria-describedby="severity-weekly-description" aria-labelledby="severity-weekly-title" class="graph"
+                            id="severity_weekly" role="img" tabindex="0">
+                        </div>
                     </div>
-                    <div class="panel-footer">
-                        <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
-                        <small>Weeks are only displayed if findings are available.</small>
+                    <div id="severity-weekly-description" class="sr-only">
+                        <p>
+                            This chart represents the number of findings per week categorized by severity.
+                            The x-axis represents the weeks, while the y-axis represents the number of findings.
+                            Critical findings are shown in red, high findings are shown in orange, medium findings
+                            are shown in yellow, Low findings are shown in blue, informational findings
+                            are shown in gray. The table below provides the same data in text format.
+                        </p>
                     </div>
+                    <table class="sr-only" id="severity-weekly-table" aria-labelledby="severity-weekly-table-caption" tabindex="0">
+                        <caption id="severity-weekly-table-caption">Weekly findings by severity breakdown</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Week</th>
+                                <th scope="col">Critical</th>
+                                <th scope="col">High</th>
+                                <th scope="col">Medium</th>
+                                <th scope="col">Low</th>
+                                <th scope="col">Informational</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for week, values in severity_weekly.items %}
+                            <tr>
+                                <td>{{ values.week|safe }}</td>
+                                <td>{{ values.critical }}</td>
+                                <td>{{ values.high }}</td>
+                                <td>{{ values.medium }}</td>
+                                <td>{{ values.low }}</td>
+                                <td>{{ values.info }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            
+                <div class="panel-footer">
+                    <i title="Weeks are only displayed if findings are available." class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
+                    <small>Weeks are only displayed if findings are available.</small>
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Critical Week to Week
                         <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                           class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                     </div>
                     <div class="panel-body">
-                        <div id="severity_critical" class="graph"></div>
+                        <h3 id="critical-weekly-title" class="sr-only">
+                            Weekly critical findings overview
+                        </h3>
+                        <div
+                        aria-describedby="critical-weekly-description"
+                        aria-labelledby="critical-weekly-title" 
+                        class="graph"
+                        id="severity_critical" 
+                        role="img"
+                        tabindex="0"></div>
                     </div>
+                    <div id="critical-weekly-description" class="sr-only">
+                        <p>
+                            This chart represents the number of critical findings per week.
+                            The x-axis represents the weeks, while the y-axis represents the number of findings.
+                            Critical findings are displayed in red. The table below provides the same data in text format.
+                        </p>
+                    </div>
+                    <p id="critical-weekly-table-intro" class="sr-only">
+                        The following table contains a breakdown of critical findings per week.
+                    </p>
+                    <table class="sr-only" id="critical-weekly-table" aria-labelledby="critical-weekly-table-caption" tabindex="0">
+                        <caption id="critical-weekly-table-caption">Weekly critical findings breakdown</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Week</th>
+                                <th scope="col">Critical Findings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for week, values in critical_weekly.items %}
+                            <tr>
+                                <td>{{ values.week|safe }}</td>
+                                <td>{{ values.count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                     <div class="panel-footer">
                         <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                           class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Weeks are only displayed if findings are available.</small>
                     </div>
-                </div>
             </div>
+
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         High Week to Week
-                        <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                        <i title="Weeks are only displayed if findings are available." class="text-info fa-solid fa-circle-info"
+                            aria-hidden="true"></i>
                     </div>
                     <div class="panel-body">
-                        <div id="severity_high" class="graph"></div>
+                        <h3 id="high-weekly-title" class="sr-only">Weekly High Severity Findings Overview</h3>
+                        <div aria-describedby="high-weekly-description" aria-labelledby="high-weekly-title" class="graph"
+                            id="severity_high" role="img" tabindex="0">
+                        </div>
                     </div>
                     <div class="panel-footer">
                         <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                            class="text-info fa-solid fa-circle-info"></i>
                         <small>Weeks are only displayed if findings are available.</small>
                     </div>
                 </div>
+                <div id="high-weekly-description" class="sr-only">
+                    <p>
+                        This chart represents the number of high-severity findings per week.
+                        The x-axis represents the weeks, while the y-axis represents the number of findings.
+                        High-severity findings are displayed in orange.
+                        The table below provides the same data in text format.
+                    </p>
+                </div>
+                <table class="sr-only" id="high-weekly-table" aria-labelledby="high-weekly-table-caption" tabindex="0">
+                    <caption id="high-weekly-table-caption">Weekly High Severity Findings Breakdown</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Week</th>
+                            <th scope="col">High severity findings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for week, values in high_weekly.items %}
+                        <tr>
+                            <td>{{ values.week|safe }}</td>
+                            <td>{{ values.count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
+
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Medium Week to Week
                         <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                           class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                     </div>
                     <div class="panel-body">
-                        <div id="severity_medium" class="graph"></div>
+                        <h3 id="medium-weekly-title" class="sr-only">
+                            Weekly medium severity findings Overview
+                        </h3>
+                        <div 
+                             aria-describedby="medium-weekly-description"
+                             aria-labelledby="medium-weekly-title"
+                             class="graph"
+                             id="severity_medium"
+                             role="img"
+                             tabindex="0">
+                        </div>
+                        <div id="medium-weekly-description" class="sr-only">
+                            <p>
+                                This chart represents the number of medium severity findings per week.
+                                The x-axis represents the weeks, while the y-axis represents the number of findings.
+                                Medium severity findings are displayed in yellow.
+                                The table below provides the same data in text format.
+                            </p>
+                        </div>
+                        <table class="sr-only" id="medium-weekly-table"
+                               aria-labelledby="medium-weekly-table-caption"
+                               tabindex="0">
+                            <caption id="medium-weekly-table-caption">Weekly medium severity findings breakdown</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Week</th>
+                                    <th scope="col">Medium Severity Findings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for week, values in medium_weekly.items %}
+                                <tr>
+                                    <td>{{ values.week|safe }}</td>
+                                    <td>{{ values.count }}</td>  
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                     <div class="panel-footer">
                         <i title="Weeks are only displayed if findings are available."
@@ -395,52 +730,163 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Finding Age
                     </div>
                     <div class="panel-body">
-                        <div id="finding_age" class="graph"></div>
+                        <h3 id="finding-age-title" class="sr-only">
+                            Finding Age Overview
+                        </h3>
+                        <div aria-describedby="finding-age-description" aria-labelledby="finding-age-title" class="graph"
+                            id="finding_age" role="img" tabindex="0">
+                        </div>
+                        <div id="finding-age-description" class="sr-only">
+                            <p>
+                                This chart represents the distribution of open findings by their age.
+                                The x-axis represents the age of findings.
+                                The y-axis represents the number of open findings.
+                                The table below provides the data in text format.
+                            </p>
+                        </div>
+                        <table class="sr-only" id="finding-age-table" aria-labelledby="finding-age-table-caption" tabindex="0">
+                            <caption id="finding-age-table-caption">Finding Age Breakdown</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Age in days</th>
+                                    <th scope="col">Open findings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for age, count in open_objs_by_age.items %}
+                                <tr>
+                                    <td>{{ age }}</td>
+                                    <td>{{ count }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
+            
                     <div class="panel-footer">
                         <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                            class="text-info fa-solid fa-circle-info"></i>
                         <small>Finding age of {{ open_objs|apnumber }} open
                             finding{{ open_objs|pluralize }}</small>
                     </div>
                 </div>
             </div>
+
             <div class="col-md-7">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Weekly activity of findings reported
-                            <i title="Weeks are only displayed if findings are available."
-                            class="text-info fa-solid fa-circle-info"></i>
+                        <i title="Weeks are only displayed if findings are available." class="text-info fa-solid fa-circle-info"
+                            aria-hidden="true"></i>
                     </div>
                     <div class="panel-body">
-                        <div class="graph" id="punchcard"></div>
+                        <h3 id="punchcard-title" class="sr-only">
+                            Weekly activity of reported findings overview
+                        </h3>
+                        <div aria-describedby="punchcard-description" aria-labelledby="punchcard-title" class="graph" id="punchcard"
+                            role="img" tabindex="0">
+                        </div>
+                        <div id="punchcard-description" class="sr-only">
+                            <p>
+                                This chart represents the weekly activity of findings reported.
+                                The x-axis represents the days of the week, while the y-axis represents the week number.
+                                The size of each dot indicates the number of findings reported on that day.
+                                The table below provides the same data in text format.
+                            </p>
+                        </div>
+                        <table
+                        class="sr-only" 
+                        id="punchcard-table" 
+                        aria-labelledby="punchcard-table-caption"
+                        tabindex="0">
+                     <caption id="punchcard-table-caption">Weekly Findings Activity Breakdown</caption>
+                     <thead>
+                         <tr>
+                             <th scope="col">Week</th>
+                             <th scope="col">Monday</th>
+                             <th scope="col">Tuesday</th>
+                             <th scope="col">Wednesday</th>
+                             <th scope="col">Thursday</th>
+                             <th scope="col">Friday</th>
+                             <th scope="col">Saturday</th>
+                             <th scope="col">Sunday</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         {% for week, values in punchcard.items %}
+                         <tr>
+                             <td>{{ week }}</td>
+                             <td>{{ values.Sunday|default:"0" }}</td>
+                             <td>{{ values.Monday|default:"0" }}</td>
+                             <td>{{ values.Tuesday|default:"0" }}</td>
+                             <td>{{ values.Wednesday|default:"0" }}</td>
+                             <td>{{ values.Thursday|default:"0" }}</td>
+                             <td>{{ values.Friday|default:"0" }}</td>
+                             <td>{{ values.Saturday|default:"0" }}</td>
+                         </tr>
+                         {% endfor %}
+                     </tbody>
+                 </table>
+                 
                     </div>
                     <div class="panel-footer">
                         <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                            class="text-info fa-solid fa-circle-info"></i>
                         <small>Weeks are only displayed if findings are available.</small>
                     </div>
                 </div>
             </div>
+
             <div class="col-md-5">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Findings by Test Type
-                        <i title="Test Types shown only if available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                        <i title="Test Types shown only if available." class="text-info fa-solid fa-circle-info"
+                            aria-hidden="true"></i>
                     </div>
                     <div class="panel-body">
-                        <div class="graph" id="test_type"></div>
+                        <h3 id="test-type-title" class="sr-only">
+                            Findings by test type overview
+                        </h3>
+                        <div aria-describedby="test-type-description" aria-labelledby="test-type-title" class="graph" id="test_type"
+                            role="img" tabindex="0">
+                        </div>
+                        <div id="test-type-description" class="sr-only">
+                            <p>
+                                This chart represents the number of findings categorized by test type.
+                                The x-axis represents different test types.
+                                The y-axis represents the number of findings for each test type.
+                                The table below provides the data in text format.
+                            </p>
+                        </div>
+                        <table class="sr-only" id="test-type-table" aria-labelledby="test-type-table-caption" tabindex="0">
+                            <caption id="test-type-table-caption">Findings by Test Type Breakdown</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Test Type</th>
+                                    <th scope="col">Findings Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for test_type, count in test_data.items %}
+                                <tr>
+                                    <td>{{ test_type }}</td>
+                                    <td>{{ count }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                     <div class="panel-footer">
                         <i title="Weeks are only displayed if findings are available."
-                           class="text-info fa-solid fa-circle-info"></i>
+                            class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Test Types shown only if available.</small>
                     </div>
                 </div>
@@ -452,25 +898,88 @@
                         Open CWE Vulnerabilities
                     </div>
                     <div class="panel-body">
-                        <div id="open_vulnerabilities" class="graph"></div>
+                        <h3 id="open-vulnerabilities-title" class="sr-only">
+                            Open CWE vulnerabilities overview
+                        </h3>
+                        <div
+                        aria-describedby="open-vulnerabilities-description"
+                        aria-labelledby="open-vulnerabilities-title"
+                        class="graph"
+                        id="open_vulnerabilities"
+                        role="img" 
+                        tabindex="0">
                     </div>
+                    <div id="open-vulnerabilities-description" class="sr-only">
+                        <p>
+                            This chart represents open CWE vulnerabilities identified in findings.
+                            The x-axis represents different CWE categories.
+                            The y-axis represents the number of findings associated with each CWE.
+                            The table below provides the data in text format.
+                        </p>
+                    </div>
+                    <table class="sr-only" id="open-vulnerabilities-table"
+                           aria-labelledby="open-vulnerabilities-table-caption"
+                           tabindex="0">
+                        <caption id="open-vulnerabilities-table">Open CWE Vulnerabilities Breakdown</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">CWE category</th>
+                                <th scope="col">Number of findings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cwe, count in open_vulnerabilities.items %}
+                            <tr>
+                                <td>{{ cwe }}</td>
+                                <td>{{ count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                     <div class="panel-footer">
-                        <i class="text-info fa-solid fa-circle-info"></i>
+                        <i class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Showing {{ open_vulnerabilities_count|apnumber }}
                             vulnerabilit{{ open_vulnerabilities_count|pluralize:"y,ies"}} from Open findings</small>
                     </div>
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Total CWE Vulnerabilities
                     </div>
                     <div class="panel-body">
-                        <div id="all_vulnerabilities" class="graph"></div>
+                        <h3 id="total-vulnerabilities-title" class="sr-only">
+                            Total CWE vulnerabilities overview
+                        </h3>
+                        <div aria-describedby="total-vulnerabilities-description" aria-labelledby="total-vulnerabilities-title"
+                            class="graph" id="all_vulnerabilities" role="img" tabindex="0">
+                        </div>
+                        <div id="total-vulnerabilities-description" class="sr-only">
+                            <p>
+                                This chart represents the total CWE vulnerabilities identified across all findings.
+                                The x-axis represents different CWE categories.
+                                The y-axis represents the number of findings associated with each CWE.
+                                The table below provides the same data in text format.
+                            </p>
+                        </div>
+                        <table class="sr-only" id="total-vulnerabilities-table" aria-labelledby="total-vulnerabilities-table-caption"
+                            tabindex="0">
+                            <caption id="total-vulnerabilities-table-caption">Total CWE Vulnerabilities Breakdown</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">CWE category</th>
+                                    <th scope="col">Number of findings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="panel-footer">
-                        <i class="text-info fa-solid fa-circle-info"></i>
+                        <i class="text-info fa-solid fa-circle-info" aria-hidden="true"></i>
                         <small>Showing {{ all_vulnerabilities_count|apnumber }}
                             vulnerabilit{{ all_vulnerabilities_count|pluralize:"y,ies"}} from all findings</small>
                     </div>
@@ -535,8 +1044,18 @@
 
             $(document).ready(function() {
                 fetch_burndown_metrics({{ prod.id }});
-            })
 
+                let allVulnerabilities = "{{ all_vulnerabilities|safe }}"; 
+                let openVulnerabilities = "{{ open_vulnerabilities|safe }}"; 
+                updateVulnerabilitiesTable(allVulnerabilities, "total-vulnerabilities-table");
+                updateVulnerabilitiesTable(openVulnerabilities, "open-vulnerabilities-table");
+
+                {%  if punchcard %}
+                let punchcardData = {{ punchcard|safe }};
+                let ticksData = {{ ticks|safe }};
+                updatePunchcardTable(punchcardData, ticksData);
+                {% endif%}
+            })
             function fetch_burndown_metrics(pid) {
                 $.ajax({
                     type: 'GET',
@@ -548,6 +1067,9 @@
                     success: function(response) {
                         $('#open_findings_burndown').show();
                         $('#id_open_findings_burndown_loader').hide();
+                        
+                        updateBurndownTable(response);
+                        
                         open_findings_burndown(
                             response.critical,
                             response.high,
@@ -558,6 +1080,41 @@
                             response.min,
                         );
                     }
+                });
+            }
+
+            function updateBurndownTable(data) {
+                let tableBody = $("#open-findings-table tbody");
+                tableBody.empty();
+
+                // Gathering all timestamps
+                // Taken from 'critical' but severity type does not really matter 
+                // as all of them come with the same bunch of timestamps
+                let timestamps = data.critical.map(entry => entry[0]); 
+
+                timestamps.forEach((timestamp, index) => {
+                    // Converting timestamp to YYYY-MM-DD format
+                    let date = new Date(timestamp).toISOString().split('T')[0]; 
+
+                    // Fetching values for each severity level or default to 0 if missing
+                    let critical = data.critical[index] ? data.critical[index][1] : 0;
+                    let high = data.high[index] ? data.high[index][1] : 0;
+                    let medium = data.medium[index] ? data.medium[index][1] : 0;
+                    let low = data.low[index] ? data.low[index][1] : 0;
+                    let info = data.info[index] ? data.info[index][1] : 0;
+
+                    // Appending the row to the table for each timestamp we got
+                    let newRow = `
+                        <tr>
+                            <td>${date}</td>
+                            <td aria-label="Critical severity findings on ${date}: ${critical}">${critical}</td>
+                            <td aria-label="High severity findings on ${date}: ${high}">${high}</td>
+                            <td aria-label="Medium severity findings on ${date}: ${medium}">${medium}</td>
+                            <td aria-label="Low severity findings on ${date}: ${low}">${low}</td>
+                            <td aria-label="Informational severity findings on ${date}: ${info}">${info}</td>
+                        </tr>
+                    `;
+                    tableBody.append(newRow);
                 });
             }
 
@@ -703,6 +1260,29 @@
             
             draw_vulnerabilities_graph("#open_vulnerabilities", {{ open_vulnerabilities|safe }});
             draw_vulnerabilities_graph("#all_vulnerabilities", {{ all_vulnerabilities|safe }});
+
+            function updateVulnerabilitiesTable(dataInfo, tableId) {
+                let tableBody = $(`#${tableId} tbody`);
+                // Converting raw data to a key-value object
+                let cweDataArray = dataInfo.split(","); 
+                let cweData = {};
+                for (let i = 0; i < cweDataArray.length; i += 2) {
+                    // Trimming and removing unnecessary characters
+                    let cwe = cweDataArray[i].replace(/[\[\]']+/g, "").trim(); 
+                    let count = parseInt(cweDataArray[i + 1], 10) || 0; 
+                    cweData[cwe] = count;
+                }
+                // If we have no valid data, write the info for users
+                if (Object.keys(cweData).length === 0) {
+                    tableBody.append(`<tr><td colspan="2">No vulnerabilities found</td></tr>`);
+                } else {
+                    // Add cwe info to the table
+                    $.each(cweData, function (cwe, count) {
+                        let newRow = `<tr><td>${cwe}</td><td>${count}</td></tr>`;
+                        tableBody.append(newRow);
+                    });
+                }
+            }
 
             //$(".product-graphs").hide();
             $("#meta_accordion").accordion();

@@ -117,12 +117,24 @@
             {% block historical_finding_severity %}
                 <div class="col-lg-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div class="panel-heading" id="homepage_pie_chart_heading">
                             {% trans "Historical Finding Severity" %}
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="chart" id="homepage_pie_chart"></div>
+                            <p id="chart-description" class="sr-only">
+                                This pie chart represents findings categorized by severity: 
+                                critical ({{critical}}), high ({{high}}), medium ({{medium}}), 
+                                low ({{low}}), and informational ({{info}}).
+                            </p>
+                            <div 
+                                aria-describedby="chart-description"
+                                aria-labelledby="homepage_pie_chart_heading"
+                                class="chart" 
+                                id="homepage_pie_chart" 
+                                role="img"
+                                tabindex="0" >
+                            </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -132,12 +144,44 @@
             {% block reported_finding_severity_by_month %}
                 <div class="col-lg-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div class="panel-heading" id="severity-chart-heading">
                             {% trans "Reported Finding Severity by Month" %}
                         </div>
+                        <p id="severity-chart-description" class="sr-only">
+                            This severity trend chart shows monthly data for findings categorized by severity:
+                            critical, high, medium, and low. The table below the chart provides the data in text format.
+                        </p>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="chart" id="homepage_severity_plot"></div>
+                            <div class="chart" id="homepage_severity_plot" aria-describedby="severity-chart-description"
+                                aria-labelledby="severity-chart-heading" role="img" tabindex="0">
+                            </div>
+                            <div class="sr-only">
+                                <h3 id="severity-table-title">{% trans "Reported finding severity breakdown by month" %}</h3>
+                                <table id="severity-table" aria-labelledby="severity-table-title" tabindex="0">
+                                    <caption>{% trans "Reported finding severity breakdown" %}</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">{% trans "Month" %}</th>
+                                            <th scope="col">{% trans "Critical" %}</th>
+                                            <th scope="col">{% trans "High" %}</th>
+                                            <th scope="col">{% trans "Medium" %}</th>
+                                            <th scope="col">{% trans "Low" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for month in by_month %}
+                                        <tr>
+                                            <td>{{ month.y|slice:"5:" }} {{ month.y|slice:":4" }}</td>
+                                            <td>{{ month.a|default_if_none:0 }}</td>
+                                            <td>{{ month.b|default_if_none:0 }}</td>
+                                            <td>{{ month.c|default_if_none:0 }}</td>
+                                            <td>{{ month.d|default_if_none:0 }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -233,11 +277,46 @@
             {% if punchcard %}
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div class="panel-heading" id="punchcard-heading">
                             {% trans "Weekly activity, displayed by day, of findings you reported." %}*
                         </div>
                         <div class="panel-body">
-                            <div class="chart" id="punchcard"></div>
+                            <p id="punchcard-description" class="sr-only">
+                                This punchcard chart represents findings distribution over time by week.
+                                The table below the chart provides the data in text format.
+                            </p>
+                            <div class="chart" id="punchcard" role="img" aria-labelledby="punchcard-heading"
+                                aria-describedby="punchcard-description">
+                            </div>
+                            <table class="sr-only" id="punchcard-table" aria-labelledby="punchcard-table-caption" tabindex="0">
+                                <caption id="punchcard-table-caption">Weekly findings activity breakdown</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Week</th>
+                                        <th scope="col">Monday</th>
+                                        <th scope="col">Tuesday</th>
+                                        <th scope="col">Wednesday</th>
+                                        <th scope="col">Thursday</th>
+                                        <th scope="col">Friday</th>
+                                        <th scope="col">Saturday</th>
+                                        <th scope="col">Sunday</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for week, values in punchcard.items %}
+                                    <tr>
+                                        <td scope="row">{{ week }}</td>
+                                        <td>{{ values.Sunday|default:"0" }}</td>
+                                        <td>{{ values.Monday|default:"0" }}</td>
+                                        <td>{{ values.Tuesday|default:"0" }}</td>
+                                        <td>{{ values.Wednesday|default:"0" }}</td>
+                                        <td>{{ values.Thursday|default:"0" }}</td>
+                                        <td>{{ values.Friday|default:"0" }}</td>
+                                        <td>{{ values.Saturday|default:"0" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                             <p class="text-center text-muted small">{% trans "Week begins on date displayed." %}</p>
                             <p>
                                 <br/>
@@ -288,7 +367,10 @@
             homepage_severity_plot(critical, high, medium, low);
 
             {% if punchcard %}
-                punchcard("#punchcard", {{ punchcard|safe }}, {{ ticks|safe }});
+                let punchcardData = {{ punchcard|safe }};
+                let ticksData = {{ ticks|safe }};
+                punchcard("#punchcard", punchcardData, ticksData);
+                updatePunchcardTable(punchcardData, ticksData);
             {% endif %}
         });
 
