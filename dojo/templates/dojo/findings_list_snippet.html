@@ -273,7 +273,7 @@
                             <tr>
                                 {% block header %}
                                     {% if not product_tab or product_tab and product_tab.product|has_object_permission:"Finding_Edit" %}
-                                        <th class="centered" title="Select all visible findings.">
+                                        <th class="centered" title="Select all visible findings." scope="col" aria-label="Select all visible findings">
                                             <div class="dropdown">
                                                 <button class="btn btn-primary dropdown-toggle"
                                                         type="button"
@@ -281,9 +281,9 @@
                                                         data-toggle="dropdown"
                                                         aria-haspopup="true"
                                                         aria-expanded="true"
-                                                        aria-label="Select all findings dropdown">
+                                                        aria-label="Select findings by severity dropdown">
                                                     <form class="inline-form" action="#">
-                                                        <input type="checkbox" name="select_all" id="select_all" aria-label="select-all"/>
+                                                        <input type="checkbox" name="select_all" id="select_all" aria-label="select all findings checkbox"/>
                                                     </form>
                                                     <span class="caret"></span>
                                                 </button>
@@ -317,26 +317,26 @@
                                         </th>
                                     {% endif %}
                                     <th></th>
-                                    <th class="nowrap centered severity-sort">
+                                    <th class="nowrap centered severity-sort" scope="col">
                                         {% trans "Severity" %}
                                     </th>
-                                    <th class="nowrap">
+                                    <th class="nowrap" scope="col">
                                         {% comment %} The display field is translated in the function. No need to translate here as well{% endcomment %}
                                         {% dojo_sort request 'Name' 'title' %}
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         {% trans "CWE" %}
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         {% trans "Vulnerability Id" %}
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         {% trans "EPSS Score" %}
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         {% trans "EPSS Percentile" %}
                                     </th>
-                                    <th class="nowrap">
+                                    <th class="nowrap" scope="col">
                                         {% if filter_name == 'Closed' %}
                                             {% comment %} The display field is translated in the function. No need to translate here as well{% endcomment %}
                                             {% dojo_sort request 'Closed Date' 'mitigated' %}
@@ -345,55 +345,55 @@
                                             {% dojo_sort request 'Date' 'date' %}
                                         {% endif %}
                                     </th>
-                                    <th class="nowrap">
+                                    <th class="nowrap" scope="col">
                                         {% trans "Age" %}
                                     </th>
                                     {% if system_settings.enable_finding_sla %}
-                                        <th>
+                                        <th scope="col">
                                             {% trans "SLA" %}
                                         </th>
                                     {% endif %}
-                                    <th>
+                                    <th scope="col">
                                         {% trans "Reporter" %}
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         {% trans "Found By" %}
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         {% trans "Status" %}
                                     </th>
                                     {% if system_settings.enable_jira %}
                                         {% if jira_project and product_tab or not product_tab %}
-                                            <th>
+                                            <th scope="col">
                                                 {% trans "Jira" %}
                                             </th>
-                                            <th>
+                                            <th scope="col">
                                                 {% trans "JIRA Age" %}
                                             </th>
-                                            <th>
+                                            <th scope="col">
                                                 {% trans "JIRA Change" %}
                                             </th>
                                         {% endif %}
                                     {% endif %}
                                     {% if 'is_finding_groups_enabled'|system_setting_enabled %}
-                                        <th>
+                                        <th scope="col">
                                             {% trans "Group" %}
                                         </th>
                                     {% endif %}
                                     {% if show_product_column and product_tab is None %}
-                                        <th class="nowrap">
+                                        <th class="nowrap" scope="col">
                                             {% comment %} The display field is translated in the function. No need to translate here as well{% endcomment %}
                                             {% dojo_sort request 'Product' 'test__engagement__product__name' %}
                                         </th>
                                     {% endif %}
-                                    <th>
+                                    <th scope="col">
                                         {% trans "Service" %}
                                     </th>
-                                    <th>
+                                    <th scope="col"> 
                                         {% trans "Planned Remediation" %}
                                     </th>
                                     {% if filter_name != 'Closed' %}
-                                        <th>
+                                        <th scope="col">
                                             {% trans "Reviewers" %}
                                         </th>
                                     {% endif %}

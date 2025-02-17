@@ -70,25 +70,25 @@
                            class="tablesorter-bootstrap table table-condensed table-striped table-hover">
                         <tr>
                             {% if not product_tab or product_tab and product_tab.product|has_object_permission:"Endpoint_Edit" %}
-                            <th class="centered" title="Select all visible endpoint." id="bulk_edit">
+                            <th class="centered" title="Select all visible endpoints." aria-label="Select all visible endpoints." id="bulk_edit" scope="col">
                                 <form class="inline-form centered" action="#">
-                                    <input type="checkbox" title="Select All" name="select_all" id="select_all"></input>
+                                    <input aria-label="Select all visible endpoints checkbox" type="checkbox" title="Select All" name="select_all" id="select_all"></input>
                                 </form>
                             </th>
                             {% endif %}
                             {% if host_view %}
                                 {% comment %} The display field is translated in the function. No need to translate here as well{% endcomment %}    
-                                <th>{% dojo_sort request 'Host' 'host' %}</th>
+                                <th scope="col">{% dojo_sort request 'Host' 'host' %}</th>
                             {% else %}
                                 {% comment %} The display field is translated in the function. No need to translate here as well{% endcomment %}    
-                                <th>{% dojo_sort request 'Endpoint' 'endpoint' %}</th>
+                                <th scope="col">{% dojo_sort request 'Endpoint' 'endpoint' %}</th>
                             {% endif %}
                             {% if not product_tab %}
                                 {% comment %} The display field is translated in the function. No need to translate here as well{% endcomment %}    
-                                <th>{% dojo_sort request 'Product' 'product' 'asc' %}</th>
+                                <th scope="col">{% dojo_sort request 'Product' 'product' 'asc' %}</th>
                             {% endif %}
-							<th class="text-center" nowrap="nowrap">Active (Verified) Findings</th>
-							<th>Status</th>
+							<th class="text-center" nowrap="nowrap" scope="col">Active (Verified) Findings</th>
+							<th scope="col">Status</th>
                         </tr>
 
                         {% for e in endpoints %}
