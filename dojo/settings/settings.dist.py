@@ -1149,6 +1149,10 @@ CELERY_BEAT_SCHEDULE = {
         "task": "dojo.tasks.evaluate_pro_proposition",
         "schedule": timedelta(hours=8),
     },
+    "clear_sessions": {
+        "task": "dojo.tasks.clear_sessions",
+        "schedule": crontab(hour=0, minute=0, day_of_week=0),
+    },
     # 'jira_status_reconciliation': {
     #     'task': 'dojo.tasks.jira_status_reconciliation_task',
     #     'schedule': timedelta(hours=12),

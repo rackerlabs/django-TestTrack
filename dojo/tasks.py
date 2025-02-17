@@ -5,6 +5,7 @@ from auditlog.models import LogEntry
 from celery.utils.log import get_task_logger
 from dateutil.relativedelta import relativedelta
 from django.conf import settings
+from django.core.management import call_command
 from django.db.models import Count, Prefetch
 from django.urls import reverse
 from django.utils import timezone
@@ -216,3 +217,8 @@ def evaluate_pro_proposition(*args, **kwargs):
     # Update the announcement
     announcement.message = f'Only professionals have {object_count:,} Findings and Endpoints in their systems... <a href="https://www.defectdojo.com/pricing" target="_blank">Get DefectDojo Pro</a> today!'
     announcement.save()
+
+
+@app.task
+def clear_sessions(*args, **kwargs):
+    call_command("clearsessions")
