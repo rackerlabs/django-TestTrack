@@ -73,7 +73,7 @@ select = [
    "FIX",
    "PD",
    "PGH",
-   "PLC01", "PLC0205", "PLC0208", "PLC0414", "PLC18", "PLC24", "PLC3",
+   "PLC01", "PLC0205", "PLC0208", "PLC0414", "PLC18", "PLC24", "PLC28", "PLC3",
    "PLE",
    "PLR01", "PLR02", "PLR04", "PLR0915", "PLR1716", "PLR172", "PLR1733", "PLR1736", "PLR5", "PLR6104", "PLR6201",
    "PLW01", "PLW02", "PLW04", "PLW07", "PLW1", "PLW2", "PLW3",
