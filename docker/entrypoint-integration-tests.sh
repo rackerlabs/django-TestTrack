@@ -26,9 +26,9 @@ if [ $COUNTER -gt 10 ]; then
     exit 1
 fi
 
-CHROMEDRIVER=$(find /opt/chrome-driver -name chromedriver)
+CHROMEDRIVER=/usr/bin/chromedriver
 export CHROMEDRIVER
-CHROME_PATH=/opt/chrome/chrome
+CHROME_PATH=/usr/bin/chromium
 export CHROME_PATH
 
 # Run available unittests with a simple setup
@@ -251,7 +251,7 @@ else
     else
         fail "$test"
     fi
-    
+
     test="False Positive History tests"
     echo "Running: $test"
     if python3 tests/false_positive_history_test.py ; then

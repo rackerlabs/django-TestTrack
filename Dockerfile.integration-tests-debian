@@ -2,8 +2,8 @@
 # code: language=Dockerfile
 
 FROM openapitools/openapi-generator-cli:v7.11.0@sha256:a9e7091ac8808c6835cf8ec88252bca603f1f889ef1456b63d8add5781feeca7 AS openapitools
-# currently only supports x64, no arm yet due to chrome and selenium dependencies
-FROM python:3.11.9-slim-bookworm@sha256:8c1036ec919826052306dfb5286e4753ffd9d5f6c24fbc352a5399c3b405b57e AS build
+# ARM64 support inspired by https://github.com/seleniumhq-community/docker-seleniarm/blob/trunk/NodeChromium/Dockerfile to install chromium instead of chrome
+FROM python:3.11.9-slim-bookworm@sha256:6ed5bff4d7d377e2a27d9285553b8c21cfccc4f00881de1b24c9bc8d90016e82 AS base
 WORKDIR /app
 RUN \
   apt-get -y update && \
@@ -18,53 +18,64 @@ RUN \
     apt-file \
     libnss3 \
     xvfb \
+    chromium \
+    chromium-driver \
     && \
-  apt-get clean && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
   true
 
 RUN pip install --no-cache-dir selenium==4.9.0 requests
 
-# Install the latest Google Chrome stable release
-WORKDIR /opt/chrome
 
-# TODO: figure out whatever fix is necessary to use Chrome >= 128 and put this back in the RUN below so we stay
-# up-to-date
-# chrome_url=$(curl https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq -r '.channels[] | select(.channel == "Stable") | .downloads.chrome[] | select(.platform == "linux64").url') && \
+# root@40b30a85486c:/# which chromium
+# /usr/bin/chromium
 
-RUN \
-  chrome_url="https://storage.googleapis.com/chrome-for-testing-public/127.0.6533.119/linux64/chrome-linux64.zip" && \
-  wget $chrome_url && \
-  unzip chrome-linux64.zip && \
-  rm -rf chrome-linux64.zip && \
-  chmod -R 0755 . && \
-  ln -s /opt/chrome/chrome-linux64/chrome /usr/bin/chrome
+# root@40b30a85486c:/# which chromedriver
+# /usr/bin/chromedriver
 
-# Install the dependencies for Google Chrome
-RUN apt-file update
-COPY docker/install_chrome_dependencies.py install_chrome_dependencies.py
-RUN \
-  missing_chrome_deps=$(python install_chrome_dependencies.py) && \
-  apt-get -y install $missing_chrome_deps
 
-# Install a suggested list of additional packages (https://stackoverflow.com/a/76734752)
-RUN apt-get install -y libxi6 libgconf-2-4 jq libjq1 libonig5 libxkbcommon0 libxss1 libglib2.0-0 libnss3 \
-  libfontconfig1 libatk-bridge2.0-0 libatspi2.0-0 libgtk-3-0 libpango-1.0-0 libgdk-pixbuf2.0-0 libxcomposite1 \
-  libxcursor1 libxdamage1 libxtst6 libappindicator3-1 libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libxfixes3 \
-  libdbus-1-3 libexpat1 libgcc1 libnspr4 libgbm1 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxext6 \
-  libxrandr2 libxrender1 gconf-service ca-certificates fonts-liberation libappindicator1 lsb-release xdg-utils
+# # Install the latest Google Chrome stable release
+# WORKDIR /opt/chrome
 
-# Installing the latest stable Google Chrome driver release
-WORKDIR /opt/chrome-driver
-# TODO: figure out whatever fix is necessary to use Chrome >= 128 and put this back in the RUN below so we stay
-# up-to-date
-# chromedriver_url=$(curl https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq -r '.channels[] | select(.channel == "Stable") | .downloads.chromedriver[] | select(.platform == "linux64").url') && \
+# # TODO: figure out whatever fix is necessary to use Chrome >= 128 and put this back in the RUN below so we stay
+# # up-to-date
+# # chrome_url=$(curl https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq -r '.channels[] | select(.channel == "Stable") | .downloads.chrome[] | select(.platform == "linux64").url') && \
 
-RUN \
-  chromedriver_url="https://storage.googleapis.com/chrome-for-testing-public/127.0.6533.119/linux64/chromedriver-linux64.zip" && \
-  wget $chromedriver_url && \
-  unzip -j chromedriver-linux64.zip chromedriver-linux64/chromedriver && \
-  rm -rf chromedriver-linux64.zip && \
-  chmod -R 0755 .
+# RUN \
+#   chrome_url="https://storage.googleapis.com/chrome-for-testing-public/127.0.6533.119/linux64/chrome-linux64.zip" && \
+#   wget $chrome_url && \
+#   unzip chrome-linux64.zip && \
+#   rm -rf chrome-linux64.zip && \
+#   chmod -R 0755 . && \
+#   ln -s /opt/chrome/chrome-linux64/chrome /usr/bin/chrome
+
+# # Install the dependencies for Google Chrome
+# RUN apt-file update
+# COPY docker/install_chrome_dependencies.py install_chrome_dependencies.py
+# RUN \
+#   missing_chrome_deps=$(python install_chrome_dependencies.py) && \
+#   apt-get -y install $missing_chrome_deps
+
+# # Install a suggested list of additional packages (https://stackoverflow.com/a/76734752)
+# RUN apt-get install -y libxi6 libgconf-2-4 jq libjq1 libonig5 libxkbcommon0 libxss1 libglib2.0-0 libnss3 \
+#   libfontconfig1 libatk-bridge2.0-0 libatspi2.0-0 libgtk-3-0 libpango-1.0-0 libgdk-pixbuf2.0-0 libxcomposite1 \
+#   libxcursor1 libxdamage1 libxtst6 libappindicator3-1 libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libxfixes3 \
+#   libdbus-1-3 libexpat1 libgcc1 libnspr4 libgbm1 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxext6 \
+#   libxrandr2 libxrender1 gconf-service ca-certificates fonts-liberation libappindicator1 lsb-release xdg-utils
+
+# # Installing the latest stable Google Chrome driver release
+# WORKDIR /opt/chrome-driver
+# # TODO: figure out whatever fix is necessary to use Chrome >= 128 and put this back in the RUN below so we stay
+# # up-to-date
+# # chromedriver_url=$(curl https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq -r '.channels[] | select(.channel == "Stable") | .downloads.chromedriver[] | select(.platform == "linux64").url') && \
+
+# RUN \
+#   chromedriver_url="https://storage.googleapis.com/chrome-for-testing-public/127.0.6533.119/linux64/chromedriver-linux64.zip" && \
+#   wget $chromedriver_url && \
+#   unzip -j chromedriver-linux64.zip chromedriver-linux64/chromedriver && \
+#   rm -rf chromedriver-linux64.zip && \
+#   chmod -R 0755 .
 WORKDIR /app
 
 # install openapi-generator-cli

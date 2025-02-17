@@ -8,7 +8,7 @@ from product_test import ProductTest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
-dir_path = Path(os.path.realpath(__file__)).parent
+dir_path = str(Path(os.path.realpath(__file__)).parent)
 
 
 class IBMAppScanTest(BaseTestCase):
