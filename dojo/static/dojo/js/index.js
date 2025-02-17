@@ -247,11 +247,11 @@ function togglePassVisibility() {
     if (passwdInput.type === "password") {
         passwdInput.type = "text";
         toggleBox.innerHTML = "<i class='fa-solid fa-eye-slash'></i>\
-        <span><b>Hide Password</b></span>";
+        <span>Hide Password</span>";
     } else {
         passwdInput.type = "password";
         toggleBox.innerHTML = "<i class='fa-solid fa-eye'></i>\
-        <span><b>Show Password</b></span>";
+        <span>Show Password</span>";
     }
 }
 
