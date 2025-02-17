@@ -170,7 +170,7 @@ This can be executed from the uwsgi docker container using:
 $ docker compose exec uwsgi /bin/bash -c 'python manage.py jira_status_reconciliation'
 {{< /highlight >}}
 
-DEBUG output can be obtains via `-v 3`, but only after increasing the logging to DEBUG level in your settings.dist.py or local_settings.py file
+DEBUG output can be obtains via `-v 3`, but only after increasing the logging to DEBUG level in your settings_dist.py or local_settings.py file
 
 {{< highlight bash >}}
 $ docker compose exec uwsgi /bin/bash -c 'python manage.py jira_status_reconciliation -v 3'

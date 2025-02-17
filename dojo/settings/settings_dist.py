@@ -1,5 +1,5 @@
 #########################################################################################################
-# It is not recommended to edit file 'settings.dist.py', for production deployments.                        #
+# It is not recommended to edit file 'settings_dist.py', for production deployments.                        #
 # Any customization of variables need to be done via environmental variables or in 'local_settings.py'. #
 # For more information check https://documentation.defectdojo.com/getting_started/configuration/        #
 #########################################################################################################
