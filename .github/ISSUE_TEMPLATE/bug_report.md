@@ -33,6 +33,7 @@ A clear and concise description of what you expected to happen.
 
 **Environment information**
  - Operating System: [e.g. Ubuntu 18.04]
+ - Docker Compose or Helm version (Output of `docker compose version` or `helm version`)
  - DefectDojo version (see footer) or commit message: [use `git show -s --format="[%ci] %h: %s [%d]"`]
 
 **Logs** 
