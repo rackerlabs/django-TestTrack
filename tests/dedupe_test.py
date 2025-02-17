@@ -14,8 +14,6 @@ from selenium.webdriver.support.ui import Select, WebDriverWait
 
 logger = logging.getLogger(__name__)
 
-dir_path = Path(os.path.realpath(__file__)).parent
-
 
 class DedupeTest(BaseTestCase):
     # --------------------------------------------------------------------------------------------------------
@@ -23,7 +21,7 @@ class DedupeTest(BaseTestCase):
     # --------------------------------------------------------------------------------------------------------
     def setUp(self):
         super().setUp()
-        self.relative_path = str(Path(os.path.realpath(__file__)).parent)
+        self.relative_path = Path(os.path.realpath(__file__)).parent
 
     def check_nb_duplicates(self, expected_number_of_duplicates):
         logger.debug("checking duplicates...")
@@ -140,7 +138,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Path Test 1").click()
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/dedupe_path_1.json"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/dedupe_path_1.json"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         # 'Bandit Scan processed a total of 1 findings created 1 findings did not touch 1 findings.'
@@ -154,7 +152,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Path Test 2").click()
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/dedupe_path_2.json"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/dedupe_path_2.json"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         # 'Bandit Scan processed a total of 2 findings created 2 findings did not touch 1 findings.'
@@ -212,7 +210,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Endpoint Test 1").click()
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/dedupe_endpoint_1.xml"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/dedupe_endpoint_1.xml"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="a total of 3 findings"))
@@ -223,7 +221,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Endpoint Test 2").click()
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/dedupe_endpoint_2.xml"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/dedupe_endpoint_2.xml"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="a total of 3 findings"))
@@ -276,7 +274,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Same Eng Test 1").click()
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/dedupe_endpoint_1.xml"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/dedupe_endpoint_1.xml"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="a total of 3 findings"))
@@ -287,7 +285,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Same Eng Test 2").click()
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/dedupe_cross_1.csv"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/dedupe_cross_1.csv"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="a total of 3 findings"))
@@ -345,7 +343,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
         # os.path.realpath makes the path canonical
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/multiple_findings.xml"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/multiple_findings.xml"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="a total of 2 findings"))
@@ -356,7 +354,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Path Test 2").click()
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/multiple_findings_line_changed.xml"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/multiple_findings_line_changed.xml"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="a total of 2 findings"))
@@ -419,7 +417,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Immuniweb Test").click()
         driver.find_element(By.CSS_SELECTOR, "i.fa-solid.fa-ellipsis-vertical").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan Results").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/dedupe_endpoint_1.xml"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/dedupe_endpoint_1.xml"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="a total of 3 findings"))
@@ -430,7 +428,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Generic Test").click()
         driver.find_element(By.CSS_SELECTOR, "i.fa-solid.fa-ellipsis-vertical").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan Results").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/dedupe_cross_1.csv"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/dedupe_cross_1.csv"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="a total of 3 findings"))
@@ -452,7 +450,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Path Test 1").click()
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/multiple_findings.xml"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/multiple_findings.xml"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="Checkmarx Scan processed a total of 2 findings created 2 findings."))
@@ -463,7 +461,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.PARTIAL_LINK_TEXT, "Path Test 2").click()
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/multiple_findings.xml"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/multiple_findings.xml"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="Checkmarx Scan processed a total of 2 findings created 2 findings."))
@@ -484,7 +482,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
         driver.find_element(By.ID, "id_service").send_keys("service_1")
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/multiple_findings.xml"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/multiple_findings.xml"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="Checkmarx Scan processed a total of 2 findings created 2 findings."))
@@ -496,7 +494,7 @@ class DedupeTest(BaseTestCase):
         driver.find_element(By.ID, "dropdownMenu1").click()
         driver.find_element(By.LINK_TEXT, "Re-Upload Scan").click()
         driver.find_element(By.ID, "id_service").send_keys("service_2")
-        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path + "/dedupe_scans/multiple_findings.xml"))
+        driver.find_element(By.ID, "id_file").send_keys(os.path.realpath(self.relative_path / "dedupe_scans/multiple_findings.xml"))
         driver.find_elements(By.CSS_SELECTOR, "button.btn.btn-primary")[1].click()
 
         self.assertTrue(self.is_success_message_present(text="Checkmarx Scan processed a total of 2 findings created 2 findings."))
