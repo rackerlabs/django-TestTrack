@@ -1,3 +1,4 @@
+import functools
 import json
 import logging
 import pathlib
@@ -151,6 +152,7 @@ IMPORTER_MOCK_RETURN_VALUE = None, 0, 0, 0, 0, 0, MagicMock()
 REIMPORTER_MOCK_RETURN_VALUE = None, 0, 0, 0, 0, 0, MagicMock()
 
 
+@functools.cache
 def get_open_api3_json_schema():
     generator_class = spectacular_settings.DEFAULT_GENERATOR_CLASS
     generator = generator_class()
@@ -161,11 +163,6 @@ def get_open_api3_json_schema():
     validate_schema(schema)
 
     return schema
-
-
-# use ugly global to avoid generating the schema for every test/method (as it's slow)
-global open_api3_json_schema
-open_api3_json_schema = get_open_api3_json_schema()
 
 
 def skipIfNotSubclass(baseclass):
@@ -363,7 +360,7 @@ class BaseClass:
             self.client = APIClient()
             self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
             self.url = reverse(self.viewname + "-list")
-            self.schema = open_api3_json_schema
+            self.schema = get_open_api3_json_schema()
 
         def setUp_not_authorized(self):
             testuser = User.objects.get(id=3)
@@ -465,7 +462,7 @@ class BaseClass:
     class ListRequestTest(RESTEndpointTest):
         @skipIfNotSubclass(ListModelMixin)
         def test_list(self):
-            # print(open_api3_json_schema)
+            # print(get_open_api3_json_schema())
             # validator = ResponseValidator(spec)
 
             check_for_tags = False
