@@ -55,11 +55,11 @@ jobs:
           merge-multiple: true
 
       - name: Load docker images
-        timeout-minutes: 10
+        timeout-minutes: 15
         run: |-
              eval $(minikube docker-env)
-             docker load -i built-docker-image/nginx-${{ matrix.os }}_img
-             docker load -i built-docker-image/django-${{ matrix.os }}_img
+             docker load -i built-docker-image/nginx-${{ matrix.os }}-ubuntu-latest_img
+             docker load -i built-docker-image/django-${{ matrix.os }}-ubuntu-latest_img
              docker images
 
       - name: Configure HELM repos
