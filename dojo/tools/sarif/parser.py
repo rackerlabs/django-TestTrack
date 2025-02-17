@@ -8,6 +8,7 @@ from django.utils.translation import gettext as _
 
 from dojo.models import Finding
 from dojo.tools.parser_test import ParserTest
+from dojo.utils import first_elem
 
 logger = logging.getLogger(__name__)
 
@@ -460,7 +461,7 @@ def get_items_from_result(result, rules, artifacts, run_date):
         # compare it
         if result.get("fingerprints"):
             hashes = get_fingerprints_hashes(result["fingerprints"])
-            first_item = next(iter(hashes.items()))
+            first_item = first_elem(hashes.items())
             finding.unique_id_from_tool = first_item[1]["value"]
         elif result.get("partialFingerprints"):
             # for this one we keep an order to have id that could be compared

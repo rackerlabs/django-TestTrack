@@ -11,7 +11,7 @@ class TesthadolintParser(DojoTestCase):
         findings = parser.get_findings(testfile, Test())
         testfile.close()
         self.assertEqual(4, len(findings))
-        finding = list(findings)[0]
+        finding = findings[0]
         self.assertEqual(finding.line, 9)
         self.assertEqual(finding.file_path, "django-DefectDojo\\Dockerfile.django")
 

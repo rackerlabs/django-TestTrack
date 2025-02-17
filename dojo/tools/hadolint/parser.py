@@ -30,7 +30,7 @@ class HadolintParser:
             )
             items[unique_key] = item
 
-        return items.values()
+        return list(items.values())
 
 
 def get_item(vulnerability, test):
