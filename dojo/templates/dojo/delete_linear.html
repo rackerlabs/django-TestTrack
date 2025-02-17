@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    {{ block.super }}
+    <h3> Delete Linear Instance: {{ inst.instance_name }}</h3>
+    <p>
+        Deleting this configuration will remove any Linear product configurations, settings, and other relationships associated
+        with this configuration. These relationships are listed below:
+    </p>
+    <div class="danger-zone panel panel-danger">
+        <div class="panel-heading">
+            <h3>Danger Zone</h3>
+        </div>
+        {% if rels|length > 1 %}
+            <ul class="left">{{ rels|unordered_list }}</ul>
+        {% else %}
+            <p>No relationships found.</p>
+        {% endif %}
+        <form class="form-horizontal" method="post">
+            {% csrf_token %}
+            {{ form }}
+
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit" name="delete_name" value="delete_linear">Delete Linear Instance</button>
+            </div>
+        </form>
+    </div>
+    <br/>
+    <br/>
+{% endblock %}

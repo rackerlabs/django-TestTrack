@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load event_tags %}
+{% block content %}
+    {{ block.super }}
+    <h3>Create Linear Issue</h3>
+    <h4>{{ finding.title }}</h4>
+
+    <form class="form-horizontal" action="{% url 'create_linear_issue' finding.id %}" method="post">
+        {% csrf_token %}
+        {% include "dojo/form_fields.html" with form=form %}
+
+        {% if linear_issues %}
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Existing Issues:</label>
+          <div class="col-sm-10">
+            <ul style="margin-top: 7px">
+              {% for issue in linear_issues %}
+              <li>
+                <a href="{{ issue.url }}">{{ issue.url }}</a>
+                <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <input class="btn btn-primary" name="_Create" type="submit" value="Create Linear Issue"/>
+          </div>
+        </div>
+
+    </form>
+{% endblock %}

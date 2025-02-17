@@ -144,6 +144,8 @@ urlpatterns = [
         name="choose_finding_template_options"),
     re_path(r"^finding/(?P<fid>\d+)/(?P<tid>\d+)/apply_template_to_finding$",
         views.apply_template_to_finding, name="apply_template_to_finding"),
+    re_path(r"^finding/(?P<fid>\d+)/linear$", views.create_linear_issue,
+        name="create_linear_issue"),
     re_path(r"^finding/(?P<fid>\d+)/close$", views.close_finding,
         name="close_finding"),
     re_path(r"^finding/(?P<fid>\d+)/defect_review$",

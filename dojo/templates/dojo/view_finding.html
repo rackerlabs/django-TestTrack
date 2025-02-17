@@ -151,6 +151,11 @@
                                         <i class="fa-solid fa-fire-extinguisher"></i> Close Finding
                                     </a>
                                 </li>
+                                <li role="presentation">
+                                    <a href="{% url 'create_linear_issue' finding.id %}">
+                                        <i class="fa-solid fa-ticket"></i> Create Linear Issue
+                                    </a>
+                                </li>
                                 {% endif %}
                             {% endif %}
                             {% if finding|has_object_permission:"Risk_Acceptance" %}
