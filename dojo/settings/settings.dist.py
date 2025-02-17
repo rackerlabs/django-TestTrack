@@ -1771,6 +1771,7 @@ VULNERABILITY_URLS = {
     "KHV": "https://avd.aquasec.com/misconfig/kubernetes/",  # e.g. https://avd.aquasec.com/misconfig/kubernetes/khv045
     "MGASA-": "https://advisories.mageia.org/&&.html",  # e.g. https://advisories.mageia.org/MGASA-2025-0023.html
     "OSV-": "https://osv.dev/vulnerability/",  # e.g. https://osv.dev/vulnerability/OSV-2024-1330
+    "PAN-SA-": "https://security.paloaltonetworks.com/",  # e.g. https://security.paloaltonetworks.com/PAN-SA-2024-0010
     "PMASA-": "https://www.phpmyadmin.net/security/",  # e.g. https://www.phpmyadmin.net/security/PMASA-2025-1
     "PYSEC-": "https://osv.dev/vulnerability/",  # e.g. https://osv.dev/vulnerability/PYSEC-2024-48
     "RHBA-": "https://access.redhat.com/errata/",  # e.g. https://access.redhat.com/errata/RHBA-2024:2406
