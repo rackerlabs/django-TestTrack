@@ -61,6 +61,13 @@
 
         <script src="{% static "jszip/dist/jszip.min.js" %}"></script>
 
+        {% if CUSTOM_JS %}
+        <!-- Custom JS -->
+            {% for one_js in CUSTOM_JS %}
+                <script src="{% static one_js %}"></script>
+            {% endfor %}
+         {% endif %}
+
         <!-- Bootstrap Core CSS -->
         <link href="{% static "bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
 
@@ -96,6 +103,14 @@
             {% block add_styles %}
             {% endblock %}
         </style>
+
+        {% if CUSTOM_CSS %}
+        <!-- Custom CSS -->
+            {% for one_css in CUSTOM_CSS %}
+                <link rel="stylesheet" href="{% static one_css %}">
+            {% endfor %}
+        {% endif %}
+
     </head>
     <body class="{% dojo_body_class %}">
         <div id="wrapper">
