@@ -8,7 +8,7 @@ django_celery_results==2.5.1
 django-auditlog==3.0.0
 django-dbbackup==4.2.1
 django-environ==0.12.0
-django-filter==24.3
+django-filter==25.1
 django-imagekit==5.0.0
 django-multiselectfield==0.1.13
 django-polymorphic==3.1.0
